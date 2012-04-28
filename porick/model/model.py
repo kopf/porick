@@ -1,9 +1,9 @@
 import datetime
-from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy import Column, Index, String, Text, DateTime, Integer, Double
+from sqlalchemy import Column, Index, String, Text, DateTime, Integer
+from sqlalchemy.dialects.mysql import DOUBLE
 
+from porick.model.meta import Base
 
-Base = declarative_base()
 
 def now():
     return datetime.datetime.now()
@@ -20,4 +20,4 @@ class Quote(Base):
     submitted    = Column(DateTime, nullable=False, default=now)
     approved     = Column(Integer(1, unsigned=True), nullable=False, default=0)
     flagged      = Column(Integer(1, unsigned=True), nullable=False, default=1)
-    score        = Column(Double(unsigned=True), nullable=False, default=1)
+    score        = Column(DOUBLE(unsigned=True), nullable=False, default=1)
