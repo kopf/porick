@@ -14,7 +14,7 @@ log = logging.getLogger(__name__)
 class DisplayController(BaseController):
 
     def index(self):
-        retval = ''
-        for row in db.query(Quote).all():
-            retval += row.body
-        return retval
+        #retval = ''
+        #for row in db.query(Quote).all():
+        #    retval += str(row.score) + ' '
+        return render('/base.mako')
