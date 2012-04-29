@@ -7,8 +7,10 @@
     </head>
     <body>
         ${self.body_header()}
-        ${self.body_content()}
-        ${self.body_footer()}
+        <div class="container">
+            ${self.body_content()}
+            ${self.body_footer()}
+        </div>
         ${self.body_js()}
     </body>
 </html>
@@ -22,15 +24,24 @@
 </%def>
 
 <%def name="head_css()">
+    <link rel="stylesheet" type="text/css" href="/css/base.css" />
     <link rel="stylesheet" type="text/css" href="/bootstrap/css/bootstrap.css" />
+    ${self.custom_css()}
+</%def>
+
+<%def name="custom_css()">
 </%def>
 
 <%def name="head_js()">
 </%def>
 
 <%def name="body_js()">
-    <script type="text/javascript" src="/js/jquery-1.7.2.js"></script>
+    <script type="text/javascript" src="/js/jquery/jquery-1.7.2.js"></script>
     <script type="text/javascript" src="/bootstrap/js/bootstrap.js"></script>
+    ${self.custom_js()}
+</%def>
+
+<%def name="custom_js()">
 </%def>
 ## Title of this page to be used in the header <title>.
 <%def name="head_title_tag()"><%
@@ -63,7 +74,7 @@
                         </form>
                         <li class="divider-vertical"></li>
                         <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Account <b class="caret"></b></a>
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Sign in <b class="caret"></b></a>
                             <ul class="dropdown-menu">
                                 <li><a href="#">Action</a></li>
                                 <li><a href="#">Another action</a></li>
