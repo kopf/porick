@@ -63,11 +63,16 @@
     <div class="navbar navbar-fixed-top">
         <div class="navbar-inner">
             <div class="container">
-                <a class="brand" href="#">Porick</a>
+                <a class="brand" href="/">Porick</a>
                 <div class="nav-collapse">
                     <ul class="nav">
-                        <li class="active"><a href="/">Home</a></li>
+                        <li><a href="${h.url(controller='browse', action='main')}">Browse</a></li>
+                        <li><a href="${h.url(controller='browse', action='top')}">Top</a></li>
+                        <li><a href="${h.url(controller='browse', action='bottom')}">Bottom</a></li>
+                        <li><a href="${h.url(controller='browse', action='random')}">Random</a></li>
+                        <li><a href="${h.url(controller='browse', action='tags')}">Tags</a></li>
                     </ul>
+                    <a href="#" class="btn btn-small btn-success">Submit</a>
                     <ul class="nav pull-right">
                         <form class="navbar-search pull-left" action="">
                             <input type="text" class="search-query span2" placeholder="Search">

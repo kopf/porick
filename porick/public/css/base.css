@@ -2,3 +2,7 @@ body {
     height: 100%;
     padding-top: 45px;
 }
+
+pre.quote_body {
+    font-size: 13px;
+}
