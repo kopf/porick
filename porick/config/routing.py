@@ -19,8 +19,8 @@ def make_map(config):
     map.connect('/error/{action}/{id}', controller='error')
 
     map.connect('/browse', controller='browse', action='main')
-    map.connect('/browse/top', controller='browse', action='top')
-    map.connect('/browse/bottom', controller='browse', action='bottom')
+    map.connect('/browse/best', controller='browse', action='best')
+    map.connect('/browse/worst', controller='browse', action='worst')
     map.connect('/browse/random', controller='browse', action='random')
     map.connect('/browse/tags', controller='browse', action='tags')
     map.connect('/browse/{ref_id}', controller='browse', action='view_one')

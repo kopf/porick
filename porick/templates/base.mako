@@ -67,8 +67,8 @@
                 <div class="nav-collapse">
                     <ul class="nav">
                         <li><a href="${h.url(controller='browse', action='main')}">Browse</a></li>
-                        <li><a href="${h.url(controller='browse', action='top')}">Top</a></li>
-                        <li><a href="${h.url(controller='browse', action='bottom')}">Bottom</a></li>
+                        <li><a href="${h.url(controller='browse', action='best')}">Best</a></li>
+                        <li><a href="${h.url(controller='browse', action='worst')}">Worst</a></li>
                         <li><a href="${h.url(controller='browse', action='random')}">Random</a></li>
                         <li><a href="${h.url(controller='browse', action='tags')}">Tags</a></li>
                     </ul>

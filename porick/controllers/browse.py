@@ -18,11 +18,11 @@ class BrowseController(BaseController):
         c.quotes = db.query(Quote).order_by(Quote.submitted.desc()).limit(QUOTES_PER_PAGE).all()
         return render('/browse.mako')
 
-    def top(self):
+    def best(self):
         c.quotes = db.query(Quote).order_by(Quote.score.desc()).limit(QUOTES_PER_PAGE).all()
         return render('/browse.mako')
 
-    def bottom(self):
+    def worst(self):
         c.quotes = db.query(Quote).order_by(Quote.score).limit(QUOTES_PER_PAGE).all()
         return render('/browse.mako')
 
