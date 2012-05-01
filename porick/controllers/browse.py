@@ -15,19 +15,19 @@ log = logging.getLogger(__name__)
 class BrowseController(BaseController):
 
     def main(self):
-        c.quotes = db.query(Quote).order_by(Quote.submitted.desc()).limit(QUOTES_PER_PAGE).all()
+        c.quotes = db.query(Quote).order_by(Quote.submitted.desc()).filter(Quote.approved == 1).limit(QUOTES_PER_PAGE)
         return render('/browse.mako')
 
     def best(self):
-        c.quotes = db.query(Quote).order_by(Quote.score.desc()).limit(QUOTES_PER_PAGE).all()
+        c.quotes = db.query(Quote).order_by(Quote.score.desc()).filter(Quote.approved == 1).limit(QUOTES_PER_PAGE)
         return render('/browse.mako')
 
     def worst(self):
-        c.quotes = db.query(Quote).order_by(Quote.score).limit(QUOTES_PER_PAGE).all()
+        c.quotes = db.query(Quote).order_by(Quote.score).filter(Quote.approved == 1).limit(QUOTES_PER_PAGE)
         return render('/browse.mako')
 
     def random(self):
-        c.quotes = [db.query(Quote).order_by(sql.func.rand()).first()]
+        c.quotes = [db.query(Quote).order_by(sql.func.rand()).filter(Quote.approved == 1).first()]
         return render('/browse.mako')
 
     def tags(self):
@@ -35,7 +35,7 @@ class BrowseController(BaseController):
 
     def view_one(self, ref_id):
         quote = db.query(Quote).filter(Quote.id == ref_id).first()
-        if not quote:
+        if not quote or quote.approved != 1:
             abort(404)
         else:
             c.quotes = [quote]
