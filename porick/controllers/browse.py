@@ -15,7 +15,7 @@ log = logging.getLogger(__name__)
 class BrowseController(BaseController):
 
     def main(self):
-        c.quotes = db.query(Quote).limit(QUOTES_PER_PAGE).all()
+        c.quotes = db.query(Quote).order_by(Quote.submitted.desc()).limit(QUOTES_PER_PAGE).all()
         return render('/browse.mako')
 
     def top(self):

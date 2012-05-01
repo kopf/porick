@@ -3,6 +3,25 @@ body {
     padding-top: 45px;
 }
 
-pre.quote_body {
+.quote .metadata {
+    margin-top: -10px;
+    margin-left: 0px;
+}
+
+.quote .metadata li {
+    float: left;
+    display: block;
+    margin-right: 15px;
+}
+.quote .metadata li.nomargin {
+    margin: 0;
+}
+
+.quote .metadata li.date_submitted {
+    float: right;
+}
+
+.quote .content {
     font-size: 13px;
+    margin-top: 20px;
 }
