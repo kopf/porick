@@ -5,7 +5,8 @@
         <div class="well quote">
             <ul class="metadata">
                 <li><a href="${h.url(controller='browse', action='view_one', ref_id=quote.id)}">${quote.submitted}</a></li>
-                <li>Up ${quote.rating}</li>
+                <li>Score ${quote.rating}</li>
+                <li>Up ${quote.votes}</li>
                 <li>Down ${quote.votes - quote.rating}</li>
                 <li class="date_submitted nomargin">${quote.submitted}</li>
             </ul>
