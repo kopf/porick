@@ -25,6 +25,8 @@ def make_map(config):
     map.connect('/browse/tags', controller='browse', action='tags')
     map.connect('/browse/{ref_id}', controller='browse', action='view_one')
 
+    map.connect('/create', controller='create', action='main')
+
     map.connect('/', controller='home', action='main')
 
     return map

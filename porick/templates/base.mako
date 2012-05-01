@@ -72,7 +72,7 @@
                         <li><a href="${h.url(controller='browse', action='random')}">Random</a></li>
                         <li><a href="${h.url(controller='browse', action='tags')}">Tags</a></li>
                     </ul>
-                    <a href="#" class="btn btn-small btn-success">Submit</a>
+                    <a class="btn btn-small btn-success" href="${h.url(controller='create', action='main')}">Submit</a>
                     <ul class="nav pull-right">
                         <form class="navbar-search pull-left" action="">
                             <input type="text" class="search-query span2" placeholder="Search">

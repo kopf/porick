@@ -30,3 +30,7 @@ body {
     white-space: -o-pre-wrap;    /* Opera 7 */
     word-wrap: break-word;       /* Internet Explorer 5.5+ */
 }
+
+form.create_new_quote textarea {
+    width: 882px;
+}
