@@ -1,7 +1,7 @@
 <%inherit file="base.mako"/>
 
 <%def name="body_content()">
-    <form class="well create_new_quote">
+    <form class="well create_new_quote" action="${h.url(controller='create', action='main')}" method="post">
         <label>Quote text</label>
         <textarea class="input-xlarge" id="quote_body" rows=10 cols=80></textarea>
         <label>Additional information, if any:</label>
