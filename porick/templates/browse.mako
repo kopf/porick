@@ -16,6 +16,6 @@
 </%def>
 
 <%def name="insert_quote_body(quote)">
-<pre class="content">${quote.body.decode('latin1') | h}</pre>
+<pre class="content">${quote.body | h}</pre>
 </%def>
 
