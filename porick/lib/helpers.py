@@ -1,12 +1,8 @@
-"""Helper functions
-
-Consists of functions to typically be used within templates, but also
-available to Controllers. This module is available to templates as 'h'.
-"""
-# Import helpers as desired, or define your own, ie:
-#from webhelpers.html.tags import checkbox, password
 from webhelpers.html import literal
 from pylons import url
+
+from porick.model.model import Quote, Tag
+from porick.model.meta import Session as db
 
 def cgi_unescape(s):
     s = s.replace('&quot;', '"')
@@ -15,3 +11,11 @@ def cgi_unescape(s):
     s = s.replace('&amp;', '&')
     return s
 
+def create_or_get_tag(tagname):
+    tag = db.query(Tag).filter(Tag.tag == tagname).first()
+    if not tag:
+        tag = Tag()
+        tag.tag = tagname
+        db.add(tag)
+        db.commit()
+    return tag
