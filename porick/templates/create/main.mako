@@ -1,4 +1,4 @@
-<%inherit file="base.mako"/>
+<%inherit file="/base.mako"/>
 
 <%def name="body_content()">
     <form class="well create_new_quote" action="${h.url(controller='create', action='main')}" method="post">
