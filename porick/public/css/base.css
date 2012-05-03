@@ -2,10 +2,35 @@ body {
     height: 100%;
     padding-top: 45px;
 }
+.well {
+    padding: 10px 18px 18px 18px !important;
+}
+
+.quote .votes {
+    float: left;
+    display: block;
+    margin-left: -10px;
+}
+.votes .vote {
+    width: 15px;
+    margin-top: 2px;
+    height: 14px;
+}
+.votes .vote.up {
+}
+.votes .vote.down {
+}
+.votes .score {
+    text-align: center;
+    margin-top: 3px;
+    font-weight: bold;
+    font-size: 16px;
+    color: #C6C6C6;
+}
 
 .quote .metadata {
     margin-top: -10px;
-    margin-left: 0px;
+    margin-left: 15px;
 }
 
 .quote .metadata li {
@@ -23,7 +48,8 @@ body {
 
 .quote .content {
     font-size: 13px;
-    margin-top: 20px;
+    margin-top: 30px;
+    margin-left: 15px;
     white-space: pre-wrap;       /* css-3 */
     white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
     white-space: -pre-wrap;      /* Opera 4-6 */
