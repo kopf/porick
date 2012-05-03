@@ -43,7 +43,7 @@ body {
     margin: 0;
 }
 
-.quote .metadata li.date_submitted {
+.quote .metadata li.top_right {
     float: right;
 }
 
