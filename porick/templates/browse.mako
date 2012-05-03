@@ -22,12 +22,7 @@
     <pre>${quote.body | h}</pre>
     % if quote.notes:
         <hr>
-        <div class="extra_info notes">
-            <h6>Notes:</h6>
-            <span class="details">
-                ${quote.notes}
-            </span>
-        </div>
+        <h6>${quote.notes}</h6>
     % endif
 </div>
 % if quote.id in c.tags:
