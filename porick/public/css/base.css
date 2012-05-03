@@ -9,7 +9,7 @@ body {
 .quote .votes {
     float: left;
     display: block;
-    margin-left: -10px;
+    margin-left: -9px;
     margin-top: 18px;
 }
 .votes .vote {
@@ -31,7 +31,7 @@ body {
 
 .quote .metadata {
     margin-top: -10px;
-    margin-left: 15px;
+    margin-left: 12px;
 }
 
 .quote .metadata li {
@@ -48,15 +48,40 @@ body {
 }
 
 .quote .content {
-    font-size: 13px;
     margin-top: 30px;
     margin-left: 15px;
+
+    display: block;
+    padding: 8.5px;
+    margin: 30px 0 9px 12px;
+    background-color: whiteSmoke;
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+}
+.quote .content pre {
+    font-size: 13px;
     white-space: pre-wrap;       /* css-3 */
     white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
     white-space: -pre-wrap;      /* Opera 4-6 */
     white-space: -o-pre-wrap;    /* Opera 7 */
     word-wrap: break-word;       /* Internet Explorer 5.5+ */
+    word-break: none;
     min-height: 36px;
+
+    padding: 0 !important;
+    margin: 0 !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+}
+.quote .content hr {
+    margin: 15px 0px 5px 0px;
+}
+
+
+.quote .extra_info .details {
+    font: verdana 12px;
 }
 
 form.create_new_quote textarea {

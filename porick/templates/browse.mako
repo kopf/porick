@@ -21,6 +21,26 @@
 </%def>
 
 <%def name="insert_quote_body(quote)">
-<pre class="content">${quote.body | h}</pre>
+<div class="content">
+    <pre>${quote.body | h}</pre>
+##    % if quote.notes or quote.tags:
+        <hr>
+##        % if quote.tags:
+            <div class="extra_info tags">
+                <span class="label label-important">
+                    tag
+                </span>
+            </div>
+##        % endif
+        % if quote.notes:
+            <div class="extra_info notes">
+                <h6>Notes:</h6>
+                <span class="details">
+                    ${quote.notes}
+                </span>
+            </div>
+        % endif
+##    % endif
+</div>
 </%def>
 
