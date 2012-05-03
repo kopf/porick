@@ -30,12 +30,16 @@
         </div>
     % endif
 </div>
-##% if quote.tags:
+% if quote.id in c.tags:
     <div class="extra_info tags">
-        <span class="label label-important">
-            tag
-        </span>
+        % for tag in c.tags[quote.id]:
+            <a href="${h.url(controller='browse', action='tags', tag=tag)}">
+                <span class="label label-important">
+                    ${tag}
+                </span>
+            </a>
+        % endfor
     </div>
-##% endif
+% endif
 </%def>
 
