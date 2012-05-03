@@ -38,7 +38,17 @@ class BrowseController(BaseController):
         if tag is None:
             return 'list'
         else:
-            return 'all quotes with tag %s' % tag
+            tag_entry = db.query(Tag).filter(Tag.tag == tag).first()
+            if not tag_entry:
+                abort(404)
+            tag_id = tag_entry.id
+
+            mappings = db.query(QuoteToTag).filter(QuoteToTag.tag_id == tag_id).limit(QUOTES_PER_PAGE)
+            c.quotes = []
+            for mapping in mappings:
+               c.quotes.append(db.query(Quote).filter(Quote.id == mapping.quote_id).first())
+            c.tags = self._get_tags_for_quotes(c.quotes)
+            return render('/browse.mako')
 
     def view_one(self, ref_id):
         quote = db.query(Quote).filter(Quote.id == ref_id).first()
