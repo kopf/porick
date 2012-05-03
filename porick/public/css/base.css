@@ -79,9 +79,8 @@ body {
     margin: 15px 0px 5px 0px;
 }
 
-
-.quote .extra_info .details {
-    font: verdana 12px;
+.extra_info.tags {
+    margin-left: 12px;
 }
 
 form.create_new_quote textarea {
