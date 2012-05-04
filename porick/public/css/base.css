@@ -83,10 +83,14 @@ body {
 .extra_info.tags {
     margin-left: 12px;
 }
-.extra_info.tags span {
+.tags span {
     margin-right: 5px;
 }
-.extra_info.tags a {
+.tags.cloud span {
+    line-height: 30px;
+    vertical-align: middle;
+}
+.tags a {
     text-decoration: none !important;
 }
 

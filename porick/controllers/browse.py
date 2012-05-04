@@ -1,3 +1,4 @@
+import math
 import logging
 import sqlalchemy as sql
 
@@ -36,7 +37,13 @@ class BrowseController(BaseController):
 
     def tags(self, tag=None):
         if tag is None:
-            return 'list'
+            c.rainbow = False
+            if 'rainbow' in request.params:
+                c.rainbow = ['', 'label-success', 'label-warning', 
+                             'label-important', 'label-info', 'label-inverse']
+
+            c.tags = self._generate_tagcloud()
+            return render('/tagcloud.mako')
         else:
             tag_entry = db.query(Tag).filter(Tag.tag == tag).first()
             if not tag_entry:
@@ -68,4 +75,12 @@ class BrowseController(BaseController):
                 for tag in tags:
                     tag_text = db.query(Tag).filter(Tag.id == tag.tag_id).first().tag 
                     retval[quote.id].append(tag_text)
+        return retval
+
+    def _generate_tagcloud(self):
+        retval = {}
+        for tag in db.query(Tag).all():
+            count = db.query(QuoteToTag).filter(QuoteToTag.tag_id == tag.id).count()
+            retval[tag.tag] = count or 1
+            retval[tag.tag] = math.log(retval[tag.tag], math.e/2)
         return retval

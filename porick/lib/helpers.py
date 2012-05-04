@@ -1,3 +1,5 @@
+import random
+
 from webhelpers.html import literal
 from pylons import url
 
