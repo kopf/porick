@@ -15,11 +15,9 @@ function setupVoteClickHandlers() {
 }
 
 function castVote(quote_id, direction, button) {
-    var postdata = {'quote_id': quote_id, 'direction': direction};
     $.ajax({
-        url: '/api/vote',
-        type: 'POST',
-        data: postdata,
+        url: '/api/vote/' + direction + '/' + quote_id,
+        type: 'PUT',
         success: function(data, status, jqXHR){
             $(button).addClass(data['status']);
             incrementScoreCount(button, direction);

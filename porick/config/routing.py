@@ -28,7 +28,7 @@ def make_map(config):
 
     map.connect('/create', controller='create', action='main')
 
-    map.connect('/api/vote', controller='vote', action='vote')
+    map.connect('/api/vote/{direction}/{quote_id}', controller='vote', action='vote')
 
     map.connect('/', controller='home', action='main')
 

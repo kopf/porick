@@ -13,14 +13,9 @@ log = logging.getLogger(__name__)
 class VoteController(BaseController):
 
     @jsonify
-    def vote(self):
-        if request.environ['REQUEST_METHOD'] != 'POST':
+    def vote(self, direction, quote_id):
+        if request.environ['REQUEST_METHOD'] not in ['PUT', 'DELETE']:
             abort(405)
-        try:
-            quote_id = request.params['quote_id']
-            direction = request.params['direction']
-        except KeyError:
-            abort(400)
 
         quote = db.query(Quote).filter(Quote.id == quote_id).first()
         if not quote:
