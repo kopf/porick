@@ -60,7 +60,7 @@
 <%def name="head_title()">Porick</%def>
 
 <%def name="side_text()">
-    % if c.page == 'tags' and c.tag_filter:
+    % if c.page == 'tags' and 'tag_filter' in c.__dict__:
         tag: ${c.tag_filter}
     % else:
         ${c.page}
