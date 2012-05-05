@@ -18,21 +18,25 @@ class BrowseController(BaseController):
     def main(self):
         c.quotes = db.query(Quote).order_by(Quote.submitted.desc()).filter(Quote.approved == 1).limit(QUOTES_PER_PAGE)
         c.tags = self._get_tags_for_quotes(c.quotes)
+        c.page = 'browse'
         return render('/browse.mako')
 
     def best(self):
         c.quotes = db.query(Quote).order_by(Quote.score.desc()).filter(Quote.approved == 1).limit(QUOTES_PER_PAGE)
         c.tags = self._get_tags_for_quotes(c.quotes)
+        c.page = 'best'
         return render('/browse.mako')
 
     def worst(self):
         c.quotes = db.query(Quote).order_by(Quote.score).filter(Quote.approved == 1).limit(QUOTES_PER_PAGE)
         c.tags = self._get_tags_for_quotes(c.quotes)
+        c.page = 'worst'
         return render('/browse.mako')
 
     def random(self):
         c.quotes = [db.query(Quote).order_by(sql.func.rand()).filter(Quote.approved == 1).first()]
         c.tags = self._get_tags_for_quotes(c.quotes)
+        c.page = 'random'
         return render('/browse.mako')
 
     def tags(self, tag=None):
@@ -43,6 +47,7 @@ class BrowseController(BaseController):
                              'label-important', 'label-info', 'label-inverse']
 
             c.tags = self._generate_tagcloud()
+            c.page = 'tags'
             return render('/tagcloud.mako')
         else:
             tag_entry = db.query(Tag).filter(Tag.tag == tag).first()
@@ -55,6 +60,8 @@ class BrowseController(BaseController):
             for mapping in mappings:
                c.quotes.append(db.query(Quote).filter(Quote.id == mapping.quote_id).first())
             c.tags = self._get_tags_for_quotes(c.quotes)
+            c.page = 'tags'
+            c.tag_filter = tag
             return render('/browse.mako')
 
     def view_one(self, ref_id):
@@ -64,6 +71,7 @@ class BrowseController(BaseController):
         else:
             c.quotes = [quote]
             c.tags = self._get_tags_for_quotes(c.quotes)
+            c.page = 'browse'
             return render('/browse.mako')
 
     def _get_tags_for_quotes(self, quotes):

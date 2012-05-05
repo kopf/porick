@@ -2,6 +2,23 @@ body {
     height: 100%;
     padding-top: 45px;
 }
+.side_text {
+    color: #333;
+    opacity: 0.3;
+    writing-mode: tb-rl;
+    -webkit-transform: rotate(90deg);
+    -moz-transform: rotate(90deg);
+    -o-transform: rotate(90deg);
+    filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
+    white-space:nowrap;
+    display: block;
+    bottom: 0;
+    width: 0px;
+    height: 0px;
+    margin-left: 80px;
+    font-size: 96px;
+    font-weight: bold;
+}
 .well {
     padding: 10px 18px 18px 18px !important;
 }

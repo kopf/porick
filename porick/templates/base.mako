@@ -7,6 +7,9 @@
     </head>
     <body>
         ${self.body_header()}
+        <div class="side_text">
+            ${self.side_text()}
+        </div>
         <div class="container">
             ${self.body_content()}
             ${self.body_footer()}
@@ -56,7 +59,12 @@
 ## You should usually overwrite this one and " - Porick" will get appended
 <%def name="head_title()">Porick</%def>
 
-<%def name="sidebar_content()">
+<%def name="side_text()">
+    % if c.page == 'tags' and c.tag_filter:
+        tag: ${c.tag_filter}
+    % else:
+        ${c.page}
+    % endif
 </%def>
 
 <%def name="body_header()">
@@ -66,11 +74,11 @@
                 <a class="brand" href="/">Porick</a>
                 <div class="nav-collapse">
                     <ul class="nav">
-                        <li><a href="${h.url(controller='browse', action='main')}">Browse</a></li>
-                        <li><a href="${h.url(controller='browse', action='best')}">Best</a></li>
-                        <li><a href="${h.url(controller='browse', action='worst')}">Worst</a></li>
-                        <li><a href="${h.url(controller='browse', action='random')}">Random</a></li>
-                        <li><a href="${h.url(controller='browse', action='tags')}">Tags</a></li>
+                        <li class="${'active' if c.page == 'browse' else ''}"><a href="${h.url(controller='browse', action='main')}">Browse</a></li>
+                        <li class="${'active' if c.page == 'best' else ''}"><a href="${h.url(controller='browse', action='best')}">Best</a></li>
+                        <li class="${'active' if c.page == 'worst' else ''}"><a href="${h.url(controller='browse', action='worst')}">Worst</a></li>
+                        <li class="${'active' if c.page == 'random' else ''}"><a href="${h.url(controller='browse', action='random')}">Random</a></li>
+                        <li class="${'active' if c.page == 'tags' else ''}"><a href="${h.url(controller='browse', action='tags')}">Tags</a></li>
                     </ul>
                     <a class="btn btn-small btn-success" href="${h.url(controller='create', action='main')}">Submit</a>
                     <ul class="nav pull-right">
