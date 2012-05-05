@@ -10,7 +10,11 @@ function setupVoteClickHandlers() {
         } else {
             direction = 'up';
         }
-        castVote(quote_id, direction, this);
+        if($(this).attr('class').indexOf('voted') >= 0) {
+            annulVote(quote_id, direction, this);
+        } else {
+            castVote(quote_id, direction, this);
+        }
     });
 }
 
@@ -19,27 +23,49 @@ function castVote(quote_id, direction, button) {
         url: '/api/vote/' + direction + '/' + quote_id,
         type: 'PUT',
         success: function(data, status, jqXHR){
-            $(button).addClass(data['status']);
-            incrementScoreCount(button, direction);
+            $(button).addClass(data['status'] + ' voted');
+            changeScoreCount(button, direction, false);
         }
     });
 }
 
-function incrementScoreCount(button, direction) {
+function annulVote(quote_id, direction, button) {
+    $.ajax({
+        url: '/api/vote/' + direction + '/' + quote_id,
+        type: 'DELETE',
+        success: function(data, status, jqXHR){
+            $(button).removeClass('success error voted');
+            changeScoreCount(button, direction, true);
+        }
+    });
+}
+
+function changeScoreCount(button, direction, cancelVote) {
     if(direction == 'up') {
         var scorefield = $(button).next();
         var score = parseInt(scorefield.html());
-        scorefield.html(score + 1);
+        if(cancelVote === true) {
+            scorefield.html(score - 1);
+            var upvotes = parseInt($(button).attr('title')) - 1 + ' upvotes';
+        } else {
+            scorefield.html(score + 1);
+            var upvotes = parseInt($(button).attr('title')) + 1 + ' upvotes';
+        }
 
-        var upvotes = parseInt($(button).attr('title')) + 1 + ' upvotes';
         $(button).attr('title', upvotes);
     } else {
         var scorefield = $(button).prev();
         var score = parseInt(scorefield.html());
-        scorefield.html(score - 1);
+        if(cancelVote === true) {
+            scorefield.html(score + 1);
+            var downvotes = parseInt($(button).attr('title')) - 1 + ' downvotes';
+        } else {
+            scorefield.html(score - 1);
+            var downvotes = parseInt($(button).attr('title')) + 1 + ' downvotes';
+        }
 
-        var downvotes = parseInt($(button).attr('title')) + 1 + ' downvotes';
         $(button).attr('title', downvotes);
     }
 
 }
+
