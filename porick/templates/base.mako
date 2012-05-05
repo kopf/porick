@@ -5,7 +5,7 @@
     <head>
         ${self.head()}
     </head>
-    <body>
+    <body ${self.extra_body_parameters()}>
         ${self.body_header()}
         <div class="side_text">
             ${self.side_text()}
@@ -17,6 +17,9 @@
         ${self.body_js()}
     </body>
 </html>
+
+<%def name="extra_body_parameters()">
+</%def>
 
 <%def name="head()">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />

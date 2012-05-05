@@ -22,7 +22,7 @@ class VoteController(BaseController):
         except KeyError:
             abort(400)
 
-        quote = db.query(Quote).filter(Quote.id == quote_id)
+        quote = db.query(Quote).filter(Quote.id == quote_id).first()
         if not quote:
             return {'msg': 'Invalid quote ID',
                     'status': 'error'}
@@ -36,5 +36,6 @@ class VoteController(BaseController):
                     'status': 'error'}
 
         quote.votes += 1
+        db.commit()
         return {'status': 'success',
                 'msg': 'Vote cast!'}
