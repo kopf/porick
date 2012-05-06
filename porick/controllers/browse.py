@@ -47,7 +47,7 @@ class BrowseController(BaseController):
             return render('/tagcloud.mako')
         else:
             tag_obj = db.query(Tag).filter(Tag.tag == tag).first()
-            c.quotes = db.query(Quote).filter(Quote.tags.contains(tag_obj)).all()
+            c.quotes = db.query(Quote).filter(Quote.tags.contains(tag_obj)).limit(QUOTES_PER_PAGE)
             c.page = 'tags'
             c.tag_filter = tag
             return render('/browse.mako')
