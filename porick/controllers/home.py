@@ -11,6 +11,7 @@ log = logging.getLogger(__name__)
 class HomeController(BaseController):
 
     def main(self):
+        c.page = 'home'
         c.site_name = SITE_NAME
         c.welcome_text = WELCOME_TEXT
         c.button_text = HOMEPAGE_BUTTON_TEXT

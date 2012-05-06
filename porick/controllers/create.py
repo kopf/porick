@@ -13,6 +13,7 @@ log = logging.getLogger(__name__)
 class CreateController(BaseController):
 
     def main(self):
+        c.page = 'create'
         if request.environ['REQUEST_METHOD'] == 'GET':
             return render('/create/main.mako')
         elif request.environ['REQUEST_METHOD'] == 'POST':

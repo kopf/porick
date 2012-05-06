@@ -1,11 +1,61 @@
+html {
+    overflow-y: scroll;
+}
 body {
     height: 100%;
     padding-top: 45px;
 }
+.side_text {
+    color: #333;
+    opacity: 0.3;
+    writing-mode: tb-rl;
+    -webkit-transform: rotate(90deg);
+    -moz-transform: rotate(90deg);
+    -o-transform: rotate(90deg);
+    filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
+    white-space:nowrap;
+    display: block;
+    bottom: 0;
+    width: 0px;
+    height: 0px;
+    margin-left: 80px;
+    font-size: 96px;
+    font-weight: bold;
+}
+.well {
+    padding: 10px 18px 18px 18px !important;
+}
+
+.quote .votes {
+    float: left;
+    display: block;
+    margin-left: -9px;
+    margin-top: 18px;
+}
+.votes .vote {
+    width: 15px;
+    margin-top: 2px;
+    height: 14px;
+    border-radius: 5px;
+}
+.votes .vote.success {
+    background-color: green;
+}
+.votes .vote.error {
+    background-color: red;
+}
+.votes .score {
+    text-align: center;
+    margin-top: 3px;
+    font-weight: bold;
+    font-size: 16px;
+    color: #C6C6C6;
+    margin-left: -3px;
+}
 
 .quote .metadata {
     margin-top: -10px;
-    margin-left: 0px;
+    margin-left: 12px;
 }
 
 .quote .metadata li {
@@ -17,18 +67,54 @@ body {
     margin: 0;
 }
 
-.quote .metadata li.date_submitted {
+.quote .metadata li.top_right {
     float: right;
 }
 
 .quote .content {
+    margin-top: 30px;
+    margin-left: 15px;
+    min-height: 36px;
+
+    display: block;
+    padding: 8.5px;
+    margin: 30px 0 9px 12px;
+    background-color: whiteSmoke;
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+}
+.quote .content pre {
     font-size: 13px;
-    margin-top: 20px;
     white-space: pre-wrap;       /* css-3 */
     white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
     white-space: -pre-wrap;      /* Opera 4-6 */
     white-space: -o-pre-wrap;    /* Opera 7 */
     word-wrap: break-word;       /* Internet Explorer 5.5+ */
+    word-break: normal;
+
+    padding: 0 !important;
+    margin: 0 !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+}
+.quote .content hr {
+    margin: 15px 0px 5px 0px;
+}
+
+.extra_info.tags {
+    margin-left: 12px;
+}
+.tags span {
+    margin-right: 5px;
+}
+.tags.cloud span {
+    line-height: 30px;
+    vertical-align: middle;
+}
+.tags a {
+    text-decoration: none !important;
 }
 
 form.create_new_quote textarea {

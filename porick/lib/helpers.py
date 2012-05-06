@@ -1,3 +1,5 @@
+import random
+
 from webhelpers.html import literal
 from pylons import url
 
@@ -19,3 +21,13 @@ def create_or_get_tag(tagname):
         db.add(tag)
         db.commit()
     return tag
+
+def get_score_mouseover(quote, direction):
+    if direction == 'up':
+        count = quote.votes
+    else:
+        count = quote.votes - quote.rating
+    retval = '%s %svote' % (count, direction)
+    if count != 1:
+        retval += 's'
+    return retval

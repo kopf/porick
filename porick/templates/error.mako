@@ -11,3 +11,7 @@
         <h1>${c.message}</h1>
     </div>
 </%def>
+
+<%def name="side_text()">
+    oh shit
+</%def>

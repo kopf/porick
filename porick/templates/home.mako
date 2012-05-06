@@ -11,3 +11,6 @@
         </p>
     </div>
 </%def>
+
+<%def name="side_text()">
+</%def>

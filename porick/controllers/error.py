@@ -30,4 +30,5 @@ class ErrorController(BaseController):
             raise Exception('No status code was found')
         c.code = code
         c.message = content
+        c.page = None
         return render('/error.mako')
