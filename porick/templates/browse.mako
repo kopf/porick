@@ -35,12 +35,12 @@
         <h6>${quote.notes}</h6>
     % endif
 </div>
-% if quote.id in c.tags:
+% if quote.tags:
     <div class="extra_info tags">
-        % for tag in c.tags[quote.id]:
-            <a href="${h.url(controller='browse', action='tags', tag=tag)}">
+        % for tag in quote.tags:
+            <a href="${h.url(controller='browse', action='tags', tag=tag.tag)}">
                 <span class="label label-important">
-                    ${tag}
+                    ${tag.tag}
                 </span>
             </a>
         % endfor

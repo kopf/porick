@@ -11,6 +11,14 @@ def now():
     return datetime.datetime.now()
 
 
+class Tag(Base):
+    __tablename__  = TABLES['tags']
+    __table_args__ = {'mysql_engine': 'InnoDB',
+                      'sqlite_autoincrement': True}
+    id = Column(Integer, nullable=False, primary_key=True)
+    tag = Column(String(255), nullable=False, primary_key=True)
+
+
 QuoteToTag = Table(TABLES['quote_to_tag'], Base.metadata,
     Column('quote_id', Integer, ForeignKey(TABLES['quotes'] + '.id')),
     Column('tag_id', Integer, ForeignKey(TABLES['tags'] + '.id'))
@@ -30,22 +38,7 @@ class Quote(Base):
     approved     = Column(Integer, nullable=False, default=0)
     flagged      = Column(Integer, nullable=False, default=0)
     score        = Column(DOUBLE(unsigned=True), nullable=False, default=1)
-    tags         = relationship("Tags", secondary=QuoteToTag)
-
-
-class Tag(Base):
-    __tablename__  = TABLES['tags']
-    __table_args__ = {'mysql_engine': 'InnoDB',
-                      'sqlite_autoincrement': True}
-    id = Column(Integer, nullable=False, primary_key=True)
-    tag = Column(String(255), nullable=False, primary_key=True)
-
-
-#class QuoteToTag(Base):
-#    __tablename__  = TABLES['quote_to_tag']
-#    __table_args__ = {'mysql_engine': 'InnoDB'}
-#    quote_id = Column(Integer, ForeignKey(TABLES['quotes'] + '.id'), primary_key=True)
-#    tag_id   = Column(Integer, ForeignKey(TABLES['tags'] + '.id'), primary_key=True)
+    tags         = relationship("Tag", secondary=QuoteToTag)
 
 
 class Account(Base):
