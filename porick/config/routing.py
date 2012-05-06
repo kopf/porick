@@ -26,7 +26,8 @@ def make_map(config):
     map.connect('/browse/tags/{tag}', controller='browse', action='tags')
     map.connect('/browse/{ref_id}', controller='browse', action='view_one')
 
-    map.connect('/create', controller='create', action='main')
+    map.connect('/create', controller='create', action='quote')
+    map.connect('/create/user', controller='create', action='user')
 
     map.connect('/api/vote/{direction}/{quote_id}', controller='vote', action='vote')
 

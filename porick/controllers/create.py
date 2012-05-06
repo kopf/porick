@@ -12,36 +12,28 @@ log = logging.getLogger(__name__)
 
 class CreateController(BaseController):
 
-    def main(self):
+    def quote(self):
         c.page = 'create'
         if request.environ['REQUEST_METHOD'] == 'GET':
-            return render('/create/main.mako')
+            return render('/create/quote/form.mako')
         elif request.environ['REQUEST_METHOD'] == 'POST':
             quote_body = request.params['quote_body']
             if not quote_body:
                 abort(400)
             tags = request.params['tags'].split(' ')
             notes = request.params['notes'] or u''
-            tag_ids = []
-            for tag in tags:
-                newtag = h.create_or_get_tag(tag)
-                tag_ids.append(newtag.id)
             newquote = Quote()
             newquote.body = quote_body
             newquote.notes = notes
+            newquote.tags = [h.create_or_get_tag(tag) for tag in tags]
             
             db.add(newquote)
             db.commit()
 
-            for tag_id in tag_ids:
-                mapping = QuoteToTag()
-                mapping.quote_id = newquote.id
-                mapping.tag_id = tag_id
-                db.add(mapping)
-
-            db.commit()
-            return render('/create/success.mako')
+            return render('/create/quote/success.mako')
 
         else:
             abort(400)
 
+    def user(self):
+        return render('/create/user/form.mako')

@@ -83,7 +83,7 @@
                         <li class="${'active' if c.page == 'random' else ''}"><a href="${h.url(controller='browse', action='random')}">Random</a></li>
                         <li class="${'active' if c.page == 'tags' else ''}"><a href="${h.url(controller='browse', action='tags')}">Tags</a></li>
                     </ul>
-                    <a class="btn btn-small btn-success" href="${h.url(controller='create', action='main')}">Submit</a>
+                    <a class="btn btn-small btn-success" href="${h.url(controller='create', action='quote')}">Submit</a>
                     <ul class="nav pull-right">
                         <form class="navbar-search pull-left" action="">
                             <input type="text" class="search-query span2" placeholder="Search">
@@ -111,3 +111,21 @@
 
 <%def name="body_footer()">
 </%def>
+
+
+
+## some libs:
+## (would be nice to have these in a helpers.mako, but the <%inherit/> seems to
+## override any <%namespace/> imports
+<%def name="display_hero_unit(heading, subheading, linktext, url)">
+    <div class="hero-unit">
+        <h1>${heading}</h1>
+        <p>${subheading}</p>
+        <p>
+            <a class="btn btn-primary btn-large" href="${url}">
+                ${linktext} 
+            </a>
+        </p>
+    </div>
+</%def>
+
