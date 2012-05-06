@@ -25,6 +25,16 @@ QuoteToTag = Table(TABLES['quote_to_tag'], Base.metadata,
 )
 
 
+class User(Base):
+    __tablename__  = TABLES['users']
+    __table_args__ = {'mysql_engine': 'InnoDB',
+                      'sqlite_autoincrement': True}
+    id = Column(Integer, nullable=False, primary_key=True)
+    username = Column(String(32), nullable=False, unique=True)
+    password = Column(String(32), nullable=False)
+    level = Column(Integer, nullable=False, default=0)
+
+
 class Quote(Base):
     __tablename__  = TABLES['quotes']
     __table_args__ = {'mysql_engine': 'InnoDB',
@@ -39,15 +49,5 @@ class Quote(Base):
     flagged      = Column(Integer, nullable=False, default=0)
     score        = Column(DOUBLE(unsigned=True), nullable=False, default=1)
     tags         = relationship("Tag", secondary=QuoteToTag)
-
-
-class User(Base):
-    __tablename__  = TABLES['users']
-    __table_args__ = {'mysql_engine': 'InnoDB',
-                      'sqlite_autoincrement': True}
-    id = Column(Integer, nullable=False, primary_key=True)
-    username = Column(String(32), nullable=False, unique=True)
-    password = Column(String(32), nullable=False)
-    level = Column(Integer, nullable=False, default=0)
 
 
