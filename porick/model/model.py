@@ -41,8 +41,8 @@ class Quote(Base):
     tags         = relationship("Tag", secondary=QuoteToTag)
 
 
-class Account(Base):
-    __tablename__  = TABLES['accounts']
+class User(Base):
+    __tablename__  = TABLES['users']
     __table_args__ = {'mysql_engine': 'InnoDB',
                       'sqlite_autoincrement': True}
     id = Column(Integer, nullable=False, primary_key=True)
@@ -50,12 +50,4 @@ class Account(Base):
     password = Column(String(32), nullable=False)
     level = Column(Integer, nullable=False, default=0)
 
-
-class Session(Base):
-    __tablename__  = TABLES['sessions']
-    __table_args__ = {'mysql_engine': 'InnoDB',
-                      'sqlite_autoincrement': True}
-    id = Column(Integer, nullable=False, primary_key=True)
-    expires = Column(Integer, nullable=False, primary_key=True, default=0)
-    data = Column(Text, nullable=False) 
 
