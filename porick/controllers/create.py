@@ -5,8 +5,8 @@ from pylons.controllers.util import abort, redirect
 
 import porick.lib.helpers as h
 from porick.lib.base import BaseController, render
-from porick.model.model import Quote, QuoteToTag
-from porick.model.meta import Session as db
+from porick.lib.create import create_quote, create_user
+
 
 log = logging.getLogger(__name__)
 
@@ -20,18 +20,14 @@ class CreateController(BaseController):
             quote_body = request.params['quote_body']
             if not quote_body:
                 abort(400)
-            tags = request.params['tags'].split(' ')
             notes = request.params['notes'] or u''
-            newquote = Quote()
-            newquote.body = quote_body
-            newquote.notes = notes
-            newquote.tags = [h.create_or_get_tag(tag) for tag in tags]
+            tags = request.params['tags'].split(' ')
             
-            db.add(newquote)
-            db.commit()
-
-            return render('/create/quote/success.mako')
-
+            result = create_quote(quote_body, notes, tags)
+            if result:
+                return render('/create/quote/success.mako')
+            else:
+                abort(500)
         else:
             abort(400)
 
@@ -40,4 +36,14 @@ class CreateController(BaseController):
         if request.environ['REQUEST_METHOD'] == 'GET':
             return render('/create/user/form.mako')
         elif request.environ['REQUEST_METHOD'] == 'POST':
-            abort(404)
+            username = request.params['username']
+            password = request.params['password']
+            email = request.params['email']
+            if not username or password or email:
+                abort(400)
+            try:
+                create_user(username, password, email)
+                return render('/create/user/success.mako')
+            except NameError, e:
+                c.error = e.__str__
+                return render('/create/user/error.mako')
