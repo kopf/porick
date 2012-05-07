@@ -37,4 +37,7 @@ class CreateController(BaseController):
 
     def user(self):
         c.page = "sign up"
-        return render('/create/user/form.mako')
+        if request.environ['REQUEST_METHOD'] == 'GET':
+            return render('/create/user/form.mako')
+        elif request.environ['REQUEST_METHOD'] == 'POST':
+            abort(404)
