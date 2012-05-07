@@ -112,20 +112,3 @@
 <%def name="body_footer()">
 </%def>
 
-
-
-## some libs:
-## (would be nice to have these in a helpers.mako, but the <%inherit/> seems to
-## override any <%namespace/> imports
-<%def name="display_hero_unit(heading, subheading, linktext, url)">
-    <div class="hero-unit">
-        <h1>${heading}</h1>
-        <p>${subheading}</p>
-        <p>
-            <a class="btn btn-primary btn-large" href="${url}">
-                ${linktext} 
-            </a>
-        </p>
-    </div>
-</%def>
-
