@@ -32,4 +32,6 @@ def make_map(config):
 
     map.connect('/', controller='home', action='main')
 
+    map.redirect('/*(url)/', '/{url}', _redirect_code='301 Moved Permanently')
+
     return map
