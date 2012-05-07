@@ -42,7 +42,8 @@ class CreateController(BaseController):
             if not username or password or email:
                 abort(400)
             try:
-                result = create_user(username, password, email)
+                create_user(username, password, email)
+                return render('/create/user/success.mako')
             except NameError, e:
                 c.error = e.__str__
                 return render('/create/user/error.mako')
