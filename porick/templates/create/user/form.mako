@@ -1,17 +1,30 @@
 <%inherit file="/base.mako"/>
 
 <%def name="body_content()">
-    <form class="well create_new_quote" action="${h.url(controller='create', action='main')}" method="post">
-        <label>Quote text</label>
-        <textarea class="input-xlarge" id="quote_body" name="quote_body" rows=10 cols=80></textarea>
-        <label>Additional information, if any:</label>
-        <textarea class="input-xlarge" id="notes" name="notes" rows=5 cols=80></textarea>
-        <input type="text" class="input-xlarge" id="tags" name="tags" placeholder="Enter some tags here...">
+    <form class="well create_new_quote" action="${h.url(controller='create', action='user')}" method="post">
+        <label class="control-label" for="username">Username:</label>
+        <div class="controls">
+            <input type="text" class="input-xlarge" id="username">
+        </div>
+
+        <label class="control-label" for="password">Password:</label>
+        <div class="controls">
+            <input type="text" class="input-xlarge" id="password">
+        </div>
+
+        <label class="control-label" for="password_confirm">Password (confirm):</label>
+        <div class="controls">
+            <input type="text" class="input-xlarge" id="password_confirm">
+        </div>
+
+        <label class="control-label" for="email">Email address:</label>
+        <div class="controls">
+            <input type="text" class="input-xlarge" id="email">
+        </div>
+
         <div>
-            <button type="submit" class="btn btn-primary">Submit</button>
+            <button type="submit" class="btn btn-primary">Sign up!</button>
         </div>
     </form>
 </%def>
 
-<%def name="side_text()">
-</%def>

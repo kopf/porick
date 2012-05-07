@@ -33,7 +33,7 @@ class User(Base):
     username = Column(String(32), nullable=False, unique=True)
     password = Column(String(32), nullable=False)
     level = Column(Integer, nullable=False, default=0)
-
+    email = Column(String, nullable=False)
 
 class Quote(Base):
     __tablename__  = TABLES['quotes']

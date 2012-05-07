@@ -13,7 +13,7 @@ log = logging.getLogger(__name__)
 class CreateController(BaseController):
 
     def quote(self):
-        c.page = 'create'
+        c.page = 'new quote'
         if request.environ['REQUEST_METHOD'] == 'GET':
             return render('/create/quote/form.mako')
         elif request.environ['REQUEST_METHOD'] == 'POST':
@@ -36,4 +36,5 @@ class CreateController(BaseController):
             abort(400)
 
     def user(self):
+        c.page = "sign up"
         return render('/create/user/form.mako')

@@ -13,5 +13,3 @@
     </form>
 </%def>
 
-<%def name="side_text()">
-</%def>
