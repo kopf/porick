@@ -39,7 +39,7 @@ class CreateController(BaseController):
             username = request.params['username']
             password = request.params['password']
             email = request.params['email']
-            if not username or password or email:
+            if not (username and password and email):
                 abort(400)
             try:
                 create_user(username, password, email)
