@@ -19,11 +19,11 @@ class CreateController(BaseController):
         if request.environ['REQUEST_METHOD'] == 'GET':
             return render('/create/form.mako')
         elif request.environ['REQUEST_METHOD'] == 'POST':
-            quote_body = request.params['quote_body']
+            quote_body = request.params.get('quote_body', '')
             if not quote_body:
                 abort(400)
-            notes = request.params['notes'] or u''
-            tags = request.params['tags'].split(' ')
+            notes = request.params.get('notes', '')
+            tags = request.params.get('tags', '').split(' ')
             
             result = create_quote(quote_body, notes, tags)
             if result:

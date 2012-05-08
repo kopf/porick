@@ -35,6 +35,19 @@ class BrowseController(BaseController):
         c.page = 'random'
         return render(self._get_template_name())
 
+    def search(self):
+        if request.environ['REQUEST_METHOD'] != 'POST':
+            # TOTO:
+            # return an advanced search page, but in the meantime:
+            abort(405)
+        else:
+            keyword = request.params.get('keyword', '')
+            query = '%' + keyword + '%'
+            c.quotes = db.query(Quote).order_by(Quote.submitted.desc()).filter(Quote.body.like(query)).limit(QUOTES_PER_PAGE)
+            c.page = 'search: %s' % keyword
+            return render(self._get_template_name())
+        
+
     def tags(self, tag=None):
         c.page = 'tags'
         if tag is None:
