@@ -46,10 +46,14 @@ function changeScoreCount(button, direction, cancelVote) {
         var score = parseInt(scorefield.html());
         if(cancelVote === true) {
             scorefield.html(score - 1);
-            var upvotes = parseInt($(button).attr('title')) - 1 + ' upvotes';
+            var upvotes = parseInt($(button).attr('title')) - 1 + ' upvote';
         } else {
             scorefield.html(score + 1);
-            var upvotes = parseInt($(button).attr('title')) + 1 + ' upvotes';
+            var upvotes = parseInt($(button).attr('title')) + 1 + ' upvote';
+        }
+
+        if(parseInt(upvotes) !== 1) {
+            upvotes += 's';
         }
 
         $(button).attr('title', upvotes);
@@ -58,10 +62,14 @@ function changeScoreCount(button, direction, cancelVote) {
         var score = parseInt(scorefield.html());
         if(cancelVote === true) {
             scorefield.html(score + 1);
-            var downvotes = parseInt($(button).attr('title')) - 1 + ' downvotes';
+            var downvotes = parseInt($(button).attr('title')) - 1 + ' downvote';
         } else {
             scorefield.html(score - 1);
-            var downvotes = parseInt($(button).attr('title')) + 1 + ' downvotes';
+            var downvotes = parseInt($(button).attr('title')) + 1 + ' downvote';
+        }
+
+        if(parseInt(downvotes) !== 1) {
+            downvotes += 's';
         }
 
         $(button).attr('title', downvotes);
