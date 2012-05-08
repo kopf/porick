@@ -2,6 +2,7 @@ import random
 
 from webhelpers.html import literal
 from pylons import url
+from pylons import tmpl_context as c
 
 from porick.model.model import Quote, Tag
 from porick.model.meta import Session as db
@@ -31,3 +32,6 @@ def get_score_mouseover(quote, direction):
     if count != 1:
         retval += 's'
     return retval
+
+def add_message(msg, level):
+    c.messages.append({'msg': msg, 'level': level})
