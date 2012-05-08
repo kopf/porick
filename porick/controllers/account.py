@@ -51,6 +51,7 @@ class AccountController(BaseController):
                 return render('/login.mako')
 
     def logout(self):
+        c.page = 'logout'
         clear_cookies()
         h.add_message('Logged out successfully!', 'info')
-        return render('/base.mako')
+        return render('/logout.mako')
