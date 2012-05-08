@@ -95,8 +95,8 @@
                     </ul>
                     <a class="btn btn-small btn-success" href="${h.url(controller='create', action='quote')}">Submit</a>
                     <ul class="nav pull-right">
-                        <form class="navbar-search pull-left" action="">
-                            <input type="text" class="search-query span2" placeholder="Search">
+                        <form class="navbar-search pull-left" action="${h.url(controller='browse', action='search')}" method="post">
+                            <input type="text" class="search-query span2" placeholder="Search" name="keyword">
                         </form>
                         <li class="divider-vertical"></li>
                         ${self.account_dropdown()}
@@ -112,8 +112,7 @@
         <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">${c.username} <b class="caret"></b></a>
             <ul class="dropdown-menu">
-                <li><a href="#">blah</a></li>
-                <li><a href="#">Another action</a></li>
+                <li><a href="#">Preferences</a></li>
                 <li class="divider"></li>
                 <li><a href="${h.url(controller='account', action='logout')}">Log out</a></li>
             </ul>
