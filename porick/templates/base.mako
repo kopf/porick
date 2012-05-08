@@ -11,6 +11,13 @@
             ${self.side_text()}
         </div>
         <div class="container">
+            % if c.messages:
+                % for message in c.messages:
+                    <div class="alert alert-${message.get('level', 'error')}">
+                        ${message.get('msg', '')}
+                    </div>
+                % endfor
+            % endif
             ${self.body_content()}
             ${self.body_footer()}
         </div>
@@ -89,21 +96,28 @@
                             <input type="text" class="search-query span2" placeholder="Search">
                         </form>
                         <li class="divider-vertical"></li>
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Sign in <b class="caret"></b></a>
-                            <ul class="dropdown-menu">
-                                <li><a href="#">Action</a></li>
-                                <li><a href="#">Another action</a></li>
-                                <li><a href="#">Something else here</a></li>
-                                <li class="divider"></li>
-                                <li><a href="#">Separated link</a></li>
-                            </ul>
-                        </li>
+                        ${self.account_dropdown()}
                     </ul>
                 </div>
             </div>
         </div>
     </div>
+</%def>
+
+<%def name="account_dropdown()">
+    % if c.logged_in:
+        <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">${c.username} <b class="caret"></b></a>
+            <ul class="dropdown-menu">
+                <li><a href="#">blah</a></li>
+                <li><a href="#">Another action</a></li>
+                <li class="divider"></li>
+                <li><a href="${h.url(controller='account', action='logout')}">Log out</a></li>
+            </ul>
+        </li>
+    % else:
+        <li><a href="${h.url(controller='account', action='login')}">Log in</a></li>
+    % endif
 </%def>
 
 <%def name="body_content()">

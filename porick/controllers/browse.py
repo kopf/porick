@@ -36,6 +36,7 @@ class BrowseController(BaseController):
         return render('/browse.mako')
 
     def tags(self, tag=None):
+        c.page = 'tags'
         if tag is None:
             c.rainbow = False
             if 'rainbow' in request.params:
@@ -43,12 +44,10 @@ class BrowseController(BaseController):
                              'label-important', 'label-info', 'label-inverse']
 
             c.tags = self._generate_tagcloud()
-            c.page = 'tags'
             return render('/tagcloud.mako')
         else:
             tag_obj = db.query(Tag).filter(Tag.tag == tag).first()
             c.quotes = db.query(Quote).filter(Quote.tags.contains(tag_obj)).limit(QUOTES_PER_PAGE)
-            c.page = 'tags'
             c.tag_filter = tag
             return render('/browse.mako')
 

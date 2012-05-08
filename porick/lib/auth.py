@@ -1,7 +1,7 @@
 import bcrypt
 import hashlib
 
-from pylons import response
+from pylons import response, request
 
 from porick.model.model import User
 from porick.model.meta import Session as db
@@ -19,7 +19,12 @@ def authenticate(username, password):
 
 
 def set_auth_cookie(user):
-    value = hashlib.md5('%s:%s:%s' % (COOKIE_SECRET,
-                                      user.username,
-                                      user.level)).hexdigest()
-    response.set_cookie('auth', value, max_age=3600) 
+    auth = hashlib.md5('%s:%s' % (COOKIE_SECRET,
+                                  user.username)).hexdigest()
+    response.set_cookie('auth', auth, max_age=3600) 
+    response.set_cookie('username', user.username, max_age=3600)
+
+
+def clear_cookies():
+    request.cookies.pop('auth', None)
+    request.cookies.pop('username', None)

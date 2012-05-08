@@ -3,7 +3,7 @@ import logging
 from pylons import request, response, session, tmpl_context as c, url
 from pylons.controllers.util import abort, redirect
 
-from porick.lib.auth import authenticate
+from porick.lib.auth import authenticate, clear_cookies
 from porick.lib.base import BaseController, render
 from porick.lib.create import create_user
 
@@ -25,8 +25,9 @@ class AccountController(BaseController):
                 create_user(username, password, email)
                 return render('/signup/success.mako')
             except NameError, e:
-                c.error = e.__str__
-                return render('/signup/error.mako')
+                c.messages.append({'msg': e.__str__,
+                                   'level': 'error'})
+                return render('/signup/form.mako')
 
     def login(self):
         c.page = 'login'
@@ -39,5 +40,10 @@ class AccountController(BaseController):
             if success:
                 redirect(url(controller='home', action='main'))
             else:
-                c.error = 'Incorrect username / password'
-                return render('/login/error.mako')
+                c.messages.append({'msg': 'Incorrect username / password',
+                                   'level': 'error'})
+                return render('/login/form.mako')
+
+    def logout(self):
+        clear_cookies()
+        redirect(url(controller='home', action='main'))
