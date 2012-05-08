@@ -37,6 +37,7 @@ body {
     margin-top: 2px;
     height: 14px;
     border-radius: 5px;
+    cursor: pointer;
 }
 .votes .vote.success {
     background-color: green;
