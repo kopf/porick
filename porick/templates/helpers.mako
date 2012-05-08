@@ -2,10 +2,12 @@
     <div class="hero-unit">
         <h1>${heading}</h1>
         <p>${subheading}</p>
-        <p>
-            <a class="btn btn-primary btn-large" href="${url}">
-                ${linktext}
-            </a>
-        </p>
+        % if linktext:
+            <p>
+                <a class="btn btn-primary btn-large" href="${url}">
+                    ${linktext}
+                </a>
+            </p>
+        % endif
     </div>
 </%def>

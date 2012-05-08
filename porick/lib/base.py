@@ -26,6 +26,7 @@ class BaseController(WSGIController):
 
     def __before__(self, action, **params):
         c.logged_in = False
+        c.username = ''
         c.page = ''
         c.messages = []
 

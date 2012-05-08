@@ -46,4 +46,4 @@ class AccountController(BaseController):
 
     def logout(self):
         clear_cookies()
-        redirect(url(controller='home', action='main'))
+        return render('/login/logout.mako')

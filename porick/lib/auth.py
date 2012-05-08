@@ -26,5 +26,5 @@ def set_auth_cookie(user):
 
 
 def clear_cookies():
-    request.cookies.pop('auth', None)
-    request.cookies.pop('username', None)
+    response.delete_cookie('auth')
+    response.delete_cookie('username')

@@ -8,6 +8,5 @@
                         h.url(controller='browse', action='main'))}
 </%def>
 
-
 <%def name="side_text()">
 </%def>
