@@ -33,7 +33,7 @@ class AccountController(BaseController):
         c.page = 'login'
         c.redirect_url = request.GET.get('redirect_url', '')
         if request.environ['REQUEST_METHOD'] == 'GET':
-            if c.redirect_url:
+            if request.GET.get('warn', ''):
                 h.add_message('You need to be logged in to perform that action.',
                               'info')
             return render('/login.mako')

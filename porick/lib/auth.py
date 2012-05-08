@@ -23,7 +23,7 @@ def authenticate(username, password):
 
 def authorize():
     if not c.logged_in:
-        redirect(url(controller='account', action='login', redirect_url=url.current()))
+        redirect(url(controller='account', action='login', redirect_url=url.current(), warn='true'))
 
 
 def set_auth_cookie(user):
