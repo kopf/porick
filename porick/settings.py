@@ -8,5 +8,6 @@ TABLES = {
     'quote_to_tag': 'quote_to_tag',
     'users': 'users'
 }
-# CHANGE THIS TO YOUR OWN UNIQUE, RANDOM STRING:
-SECRET = 'ULJc5ydo0tX2vEBfXik28LvEjff7x6tQ'
+# CHANGE THESE TO YOUR OWN UNIQUE, RANDOM STRING:
+COOKIE_SECRET = 'ULJc5ydo0tX2vEBfXik28LvEjff7x6tQ'
+PASSWORD_SALT = '$2a$12$cyjVSDp3KjAXKkgR4dTl..'

@@ -4,7 +4,7 @@ from sqlalchemy import or_
 import porick.lib.helpers as h
 from porick.model.meta import Session as db
 from porick.model.model import Quote, User
-
+from porick.settings import PASSWORD_SALT
 
 def create_quote(quote_body, notes, tags):
     try:
@@ -30,7 +30,7 @@ def create_user(username, password, email):
         elif conflicts.username == username:
             raise NameError('Sorry! That username is already taken.')
     
-    hashed_pass = bcrypt.hashpw(password, bcrypt.gensalt())
+    hashed_pass = bcrypt.hashpw(password, PASSWORD_SALT)
     new_user = User()
     new_user.username = username
     new_user.password = hashed_pass

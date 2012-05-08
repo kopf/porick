@@ -31,7 +31,7 @@ class User(Base):
                       'sqlite_autoincrement': True}
     id = Column(Integer, nullable=False, primary_key=True)
     username = Column(String(32), nullable=False, unique=True)
-    password = Column(String(32), nullable=False)
+    password = Column(String(60), nullable=False)
     level = Column(Integer, nullable=False, default=0)
     email = Column(String(64), nullable=False)
 

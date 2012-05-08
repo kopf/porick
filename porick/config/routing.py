@@ -29,6 +29,7 @@ def make_map(config):
     map.connect('/create', controller='create', action='quote')
 
     map.connect('/signup', controller='account', action='create')
+    map.connect('/login', controller='account', action='login')
 
     map.connect('/api/vote/{direction}/{quote_id}', controller='vote', action='vote')
 
