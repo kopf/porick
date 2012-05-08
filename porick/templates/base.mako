@@ -30,12 +30,15 @@
 
 <%def name="head()">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    ${self.head_extra_metadata()}
     <title>${self.head_title_tag()}</title>
     ${self.head_css()}
     ${self.head_js()}
     <link rel="icon" type="image/png" href="/img/favicon.ico" />
 </%def>
 
+<%def name="head_extra_metadata()">
+</%def>
 <%def name="head_css()">
     <link rel="stylesheet" type="text/css" href="/css/base.css" />
     <link rel="stylesheet" type="text/css" href="/bootstrap/css/bootstrap.css" />
@@ -105,7 +108,7 @@
 </%def>
 
 <%def name="account_dropdown()">
-    % if c.logged_in:
+    % if c.logged_in and not c.page == 'logout':
         <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">${c.username} <b class="caret"></b></a>
             <ul class="dropdown-menu">
