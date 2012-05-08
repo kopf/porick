@@ -4,6 +4,7 @@ from pylons import request, response, session, tmpl_context as c, url
 from pylons.controllers.util import abort, redirect
 
 import porick.lib.helpers as h
+from porick.lib.auth import authorize
 from porick.lib.base import BaseController, render
 from porick.lib.create import create_quote, create_user
 
@@ -13,6 +14,7 @@ log = logging.getLogger(__name__)
 class CreateController(BaseController):
 
     def quote(self):
+        authorize()
         c.page = 'new quote'
         if request.environ['REQUEST_METHOD'] == 'GET':
             return render('/create/form.mako')

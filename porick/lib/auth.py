@@ -1,8 +1,11 @@
 import bcrypt
 import hashlib
 
-from pylons import response, request
+from pylons import response, request, url
+from pylons import tmpl_context as c
+from pylons.controllers.util import redirect
 
+import porick.lib.helpers as h
 from porick.model.model import User
 from porick.model.meta import Session as db
 from porick.settings import COOKIE_SECRET, PASSWORD_SALT
@@ -16,6 +19,11 @@ def authenticate(username, password):
         set_auth_cookie(user)
         return True
     return False
+
+
+def authorize():
+    if not c.logged_in:
+        redirect(url(controller='account', action='login', redirect_url=url.current()))
 
 
 def set_auth_cookie(user):

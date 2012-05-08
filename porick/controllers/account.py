@@ -31,17 +31,24 @@ class AccountController(BaseController):
 
     def login(self):
         c.page = 'login'
+        c.redirect_url = request.GET.get('redirect_url', '')
         if request.environ['REQUEST_METHOD'] == 'GET':
-            return render('/login/form.mako')
+            if c.redirect_url:
+                h.add_message('You need to be logged in to perform that action.',
+                              'info')
+            return render('/login.mako')
         elif request.environ['REQUEST_METHOD'] == 'POST':
             username = request.params['username']
             password = request.params['password']
             success = authenticate(username, password)
             if success:
-                redirect(url(controller='home', action='main'))
+                if c.redirect_url:
+                    redirect(c.redirect_url)
+                else:
+                    redirect(url(controller='home', action='main'))
             else:
                 h.add_message('Incorrect username / password', 'error')
-                return render('/login/form.mako')
+                return render('/login.mako')
 
     def logout(self):
         clear_cookies()

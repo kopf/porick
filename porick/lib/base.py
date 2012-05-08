@@ -25,6 +25,9 @@ class BaseController(WSGIController):
             Session.remove()
 
     def __before__(self, action, **params):
+        self._set_auth_cookies()
+
+    def _set_auth_cookies(self):
         c.logged_in = False
         c.username = ''
         c.page = ''

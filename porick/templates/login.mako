@@ -1,7 +1,7 @@
 <%inherit file="/base.mako"/>
 
 <%def name="body_content()">
-    <form class="well create_new_quote" action="${h.url(controller='account', action='login')}" method="post">
+    <form class="well create_new_quote" action="${h.url(controller='account', action='login', redirect_url=c.redirect_url)}" method="post">
         <label class="control-label" for="username">Username:</label>
         <div class="controls">
             <input type="text" class="input-xlarge" id="username" name="username">
