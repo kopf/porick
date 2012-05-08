@@ -4,6 +4,7 @@ from pylons import request, response, session, tmpl_context as c, url
 from pylons.controllers.util import abort, redirect
 from pylons.decorators import jsonify
 
+from porick.lib.auth import authorize
 from porick.lib.base import BaseController, render
 from porick.model.model import Quote
 from porick.model.meta import Session as db
@@ -14,6 +15,7 @@ class VoteController(BaseController):
 
     @jsonify
     def vote(self, direction, quote_id):
+        authorize()
         if request.environ['REQUEST_METHOD'] == 'PUT':
             quote = db.query(Quote).filter(Quote.id == quote_id).first()
             if not quote:

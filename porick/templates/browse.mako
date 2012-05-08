@@ -1,11 +1,5 @@
 <%inherit file="base.mako"/>
 
-<%def name="custom_js()">
-   <script type="text/javascript" src="/js/voting.js"></script>
-</%def>
-
-<%def name="extra_body_parameters()">onload="setupVoteClickHandlers();"</%def>
-
 <%def name="body_content()">
     % if not c.quotes:
         <div class="hero-unit">
@@ -35,23 +29,23 @@
 </%def>
 
 <%def name="insert_quote_body(quote)">
-<div class="content">
-    <pre>${quote.body | h}</pre>
-    % if quote.notes:
-        <hr>
-        <h6>${quote.notes}</h6>
-    % endif
-</div>
-% if quote.tags:
-    <div class="extra_info tags">
-        % for tag in quote.tags:
-            <a href="${h.url(controller='browse', action='tags', tag=tag.tag)}">
-                <span class="label label-important">
-                    ${tag.tag}
-                </span>
-            </a>
-        % endfor
+    <div class="content">
+        <pre>${quote.body | h}</pre>
+        % if quote.notes:
+            <hr>
+            <h6>${quote.notes}</h6>
+        % endif
     </div>
-% endif
+    % if quote.tags:
+        <div class="extra_info tags">
+            % for tag in quote.tags:
+                <a href="${h.url(controller='browse', action='tags', tag=tag.tag)}">
+                    <span class="label label-important">
+                        ${tag.tag}
+                    </span>
+                </a>
+            % endfor
+        </div>
+    % endif
 </%def>
 
