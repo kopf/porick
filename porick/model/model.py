@@ -25,6 +25,16 @@ QuoteToTag = Table(TABLES['quote_to_tag'], Base.metadata,
 )
 
 
+class User(Base):
+    __tablename__  = TABLES['users']
+    __table_args__ = {'mysql_engine': 'InnoDB',
+                      'sqlite_autoincrement': True}
+    id = Column(Integer, nullable=False, primary_key=True)
+    username = Column(String(32), nullable=False, unique=True)
+    password = Column(String(60), nullable=False)
+    level = Column(Integer, nullable=False, default=0)
+    email = Column(String(64), nullable=False)
+
 class Quote(Base):
     __tablename__  = TABLES['quotes']
     __table_args__ = {'mysql_engine': 'InnoDB',
@@ -40,22 +50,4 @@ class Quote(Base):
     score        = Column(DOUBLE(unsigned=True), nullable=False, default=1)
     tags         = relationship("Tag", secondary=QuoteToTag)
 
-
-class Account(Base):
-    __tablename__  = TABLES['accounts']
-    __table_args__ = {'mysql_engine': 'InnoDB',
-                      'sqlite_autoincrement': True}
-    id = Column(Integer, nullable=False, primary_key=True)
-    username = Column(String(32), nullable=False, unique=True)
-    password = Column(String(32), nullable=False)
-    level = Column(Integer, nullable=False, default=0)
-
-
-class Session(Base):
-    __tablename__  = TABLES['sessions']
-    __table_args__ = {'mysql_engine': 'InnoDB',
-                      'sqlite_autoincrement': True}
-    id = Column(Integer, nullable=False, primary_key=True)
-    expires = Column(Integer, nullable=False, primary_key=True, default=0)
-    data = Column(Text, nullable=False) 
 
