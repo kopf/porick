@@ -15,7 +15,7 @@ class CreateController(BaseController):
     def quote(self):
         c.page = 'new quote'
         if request.environ['REQUEST_METHOD'] == 'GET':
-            return render('/create/quote/form.mako')
+            return render('/create/form.mako')
         elif request.environ['REQUEST_METHOD'] == 'POST':
             quote_body = request.params['quote_body']
             if not quote_body:
@@ -25,25 +25,9 @@ class CreateController(BaseController):
             
             result = create_quote(quote_body, notes, tags)
             if result:
-                return render('/create/quote/success.mako')
+                return render('/create/success.mako')
             else:
                 abort(500)
         else:
             abort(400)
 
-    def user(self):
-        c.page = "sign up"
-        if request.environ['REQUEST_METHOD'] == 'GET':
-            return render('/create/user/form.mako')
-        elif request.environ['REQUEST_METHOD'] == 'POST':
-            username = request.params['username']
-            password = request.params['password']
-            email = request.params['email']
-            if not (username and password and email):
-                abort(400)
-            try:
-                create_user(username, password, email)
-                return render('/create/user/success.mako')
-            except NameError, e:
-                c.error = e.__str__
-                return render('/create/user/error.mako')
