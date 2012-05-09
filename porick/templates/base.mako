@@ -30,6 +30,7 @@
 
 <%def name="head()">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link rel="icon" type="image/png" href="/img/favicon.png">
     ${self.head_extra_metadata()}
     <title>${self.head_title_tag()}</title>
     ${self.head_css()}
