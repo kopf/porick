@@ -4,7 +4,7 @@ from webhelpers.html import literal
 from pylons import url
 from pylons import tmpl_context as c
 
-from porick.model import db, Quote, Tag
+from porick.model import db, Quote, Tag, User
 
 def cgi_unescape(s):
     s = s.replace('&quot;', '"')
@@ -34,3 +34,11 @@ def get_score_mouseover(quote, direction):
 
 def add_message(msg, level):
     c.messages.append({'msg': msg, 'level': level})
+
+def get_current_user():
+    return db.query(User).filter(User.username == c.username).first()
+
+def check_if_voted(quote):
+    for assoc in quote.voters:
+        if assoc.user.username == c.username:
+            return assoc.direction
