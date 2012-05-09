@@ -4,7 +4,6 @@ from sqlalchemy.orm import relationship
 from sqlalchemy.dialects.mysql import DOUBLE
 
 from porick.model.meta import Base, Session as db
-from porick.settings import TABLES
 
 
 def now():
@@ -16,21 +15,21 @@ def init_model(engine):
 
 
 class Tag(Base):
-    __tablename__  = TABLES['tags']
+    __tablename__  = 'tags'
     __table_args__ = {'mysql_engine': 'InnoDB',
                       'sqlite_autoincrement': True}
     id = Column(Integer, nullable=False, primary_key=True)
     tag = Column(String(255), nullable=False, primary_key=True)
 
 
-QuoteToTag = Table(TABLES['quote_to_tag'], Base.metadata,
+QuoteToTag = Table('quote_to_tag', Base.metadata,
     Column('quote_id', Integer, ForeignKey(TABLES['quotes'] + '.id')),
     Column('tag_id', Integer, ForeignKey(TABLES['tags'] + '.id'))
 )
 
 
 class User(Base):
-    __tablename__  = TABLES['users']
+    __tablename__  = 'users'
     __table_args__ = {'mysql_engine': 'InnoDB',
                       'sqlite_autoincrement': True}
     id = Column(Integer, nullable=False, primary_key=True)
@@ -40,7 +39,7 @@ class User(Base):
     email = Column(String(64), nullable=False)
 
 class Quote(Base):
-    __tablename__  = TABLES['quotes']
+    __tablename__  = 'quotes'
     __table_args__ = {'mysql_engine': 'InnoDB',
                       'sqlite_autoincrement': True}
     id           = Column(Integer, nullable=False, primary_key=True)

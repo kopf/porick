@@ -4,13 +4,12 @@ Provides the BaseController class for subclassing.
 """
 import hashlib
 
-from pylons import request
+from pylons import request, config
 from pylons import tmpl_context as c
 from pylons.controllers import WSGIController
 from pylons.templating import render_mako as render
 
 from porick.model.meta import Session
-from porick.settings import COOKIE_SECRET
 
 class BaseController(WSGIController):
 
@@ -25,9 +24,9 @@ class BaseController(WSGIController):
             Session.remove()
 
     def __before__(self, action, **params):
-        self._set_auth_cookies()
+        self._process_auth_cookies()
 
-    def _set_auth_cookies(self):
+    def _process_auth_cookies(self):
         c.logged_in = False
         c.username = ''
         c.page = ''
@@ -38,7 +37,7 @@ class BaseController(WSGIController):
         username = request.cookies.get('username')
         level = request.cookies.get('level')
         if auth:
-            if hashlib.md5('%s:%s:%s' % (COOKIE_SECRET, username, level)).hexdigest() == auth:
+            if hashlib.md5('%s:%s:%s' % (config['COOKIE_SECRET'], username, level)).hexdigest() == auth:
                 c.logged_in = True
                 c.username = username
                 c.user_level = int(level)

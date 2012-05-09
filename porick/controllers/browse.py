@@ -7,7 +7,6 @@ from pylons.controllers.util import abort, redirect
 
 from porick.lib.base import BaseController, render
 from porick.model import db, Quote, QuoteToTag, Tag
-from porick.settings import QUOTES_PER_PAGE
 
 log = logging.getLogger(__name__)
 
@@ -15,17 +14,17 @@ log = logging.getLogger(__name__)
 class BrowseController(BaseController):
 
     def main(self):
-        c.quotes = db.query(Quote).order_by(Quote.submitted.desc()).filter(Quote.approved == 1).limit(QUOTES_PER_PAGE)
+        c.quotes = db.query(Quote).order_by(Quote.submitted.desc()).filter(Quote.approved == 1).limit(10)
         c.page = 'browse'
         return render(self._get_template_name())
 
     def best(self):
-        c.quotes = db.query(Quote).order_by(Quote.score.desc()).filter(Quote.approved == 1).limit(QUOTES_PER_PAGE)
+        c.quotes = db.query(Quote).order_by(Quote.score.desc()).filter(Quote.approved == 1).limit(10)
         c.page = 'best'
         return render(self._get_template_name())
 
     def worst(self):
-        c.quotes = db.query(Quote).order_by(Quote.score).filter(Quote.approved == 1).limit(QUOTES_PER_PAGE)
+        c.quotes = db.query(Quote).order_by(Quote.score).filter(Quote.approved == 1).limit(10)
         c.page = 'worst'
         return render(self._get_template_name())
 
@@ -42,7 +41,7 @@ class BrowseController(BaseController):
         else:
             keyword = request.params.get('keyword', '')
             query = '%' + keyword + '%'
-            c.quotes = db.query(Quote).order_by(Quote.submitted.desc()).filter(Quote.body.like(query)).limit(QUOTES_PER_PAGE)
+            c.quotes = db.query(Quote).order_by(Quote.submitted.desc()).filter(Quote.body.like(query)).limit(10)
             c.page = 'search: %s' % keyword
             return render(self._get_template_name())
         
@@ -59,7 +58,7 @@ class BrowseController(BaseController):
             return render('/tagcloud.mako')
         else:
             tag_obj = db.query(Tag).filter(Tag.tag == tag).first()
-            c.quotes = db.query(Quote).filter(Quote.tags.contains(tag_obj)).limit(QUOTES_PER_PAGE)
+            c.quotes = db.query(Quote).filter(Quote.tags.contains(tag_obj)).limit(10)
             c.tag_filter = tag
             return render(self._get_template_name())
 
