@@ -10,6 +10,10 @@ from porick.settings import TABLES
 def now():
     return datetime.datetime.now()
 
+def init_model(engine):
+    """Call me before using any of the tables or classes in the model"""
+    db.configure(bind=engine)
+
 
 class Tag(Base):
     __tablename__  = TABLES['tags']
