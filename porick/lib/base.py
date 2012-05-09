@@ -31,12 +31,15 @@ class BaseController(WSGIController):
         c.logged_in = False
         c.username = ''
         c.page = ''
+        c.user_level = 0
         c.messages = []
 
         auth = request.cookies.get('auth')
         username = request.cookies.get('username')
+        level = request.cookies.get('level')
         if auth:
-            if hashlib.md5('%s:%s' % (COOKIE_SECRET, username)).hexdigest() == auth:
+            if hashlib.md5('%s:%s:%s' % (COOKIE_SECRET, username, level)).hexdigest() == auth:
                 c.logged_in = True
                 c.username = username
+                c.user_level = int(level)
         

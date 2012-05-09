@@ -26,10 +26,12 @@ def authorize():
 
 
 def set_auth_cookie(user):
-    auth = hashlib.md5('%s:%s' % (COOKIE_SECRET,
-                                  user.username)).hexdigest()
+    auth = hashlib.md5('%s:%s:%s' % (COOKIE_SECRET,
+                                     user.username,
+                                     user.level)).hexdigest()
     response.set_cookie('auth', auth, max_age=3600) 
     response.set_cookie('username', user.username, max_age=3600)
+    response.set_cookie('level', str(user.level), max_age=3600)
 
 
 def clear_cookies():
