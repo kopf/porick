@@ -2,8 +2,7 @@ import bcrypt
 from sqlalchemy import or_
 
 import porick.lib.helpers as h
-from porick.model.meta import Session as db
-from porick.model.model import Quote, User
+from porick.model import db, Quote, User
 from porick.settings import PASSWORD_SALT
 
 def create_quote(quote_body, notes, tags):

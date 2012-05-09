@@ -6,8 +6,7 @@ from pylons import request, response, session, tmpl_context as c, url
 from pylons.controllers.util import abort, redirect
 
 from porick.lib.base import BaseController, render
-from porick.model.model import Quote, QuoteToTag, Tag
-from porick.model.meta import Session as db
+from porick.model import db, Quote, QuoteToTag, Tag
 from porick.settings import QUOTES_PER_PAGE
 
 log = logging.getLogger(__name__)

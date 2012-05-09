@@ -4,8 +4,7 @@ from webhelpers.html import literal
 from pylons import url
 from pylons import tmpl_context as c
 
-from porick.model.model import Quote, Tag
-from porick.model.meta import Session as db
+from porick.model import db, Quote, Tag
 
 def cgi_unescape(s):
     s = s.replace('&quot;', '"')

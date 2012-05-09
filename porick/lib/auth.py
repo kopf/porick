@@ -6,8 +6,7 @@ from pylons import tmpl_context as c
 from pylons.controllers.util import redirect
 
 import porick.lib.helpers as h
-from porick.model.model import User
-from porick.model.meta import Session as db
+from porick.model import db, User
 from porick.settings import COOKIE_SECRET, PASSWORD_SALT
 
 

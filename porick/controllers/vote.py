@@ -6,8 +6,7 @@ from pylons.decorators import jsonify
 
 from porick.lib.auth import authorize
 from porick.lib.base import BaseController, render
-from porick.model.model import Quote
-from porick.model.meta import Session as db
+from porick.model import db, Quote
 
 log = logging.getLogger(__name__)
 
