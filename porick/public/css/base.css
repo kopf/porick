@@ -5,6 +5,14 @@ body {
     height: 100%;
     padding-top: 45px;
 }
+@font-face { 
+    font-family: 'WebSymbolsRegular';
+    src: url('/fonts/websymbols-regular-webfont.eot');
+    src: url('/fonts/websymbols-regular-webfont.eot?#iefix') format('embedded-opentype'),
+         url('/fonts/websymbols-regular-webfont.woff') format('woff'),
+         url('/fonts/websymbols-regular-webfont.ttf') format('truetype'),
+         url('/fonts/websymbols-regular-webfont.svg#WebSymbolsRegular') format('svg');
+}
 .side_text {
     color: #333;
     opacity: 0.3;
@@ -30,27 +38,26 @@ body {
     float: left;
     display: block;
     margin-left: -9px;
-    margin-top: 18px;
+    margin-top: 15px;
 }
 .votes .vote {
     width: 15px;
     margin-top: 2px;
-    height: 14px;
-    border-radius: 5px;
+    font-family: 'WebSymbolsRegular';
+    font-size: 14px;
 }
 .votes .vote.success {
-    background-color: green;
+    color: green;
 }
 .votes .vote.error {
-    background-color: red;
+    color: red;
 }
 .votes .score {
     text-align: center;
-    margin-top: 3px;
     font-weight: bold;
     font-size: 16px;
     color: #C6C6C6;
-    margin-left: -3px;
+    margin: 1px 0px -2px -3px;
 }
 
 .quote .metadata {
