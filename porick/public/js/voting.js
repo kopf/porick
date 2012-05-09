@@ -24,6 +24,11 @@ function castVote(quote_id, direction, button) {
         type: 'PUT',
         success: function(data, status, jqXHR){
             $(button).addClass(data['status'] + ' voted');
+            if(direction === 'up') {
+                $(button).next().next().removeClass('voted success error');
+            } else {
+                $(button).prev().prev().removeClass('voted success error');
+            }
             changeScoreCount(button, direction, false);
         }
     });
