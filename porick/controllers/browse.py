@@ -68,7 +68,6 @@ class BrowseController(BaseController):
             abort(404)
         else:
             c.quotes = [quote]
-            c.tags = self._get_tags_for_quotes(c.quotes)
             c.page = 'browse'
             return render(self._get_template_name())
 

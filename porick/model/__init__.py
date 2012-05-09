@@ -23,8 +23,8 @@ class Tag(Base):
 
 
 QuoteToTag = Table('quote_to_tag', Base.metadata,
-    Column('quote_id', Integer, ForeignKey(TABLES['quotes'] + '.id')),
-    Column('tag_id', Integer, ForeignKey(TABLES['tags'] + '.id'))
+    Column('quote_id', Integer, ForeignKey('quotes.id')),
+    Column('tag_id', Integer, ForeignKey('tags.id'))
 )
 
 
