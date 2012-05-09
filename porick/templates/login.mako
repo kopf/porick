@@ -13,7 +13,7 @@
         </div>
 
         <div>
-            <button type="submit" class="btn btn-primary">Sign up!</button>
+            <button type="submit" class="btn btn-primary">Sign in</button>
         </div>
     </form>
 </%def>
