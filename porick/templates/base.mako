@@ -119,6 +119,7 @@
             </ul>
         </li>
     % else:
+        <li><a href="${h.url(controller='account', action='create')}">Sign up</a></li>
         <li><a href="${h.url(controller='account', action='login', redirect_url=h.url.current())}">Log in</a></li>
     % endif
 </%def>

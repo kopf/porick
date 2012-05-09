@@ -49,7 +49,7 @@ class AccountController(BaseController):
             password = request.params['password']
             success = authenticate(username, password)
             if success:
-                if c.redirect_url:
+                if c.redirect_url and not c.redirect_url == '/signup':
                     redirect(c.redirect_url)
                 else:
                     redirect(url(controller='home', action='main'))
