@@ -38,6 +38,14 @@ class User(Base):
     level = Column(Integer, nullable=False, default=0)
     email = Column(String(64), nullable=False)
 
+
+class VoteToUser(Base):
+    __tablename__  = 'vote_to_user'
+    quote_id = Column(Integer, ForeignKey('quotes.id'), primary_key=True)
+    user_id  = Column(Integer, ForeignKey('users.id'), primary_key=True)
+    direction = Column(String(4), nullable=False)
+    user = relationship("User")
+
 class Quote(Base):
     __tablename__  = 'quotes'
     __table_args__ = {'mysql_engine': 'InnoDB',
@@ -52,4 +60,5 @@ class Quote(Base):
     flagged      = Column(Integer, nullable=False, default=0)
     score        = Column(DOUBLE(unsigned=True), nullable=False, default=1)
     tags         = relationship("Tag", secondary=QuoteToTag)
+    voters       = relationship("VoteToUser")
 

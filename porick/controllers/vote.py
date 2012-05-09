@@ -6,7 +6,8 @@ from pylons.decorators import jsonify
 
 from porick.lib.auth import authorize
 from porick.lib.base import BaseController, render
-from porick.model import db, Quote
+import porick.lib.helpers as h
+from porick.model import db, Quote, VoteToUser
 
 log = logging.getLogger(__name__)
 
@@ -15,11 +16,27 @@ class VoteController(BaseController):
     @jsonify
     def vote(self, direction, quote_id):
         authorize()
+        quote = db.query(Quote).filter(Quote.id == quote_id).first()
+        user = h.get_current_user()
         if request.environ['REQUEST_METHOD'] == 'PUT':
-            quote = db.query(Quote).filter(Quote.id == quote_id).first()
             if not quote:
                 return {'msg': 'Invalid quote ID',
                         'status': 'error'}
+
+            already_voted = ''
+            for assoc in quote.voters:
+                if assoc.user == user:
+                    already_voted = True
+                    # cancel the last vote:
+                    if assoc.direction == 'up':
+                        quote.rating -= 1
+                    elif assoc.direction == 'down':
+                        quote.rating += 1
+                    db.delete(assoc)
+            
+            assoc = VoteToUser(direction=direction)
+            assoc.user = user
+            quote.voters.append(assoc)
 
             if direction == 'up':
                 quote.rating += 1
@@ -29,12 +46,27 @@ class VoteController(BaseController):
                 return {'msg': 'Invalid vote direction',
                         'status': 'error'}
 
-            quote.votes += 1
+            if not already_voted:
+                quote.votes += 1
             db.commit()
             return {'status': 'success',
                     'msg': 'Vote cast!'}
         elif request.environ['REQUEST_METHOD'] == 'DELETE':
-            # delete the appropriate vote
-            pass
+            for assoc in quote.voters:
+                if assoc.user == user:
+                    db.delete(assoc)
+            if direction == 'up':
+                quote.rating -= 1
+            elif direction == 'down':
+                quote.rating += 1
+            else:
+                return {'msg': 'Invalid vote direction',
+                        'status': 'error'}
+            
+            quote.votes -= 1
+            db.commit()
+            return {'status': 'success',
+                    'msg': 'Vote annulled!!'}
+
         else:
             abort(405)
