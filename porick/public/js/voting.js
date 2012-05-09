@@ -1,3 +1,7 @@
+/* TODO: CLEAN THIS SHIT UP
+ *
+ **/ 
+
 function setupVoteClickHandlers() {
     /**
      * Assign click handlers to all voting buttons.
@@ -24,11 +28,6 @@ function castVote(quote_id, direction, button) {
         type: 'PUT',
         success: function(data, status, jqXHR){
             $(button).addClass(data['status'] + ' voted');
-            if(direction === 'up') {
-                $(button).next().next().removeClass('voted success error');
-            } else {
-                $(button).prev().prev().removeClass('voted success error');
-            }
             changeScoreCount(button, direction, false);
         }
     });
@@ -53,7 +52,13 @@ function changeScoreCount(button, direction, cancelVote) {
             scorefield.html(score - 1);
             var upvotes = parseInt($(button).attr('title')) - 1 + ' upvote';
         } else {
-            scorefield.html(score + 1);
+            if($(button).next().next().attr('class').indexOf('voted') > -1) {
+                // quote has already been downvoted, remove that downvote
+                $(button).next().next().removeClass('voted success error');
+                scorefield.html(score + 2);
+            } else {
+                scorefield.html(score + 1);
+            }
             var upvotes = parseInt($(button).attr('title')) + 1 + ' upvote';
         }
 
@@ -69,7 +74,13 @@ function changeScoreCount(button, direction, cancelVote) {
             scorefield.html(score + 1);
             var downvotes = parseInt($(button).attr('title')) - 1 + ' downvote';
         } else {
-            scorefield.html(score - 1);
+            if($(button).prev().prev().attr('class').indexOf('voted') > -1) {
+                // quote has already been upvoted, remove that upvote
+                $(button).prev().prev().removeClass('voted success error');
+                scorefield.html(score - 2);
+            } else {
+                scorefield.html(score - 1);
+            }
             var downvotes = parseInt($(button).attr('title')) + 1 + ' downvote';
         }
 
