@@ -11,11 +11,11 @@
             <div class="well quote">
                 <div class="votes">
                     <div class="vote up" title="${h.get_score_mouseover(quote, 'up')}" data-quote_id="${quote.id}">
-                        <i class="icon-circle-arrow-up"> </i>
+                        :
                     </div>
                     <div class="score">${quote.rating}</div>
                     <div class="vote down" title="${h.get_score_mouseover(quote, 'down')}" data-quote_id="${quote.id}">
-                        <i class="icon-circle-arrow-down"> </i>
+                        ;
                     </div>
                 </div>
                 <ul class="metadata">
