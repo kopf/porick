@@ -24,14 +24,19 @@ class BaseController(WSGIController):
             Session.remove()
 
     def __before__(self, action, **params):
+        self._set_context_var_defaults()
         self._process_auth_cookies()
+
+    def _set_context_var_defaults(self):
+        c.page = ''
+        c.paginator = None
+        c.quote = None
+        c.messages = []
 
     def _process_auth_cookies(self):
         c.logged_in = False
         c.username = ''
-        c.page = ''
         c.user_level = 0
-        c.messages = []
 
         auth = request.cookies.get('auth')
         username = request.cookies.get('username')

@@ -4,6 +4,7 @@ import sqlalchemy as sql
 
 from pylons import request, response, session, tmpl_context as c, url
 from pylons.controllers.util import abort, redirect
+import webhelpers.paginate as paginate
 
 from porick.lib.base import BaseController, render
 from porick.model import db, Quote, QuoteToTag, Tag
@@ -13,40 +14,41 @@ log = logging.getLogger(__name__)
 
 class BrowseController(BaseController):
 
-    def main(self):
-        c.quotes = db.query(Quote).order_by(Quote.submitted.desc()).filter(Quote.approved == 1).limit(10)
+    def main(self, page=1):
+        quotes = db.query(Quote).order_by(Quote.submitted.desc()).filter(Quote.approved == 1).all()
+        c.paginator = self._create_paginator(quotes, page)
         c.page = 'browse'
         return render(self._get_template_name())
 
-    def best(self):
-        c.quotes = db.query(Quote).order_by(Quote.score.desc()).filter(Quote.approved == 1).limit(10)
+    def best(self, page=1):
+        quotes = db.query(Quote).order_by(Quote.score.desc()).filter(Quote.approved == 1).all()
+        c.paginator = self._create_paginator(quotes, page)
         c.page = 'best'
         return render(self._get_template_name())
 
-    def worst(self):
-        c.quotes = db.query(Quote).order_by(Quote.score).filter(Quote.approved == 1).limit(10)
+    def worst(self, page=1):
+        quotes = db.query(Quote).order_by(Quote.score).filter(Quote.approved == 1).all()
+        c.paginator = self._create_paginator(quotes, page)
         c.page = 'worst'
         return render(self._get_template_name())
 
     def random(self):
-        c.quotes = [db.query(Quote).order_by(sql.func.rand()).filter(Quote.approved == 1).first()]
+        c.quote = db.query(Quote).order_by(sql.func.rand()).filter(Quote.approved == 1).first()
         c.page = 'random'
         return render(self._get_template_name())
 
-    def search(self):
-        if request.environ['REQUEST_METHOD'] != 'POST':
-            # TOTO:
-            # return an advanced search page, but in the meantime:
-            abort(405)
-        else:
+    def search(self, keyword='', page=1):
+        if request.environ['REQUEST_METHOD'] == 'POST':
             keyword = request.params.get('keyword', '')
-            query = '%' + keyword + '%'
-            c.quotes = db.query(Quote).order_by(Quote.submitted.desc()).filter(Quote.body.like(query)).limit(10)
-            c.page = 'search: %s' % keyword
-            return render(self._get_template_name())
+            redirect(url(controller='browse', action='search', keyword=keyword))
+        query = '%' + keyword + '%'
+        quotes = db.query(Quote).order_by(Quote.submitted.desc()).filter(Quote.body.like(query)).all()
+        c.paginator = self._create_paginator(quotes, page)
+        c.page = 'search: %s' % keyword
+        return render(self._get_template_name())
         
 
-    def tags(self, tag=None):
+    def tags(self, tag=None, page=1):
         c.page = 'tags'
         if tag is None:
             c.rainbow = False
@@ -58,7 +60,8 @@ class BrowseController(BaseController):
             return render('/tagcloud.mako')
         else:
             tag_obj = db.query(Tag).filter(Tag.tag == tag).first()
-            c.quotes = db.query(Quote).filter(Quote.tags.contains(tag_obj)).limit(10)
+            quotes = db.query(Quote).filter(Quote.tags.contains(tag_obj)).all()
+            c.paginator = self._create_paginator(quotes, page)
             c.tag_filter = tag
             return render(self._get_template_name())
 
@@ -67,7 +70,7 @@ class BrowseController(BaseController):
         if not quote or quote.approved != 1:
             abort(404)
         else:
-            c.quotes = [quote]
+            c.quote = quote
             c.page = 'browse'
             return render(self._get_template_name())
 
@@ -81,3 +84,6 @@ class BrowseController(BaseController):
 
     def _get_template_name(self):
         return '/browse-logged_in.mako' if c.logged_in else '/browse.mako'
+
+    def _create_paginator(self, quotes, page):
+        return paginate.Page(quotes, page=page, items_per_page=10)

@@ -18,15 +18,27 @@ def make_map(config):
     map.connect('/error/{action}', controller='error')
     map.connect('/error/{action}/{id}', controller='error')
 
+
     map.connect('/browse', controller='browse', action='main')
+    map.connect('/browse/page/{page}', controller='browse', action='main')
+
     map.connect('/browse/best', controller='browse', action='best')
+    map.connect('/browse/best/page/{page}', controller='browse', action='best')
+
     map.connect('/browse/worst', controller='browse', action='worst')
-    map.connect('/browse/random', controller='browse', action='random')
+    map.connect('/browse/worst/page/{page}', controller='browse', action='worst')
+
     map.connect('/browse/tags', controller='browse', action='tags')
     map.connect('/browse/tags/{tag}', controller='browse', action='tags')
+    map.connect('/browse/tags/{tag}/page/{page}', controller='browse', action='tags')
+
+    map.connect('/browse/random', controller='browse', action='random')
     map.connect('/browse/{ref_id}', controller='browse', action='view_one')
 
     map.connect('/search', controller='browse', action='search')
+    map.connect('/search/{keyword}', controller='browse', action='search')
+    map.connect('/search/{keyword}/page/{page}', controller='browse', action='search')
+
 
     map.connect('/create', controller='create', action='quote')
 
