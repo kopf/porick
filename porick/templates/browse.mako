@@ -9,23 +9,33 @@
 </%def>
 
 <%def name="body_content()">
-    % if not c.quotes:
+    % if not (c.paginator or c.quote):
         <div class="hero-unit">
             <h1>No quotes found.</h1>
             <p>Get your users to add some!</p>
         </div>
     % else:
-        % for quote in c.quotes:
-            <div class="well quote">
-                ${self.insert_vote_buttons(quote)}
-                <ul class="metadata">
-                    <li><a href="${h.url(controller='browse', action='view_one', ref_id=quote.id)}">${quote.submitted}</a></li>
-                    <li class="top_right nomargin"></li>
-                </ul>
-                ${self.insert_quote_body(quote)}
-            </div>
-        % endfor
+        % if c.quote:
+            ${self.display_quote(c.quote)}
+        % else:
+            ${self.display_pagination()}
+            % for quote in c.paginator:
+                ${self.display_quote(quote)}
+            % endfor
+            ${self.display_pagination()}
+        % endif
     % endif
+</%def>
+
+<%def name="display_quote(quote)">
+    <div class="well quote">
+        ${self.insert_vote_buttons(quote)}
+        <ul class="metadata">
+            <li><a href="${h.url(controller='browse', action='view_one', ref_id=quote.id)}">${quote.submitted}</a></li>
+            <li class="top_right nomargin"></li>
+        </ul>
+        ${self.insert_quote_body(quote)}
+    </div>
 </%def>
 
 <%def name="insert_vote_buttons(quote)">
@@ -61,3 +71,11 @@
     % endif
 </%def>
 
+<%def name="display_pagination()">
+    <div class="pagination">
+        ${c.paginator.pager(curpage_attr={'class': 'bootstrap_style'},
+                            dotdot_attr={'class': 'bootstrap_style'},
+                            symbol_previous='&#171;',
+                            symbol_next='&#187;')}
+    </div>
+</%def>

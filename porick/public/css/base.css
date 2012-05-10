@@ -33,6 +33,19 @@ body {
 .well {
     padding: 10px 18px 18px 18px !important;
 }
+.pagination {
+    border-left: 1px solid #DDD;
+    width: 390px;
+    margin: 6px auto 12px auto !important;
+}
+.pagination .bootstrap_style {
+    float: left;
+    padding: 0 14px;
+    line-height: 34px;
+    text-decoration: none;
+    border: 1px solid #DDD;
+    border-left-width: 0;
+}
 
 .quote .votes {
     float: left;
