@@ -1,5 +1,7 @@
 <%inherit file="/base.mako"/>
 
+<%def name="head_title()">Submit a quote</%def>
+
 <%def name="body_content()">
     <form class="well create_new_quote" action="${h.url(controller='create', action='quote')}" method="post">
         <label>Quote text</label>

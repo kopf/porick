@@ -1,5 +1,13 @@
 <%inherit file="base.mako"/>
 
+<%def name="head_title()">
+    % if not c.page == 'tags':
+        ${c.page.capitalize()} Quotes
+    % else:
+        Browse Quotes
+    % endif
+</%def>
+
 <%def name="body_content()">
     % if not c.quotes:
         <div class="hero-unit">

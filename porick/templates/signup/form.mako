@@ -1,5 +1,7 @@
 <%inherit file="/base.mako"/>
 
+<%def name="head_title()">Sign up</%def>
+
 <%def name="body_content()">
     <form class="well create_new_quote" action="${h.url(controller='account', action='create')}" method="post">
         <label class="control-label" for="username">Username:</label>

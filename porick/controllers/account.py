@@ -39,7 +39,7 @@ class AccountController(BaseController):
                 return render('/signup/form.mako')
 
     def login(self):
-        c.page = 'login'
+        c.page = 'log in'
         c.redirect_url = request.GET.get('redirect_url', '')
         if request.environ['REQUEST_METHOD'] == 'GET':
             if request.GET.get('warn', ''):

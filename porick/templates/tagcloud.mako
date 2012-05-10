@@ -1,5 +1,7 @@
 <%inherit file="base.mako"/>
 
+<%def name="head_title()">Tag cloud</%def>
+
 <%def name="body_content()">
     <div class="tags cloud">
         % for tag in c.tags:
