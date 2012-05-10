@@ -22,6 +22,7 @@
             % for quote in c.paginator:
                 ${self.display_quote(quote)}
             % endfor
+            ${self.display_pagination()}
         % endif
     % endif
 </%def>
