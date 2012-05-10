@@ -18,6 +18,7 @@
         % if c.quote:
             ${self.display_quote(c.quote)}
         % else:
+            ${self.display_pagination()}
             % for quote in c.paginator:
                 ${self.display_quote(quote)}
             % endfor
@@ -69,3 +70,11 @@
     % endif
 </%def>
 
+<%def name="display_pagination()">
+    <div class="pagination">
+        ${c.paginator.pager(curpage_attr={'class': 'bootstrap_style'},
+                            dotdot_attr={'class': 'bootstrap_style'},
+                            symbol_previous='&#171;',
+                            symbol_next='&#187;')}
+    </div>
+</%def>
