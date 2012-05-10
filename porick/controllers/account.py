@@ -30,7 +30,9 @@ class AccountController(BaseController):
             try:
                 create_user(username, password, email)
                 authenticate(username, password)
-                self._process_auth_cookies()
+                c.logged_in = True
+                c.username = username
+                c.user_level = 0
                 return render('/signup/success.mako')
             except NameError, e:
                 h.add_message(e.__str__, 'error')
