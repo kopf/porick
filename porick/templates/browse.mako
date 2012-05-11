@@ -18,7 +18,6 @@
         % if c.quote:
             ${self.display_quote(c.quote)}
         % else:
-            ${self.display_pagination()}
             % for quote in c.paginator:
                 ${self.display_quote(quote)}
             % endfor
