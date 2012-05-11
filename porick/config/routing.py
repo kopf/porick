@@ -32,6 +32,9 @@ def make_map(config):
     map.connect('/browse/tags/{tag}', controller='browse', action='tags')
     map.connect('/browse/tags/{tag}/page/{page}', controller='browse', action='tags')
 
+    map.connect('/browse/unapproved', controller='browse', action='unapproved')
+    map.connect('/browse/unapproved/page/{page}', controller='browse', action='unapproved')
+
     map.connect('/browse/random', controller='browse', action='random')
     map.connect('/browse/{ref_id}', controller='browse', action='view_one')
 

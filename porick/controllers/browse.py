@@ -7,6 +7,7 @@ from pylons.controllers.util import abort, redirect
 import webhelpers.paginate as paginate
 
 from porick.lib.base import BaseController, render
+import porick.lib.helpers as h
 from porick.model import db, Quote, QuoteToTag, Tag
 
 log = logging.getLogger(__name__)
@@ -73,6 +74,15 @@ class BrowseController(BaseController):
             c.quote = quote
             c.page = 'browse'
             return render(self._get_template_name())
+
+    def unapproved(self, page=1):
+        if not h.is_admin():
+            h.add_message('You must be an admin to perform that action.', 'error')
+            return render('/blank.mako')
+        quotes = db.query(Quote).order_by(Quote.score).filter(Quote.approved == 0).all()
+        c.paginator = self._create_paginator(quotes, page)
+        c.page = 'unapproved'
+        return render(self._get_template_name())
 
     def _generate_tagcloud(self):
         retval = {}
