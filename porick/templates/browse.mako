@@ -71,10 +71,12 @@
 </%def>
 
 <%def name="display_pagination()">
-    <div class="pagination">
-        ${c.paginator.pager(curpage_attr={'class': 'bootstrap_style'},
-                            dotdot_attr={'class': 'bootstrap_style'},
-                            symbol_previous='&#171;',
-                            symbol_next='&#187;')}
+    <div class="paginator_container">
+        <div class="pagination">
+            ${c.paginator.pager(curpage_attr={'class': 'bootstrap_style'},
+                                dotdot_attr={'class': 'bootstrap_style'},
+                                symbol_previous='&#171;',
+                                symbol_next='&#187;')}
+        </div>
     </div>
 </%def>
