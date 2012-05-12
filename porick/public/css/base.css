@@ -58,12 +58,18 @@ body {
     margin-top: 2px;
     font-family: 'WebSymbolsRegular';
     font-size: 14px;
+    color: #ddd;
+    cursor: default;
+}
+.votes .vote.logged_in {
+    color: #000;
+    cursor: pointer;
 }
 .votes .vote.voted {
-    color: green;
+    color: green !important;
 }
 .votes .vote.error {
-    color: red;
+    color: red !important;
 }
 .votes .score {
     text-align: center;
