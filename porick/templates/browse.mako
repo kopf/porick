@@ -30,7 +30,7 @@
     <div class="well quote">
         ${self.insert_vote_buttons(quote)}
         <ul class="metadata">
-            <li><a href="${h.url(controller='browse', action='view_one', ref_id=quote.id)}">${quote.submitted}</a></li>
+            <li><a href="${h.url(controller='browse', action='view_one', ref_id=quote.id)}" class="date">${quote.submitted}</a></li>
             <li class="top_right nomargin"></li>
         </ul>
         ${self.insert_quote_body(quote)}
