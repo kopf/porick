@@ -72,6 +72,12 @@ body {
 }
 .favourite {
     font-family: 'WebSymbolsRegular';
+    color: #ddd;
+    cursor: default;
+}
+.favourite.logged_in {
+    color: #F71E75;
+    cursor: pointer;
 }
 .votes .vote {
     width: 15px;

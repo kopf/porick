@@ -5,9 +5,11 @@
         <script type="text/javascript" src="/js/approval.js"></script>
     % endif
     <script type="text/javascript" src="/js/voting.js"></script>
+    <script type="text/javascript" src="/js/favourites.js"></script>
     <script type="text/javascript">
         $(document).ready(function() {
             setupVoteClickHandlers();
+            setupFavouritesClickHandlers();
             % if h.show_approval_buttons():
                 setupApproveClickHandlers();
             % endif
@@ -29,11 +31,9 @@
 </%def>
 
 <%def name="insert_favourite_button(quote)">
-    <span class="favourite">
-        % if quote in c.user.favourites:
-            N 
-        % else:
-            O
-        % endif
-    </span>
+    % if quote in c.user.favourites:
+        <span class="favourite logged_in favourited" data-quote_id="${quote.id}">N</span>
+    % else:
+        <span class="favourite logged_in" data-quote_id="${quote.id}">O</span>
+    % endif
 </%def>

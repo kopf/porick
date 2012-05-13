@@ -50,6 +50,7 @@ def make_map(config):
     map.connect('/logout', controller='account', action='logout')
 
     map.connect('/api/v1/approve/{quote_id}', controller='api_v1', action='approve')
+    map.connect('/api/v1/favourite/{quote_id}', controller='api_v1', action='favourite')
     map.connect('/api/v1/vote/{direction}/{quote_id}', controller='api_v1', action='vote')
 
     map.connect('/', controller='home', action='main')

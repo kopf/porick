@@ -29,6 +29,28 @@ class ApiV1Controller(BaseController):
                     'status': 'success'}
 
     @jsonify
+    def favourite(self, quote_id):
+        authorize()
+        quote = db.query(Quote).filter(Quote.id == quote_id).first()
+        if not quote:
+            return {'msg': 'Invalid quote ID',
+                    'status': 'error'}
+        if request.environ['REQUEST_METHOD'] == 'PUT':
+            c.user.favourites.append(quote)
+            db.commit()
+            return {'msg': 'Quote favourited',
+                    'status': 'success'}
+        elif request.environ['REQUEST_METHOD'] == 'DELETE':
+            if not quote in c.user.favourites:
+                return {'msg': "Can't remove: This quote isn't in your favourites",
+                        'status': 'error'}
+            c.user.favourites.remove(quote)
+            db.commit()
+            return {'msg': 'Removed favourite',
+                    'status': 'success'}
+
+
+    @jsonify
     def vote(self, direction, quote_id):
         authorize()
         quote = db.query(Quote).filter(Quote.id == quote_id).first()
