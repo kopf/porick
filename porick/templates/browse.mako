@@ -30,11 +30,12 @@
     <div class="well quote">
         ${self.insert_vote_buttons(quote)}
         <ul class="metadata">
-            <li>${self.insert_favourite_button(quote)}</li>
             <li><a href="${h.url(controller='browse', action='view_one', ref_id=quote.id)}" class="date">${quote.submitted.strftime("%d. %B %Y %I:%M%p")}</a></li>
             <li class="top_right nomargin">
                 % if h.show_approval_buttons():
                     <div class="approve" data-quote_id="${quote.id}">/</div>
+                % else:
+                    <div>${self.insert_favourite_button(quote)}</div>
                 % endif
             </li>
         </ul>
