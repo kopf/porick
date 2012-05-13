@@ -27,6 +27,10 @@ QuoteToTag = Table('quote_to_tag', Base.metadata,
     Column('tag_id', Integer, ForeignKey('tags.id'))
 )
 
+Favourites = Table('favourites', Base.metadata,
+    Column('user_id', Integer, ForeignKey('users.id')),
+    Column('quote_id', Integer, ForeignKey('quotes.id'))
+)
 
 class User(Base):
     __tablename__  = 'users'
@@ -37,6 +41,7 @@ class User(Base):
     password = Column(String(60), nullable=False)
     level = Column(Integer, nullable=False, default=0)
     email = Column(String(64), nullable=False)
+    favourites = relationship("Quote", secondary=Favourites)
 
 QuoteToUser = Table('quote_to_user', Base.metadata,
     Column('quote_id', Integer, ForeignKey('quotes.id')),
