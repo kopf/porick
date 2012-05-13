@@ -31,8 +31,7 @@ class AccountController(BaseController):
                 create_user(username, password, email)
                 authenticate(username, password)
                 c.logged_in = True
-                c.username = username
-                c.user_level = 0
+                c.user = db.query(User).filter(User.username == username).first()
                 return render('/signup/success.mako')
             except NameError, e:
                 h.add_message(e.__str__, 'error')

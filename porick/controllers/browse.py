@@ -6,6 +6,7 @@ from pylons import request, response, session, tmpl_context as c, url
 from pylons.controllers.util import abort, redirect
 import webhelpers.paginate as paginate
 
+from porick.lib.auth import authorize
 from porick.lib.base import BaseController, render
 import porick.lib.helpers as h
 from porick.model import db, Quote, QuoteToTag, Tag
@@ -79,9 +80,15 @@ class BrowseController(BaseController):
         if not h.is_admin():
             h.add_message('You must be an admin to perform that action.', 'error')
             return render('/blank.mako')
-        quotes = db.query(Quote).order_by(Quote.score).filter(Quote.approved == 0).all()
+        quotes = db.query(Quote).filter(Quote.approved == 0).all()
         c.paginator = self._create_paginator(quotes, page)
         c.page = 'unapproved'
+        return render(self._get_template_name())
+
+    def favourites(self, page=1):
+        authorize()
+        c.paginator = self._create_paginator(c.user.favourites, page)
+        c.page = 'favourites'
         return render(self._get_template_name())
 
     def _generate_tagcloud(self):
