@@ -117,7 +117,7 @@
 <%def name="account_dropdown()">
     % if c.logged_in and not c.page == 'logout':
         <li class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown">${c.username} <b class="caret"></b></a>
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">${c.user.username} <b class="caret"></b></a>
             <ul class="dropdown-menu">
                 % if h.is_admin():
                     <li class="nav-header">Admin</li>

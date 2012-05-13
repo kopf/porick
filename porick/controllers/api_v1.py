@@ -20,7 +20,6 @@ class ApiV1Controller(BaseController):
             abort(401)
         if request.environ['REQUEST_METHOD'] == 'POST':
             quote = db.query(Quote).filter(Quote.id == quote_id).first()
-            user = h.get_current_user()
             if not quote:
                 return {'msg': 'Invalid quote ID',
                         'status': 'error'}
@@ -33,7 +32,6 @@ class ApiV1Controller(BaseController):
     def vote(self, direction, quote_id):
         authorize()
         quote = db.query(Quote).filter(Quote.id == quote_id).first()
-        user = h.get_current_user()
         if request.environ['REQUEST_METHOD'] == 'PUT':
             if not quote:
                 return {'msg': 'Invalid quote ID',
@@ -41,7 +39,7 @@ class ApiV1Controller(BaseController):
 
             already_voted = ''
             for assoc in quote.voters:
-                if assoc.user == user:
+                if assoc.user == c.user:
                     already_voted = True
                     # cancel the last vote:
                     if assoc.direction == 'up':
@@ -51,7 +49,7 @@ class ApiV1Controller(BaseController):
                     db.delete(assoc)
             
             assoc = VoteToUser(direction=direction)
-            assoc.user = user
+            assoc.user = c.user
             quote.voters.append(assoc)
 
             if direction == 'up':
@@ -69,7 +67,7 @@ class ApiV1Controller(BaseController):
                     'msg': 'Vote cast!'}
         elif request.environ['REQUEST_METHOD'] == 'DELETE':
             for assoc in quote.voters:
-                if assoc.user == user:
+                if assoc.user == c.user:
                     db.delete(assoc)
             if direction == 'up':
                 quote.rating -= 1

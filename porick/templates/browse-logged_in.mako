@@ -27,3 +27,13 @@
         </div>
     </div>
 </%def>
+
+<%def name="insert_favourite_button(quote)">
+    <span class="favourite">
+        % if quote in c.user.favourites:
+            N 
+        % else:
+            O
+        % endif
+    </span>
+</%def>

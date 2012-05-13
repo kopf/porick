@@ -35,16 +35,13 @@ def get_score_mouseover(quote, direction):
 def add_message(msg, level):
     c.messages.append({'msg': msg, 'level': level})
 
-def get_current_user():
-    return db.query(User).filter(User.username == c.username).first()
-
 def check_if_voted(quote):
     for assoc in quote.voters:
-        if assoc.user.username == c.username:
+        if assoc.user.username == c.user.username:
             return assoc.direction
 
 def is_admin():
-    return c.logged_in and c.user_level == 1
+    return c.logged_in and c.user.level == 1
 
 def show_approval_buttons():
     return c.page == 'unapproved' and is_admin()

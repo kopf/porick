@@ -2,24 +2,20 @@ import bcrypt
 import re
 from sqlalchemy import or_
 
-from pylons import config
+from pylons import config, tmpl_context as c
 
 import porick.lib.helpers as h
 from porick.model import db, Quote, User
 
 def create_quote(quote_body, notes, tags):
-    try:
-        newquote = Quote()
-        newquote.body = quote_body
-        newquote.notes = notes
-        newquote.tags = [h.create_or_get_tag(tag) for tag in tags]
-        newquote.submitted_by = h.get_current_user()
-        
-        db.add(newquote)
-        db.commit()
-    except Exception, e:
-        # TODO: add proper exception handling
-        return False
+    newquote = Quote()
+    newquote.body = quote_body
+    newquote.notes = notes
+    newquote.tags = [h.create_or_get_tag(tag) for tag in tags]
+    newquote.submitted_by = c.user
+    
+    db.add(newquote)
+    db.commit()
     return True
 
 
