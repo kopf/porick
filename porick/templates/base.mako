@@ -124,7 +124,7 @@
                     <li><a href="${h.url(controller='browse', action='unapproved')}">Unapproved Quotes</a></li>
                     <li class="divider"></li>
                 % endif
-                <li><a href="#">Preferences</a></li>
+                <li><a href="${h.url(controller='browse', action='favourites')}">My Favourites</a></li>
                 <li class="divider"></li>
                 <li><a href="${h.url(controller='account', action='logout')}">Log out</a></li>
             </ul>
