@@ -11,7 +11,23 @@ from porick.model import db, Quote, VoteToUser
 
 log = logging.getLogger(__name__)
 
-class VoteController(BaseController):
+class ApiV1Controller(BaseController):
+
+    @jsonify
+    def approve(self, quote_id):
+        authorize()
+        if not h.is_admin():
+            abort(401)
+        if request.environ['REQUEST_METHOD'] == 'POST':
+            quote = db.query(Quote).filter(Quote.id == quote_id).first()
+            user = h.get_current_user()
+            if not quote:
+                return {'msg': 'Invalid quote ID',
+                        'status': 'error'}
+            quote.approved = 1
+            db.commit()
+            return {'msg': 'Quote approved',
+                    'status': 'success'}
 
     @jsonify
     def vote(self, direction, quote_id):

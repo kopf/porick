@@ -53,7 +53,14 @@ body {
     border: 1px solid #DDD;
     border-left-width: 0;
 }
-
+.approve {
+    font-family: 'WebSymbolsRegular';
+    font-size: 15px;
+    cursor: pointer;
+}
+.approve.approved {
+    color: green !important;
+}
 .metadata .date {
     font-size: 11px;
 }
