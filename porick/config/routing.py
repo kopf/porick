@@ -32,6 +32,9 @@ def make_map(config):
     map.connect('/browse/tags/{tag}', controller='browse', action='tags')
     map.connect('/browse/tags/{tag}/page/{page}', controller='browse', action='tags')
 
+    map.connect('/browse/unapproved', controller='browse', action='unapproved')
+    map.connect('/browse/unapproved/page/{page}', controller='browse', action='unapproved')
+
     map.connect('/browse/random', controller='browse', action='random')
     map.connect('/browse/{ref_id}', controller='browse', action='view_one')
 
@@ -46,7 +49,8 @@ def make_map(config):
     map.connect('/login', controller='account', action='login')
     map.connect('/logout', controller='account', action='logout')
 
-    map.connect('/api/vote/{direction}/{quote_id}', controller='vote', action='vote')
+    map.connect('/api/v1/approve/{quote_id}', controller='api_v1', action='approve')
+    map.connect('/api/v1/vote/{direction}/{quote_id}', controller='api_v1', action='vote')
 
     map.connect('/', controller='home', action='main')
 

@@ -42,3 +42,9 @@ def check_if_voted(quote):
     for assoc in quote.voters:
         if assoc.user.username == c.username:
             return assoc.direction
+
+def is_admin():
+    return c.logged_in and c.user_level == 1
+
+def show_approval_buttons():
+    return c.page == 'unapproved' and is_admin()

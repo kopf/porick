@@ -70,11 +70,20 @@
 ## You should usually overwrite this one and " - Porick" will get appended
 <%def name="head_title()">Porick</%def>
 
-<%def name="side_text()">
+<%def name="side_text(capitalize=False)">
     % if c.page == 'tags' and 'tag_filter' in c.__dict__:
-        tag: ${c.tag_filter}
+        % if capitalize:
+            Tag: 
+        % else:
+            tag: 
+        % endif
+        ${c.tag_filter}
     % else:
-        ${c.page}
+        % if capitalize:
+            ${c.page.capitalize()}
+        % else:
+            ${c.page}
+        % endif
     % endif
 </%def>
 
@@ -110,6 +119,11 @@
         <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">${c.username} <b class="caret"></b></a>
             <ul class="dropdown-menu">
+                % if h.is_admin():
+                    <li class="nav-header">Admin</li>
+                    <li><a href="${h.url(controller='browse', action='unapproved')}">Unapproved Quotes</a></li>
+                    <li class="divider"></li>
+                % endif
                 <li><a href="#">Preferences</a></li>
                 <li class="divider"></li>
                 <li><a href="${h.url(controller='account', action='logout')}">Log out</a></li>

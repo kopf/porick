@@ -1,10 +1,16 @@
 <%inherit file="browse.mako"/>
 
 <%def name="custom_js()">
+    % if h.show_approval_buttons():
+        <script type="text/javascript" src="/js/approval.js"></script>
+    % endif
     <script type="text/javascript" src="/js/voting.js"></script>
     <script type="text/javascript">
         $(document).ready(function() {
             setupVoteClickHandlers();
+            % if h.show_approval_buttons():
+                setupApproveClickHandlers();
+            % endif
         });
     </script>
 </%def>

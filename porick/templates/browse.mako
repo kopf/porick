@@ -1,10 +1,10 @@
 <%inherit file="base.mako"/>
 
 <%def name="head_title()">
-    % if not c.page == 'tags':
-        ${c.page.capitalize()} Quotes
+    % if 'search' in c.page or c.page == 'tags':
+        ${self.side_text(capitalize=True)}
     % else:
-        Browse Quotes
+        ${c.page.capitalize()} Quotes
     % endif
 </%def>
 
@@ -30,8 +30,12 @@
     <div class="well quote">
         ${self.insert_vote_buttons(quote)}
         <ul class="metadata">
-            <li><a href="${h.url(controller='browse', action='view_one', ref_id=quote.id)}">${quote.submitted}</a></li>
-            <li class="top_right nomargin"></li>
+            <li><a href="${h.url(controller='browse', action='view_one', ref_id=quote.id)}" class="date">${quote.submitted.strftime("%d. %B %Y %I:%M%p")}</a></li>
+            <li class="top_right nomargin">
+                % if h.show_approval_buttons():
+                    <div class="approve" data-quote_id="${quote.id}">/</div>
+                % endif
+            </li>
         </ul>
         ${self.insert_quote_body(quote)}
     </div>
@@ -71,10 +75,14 @@
 </%def>
 
 <%def name="display_pagination()">
-    <div class="pagination">
-        ${c.paginator.pager(curpage_attr={'class': 'bootstrap_style'},
-                            dotdot_attr={'class': 'bootstrap_style'},
-                            symbol_previous='&#171;',
-                            symbol_next='&#187;')}
-    </div>
+    % if c.paginator.page_count > 1:
+        <div class="paginator_container">
+            <div class="pagination">
+                ${c.paginator.pager(curpage_attr={'class': 'bootstrap_style'},
+                                    dotdot_attr={'class': 'bootstrap_style'},
+                                    symbol_previous='&#171;',
+                                    symbol_next='&#187;')}
+            </div>
+        </div>
+    % endif
 </%def>
