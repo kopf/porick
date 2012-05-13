@@ -13,6 +13,7 @@ def create_quote(quote_body, notes, tags):
         newquote.body = quote_body
         newquote.notes = notes
         newquote.tags = [h.create_or_get_tag(tag) for tag in tags]
+        newquote.submitted_by = h.get_current_user()
         
         db.add(newquote)
         db.commit()

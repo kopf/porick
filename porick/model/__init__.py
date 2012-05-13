@@ -38,6 +38,10 @@ class User(Base):
     level = Column(Integer, nullable=False, default=0)
     email = Column(String(64), nullable=False)
 
+QuoteToUser = Table('quote_to_user', Base.metadata,
+    Column('quote_id', Integer, ForeignKey('quotes.id')),
+    Column('user_id', Integer, ForeignKey('users.id'))
+)
 
 class VoteToUser(Base):
     __tablename__  = 'vote_to_user'
@@ -60,5 +64,6 @@ class Quote(Base):
     flagged      = Column(Integer, nullable=False, default=0)
     score        = Column(DOUBLE(unsigned=True), nullable=False, default=1)
     tags         = relationship("Tag", secondary=QuoteToTag)
+    submitted_by = relationship("User", secondary=QuoteToUser, uselist=False)
     voters       = relationship("VoteToUser")
 
