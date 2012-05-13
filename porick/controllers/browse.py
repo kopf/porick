@@ -44,7 +44,7 @@ class BrowseController(BaseController):
             keyword = request.params.get('keyword', '')
             redirect(url(controller='browse', action='search', keyword=keyword))
         query = '%' + keyword + '%'
-        quotes = db.query(Quote).order_by(Quote.submitted.desc()).filter(Quote.body.like(query)).all()
+        quotes = db.query(Quote).filter(Quote.body.like(query)).order_by(Quote.submitted.desc()).all()
         c.paginator = self._create_paginator(quotes, page)
         c.page = 'search: %s' % keyword
         return render(self._get_template_name())
@@ -80,7 +80,7 @@ class BrowseController(BaseController):
         if not h.is_admin():
             h.add_message('You must be an admin to perform that action.', 'error')
             return render('/blank.mako')
-        quotes = db.query(Quote).filter(Quote.approved == 0).all()
+        quotes = db.query(Quote).filter(Quote.approved == 0).order_by(Quote.submitted.desc()).all()
         c.paginator = self._create_paginator(quotes, page)
         c.page = 'unapproved'
         return render(self._get_template_name())
