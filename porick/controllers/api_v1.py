@@ -57,6 +57,7 @@ class ApiV1Controller(BaseController):
             return {'msg': 'Invalid quote ID',
                     'status': 'error'}
         if request.environ['REQUEST_METHOD'] == 'POST':
+            c.user.reported_quotes.append(quote)
             quote.flagged = 1
             db.commit()
             return {'msg': 'Quote reported',

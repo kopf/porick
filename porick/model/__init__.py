@@ -32,6 +32,11 @@ Favourites = Table('favourites', Base.metadata,
     Column('quote_id', Integer, ForeignKey('quotes.id'))
 )
 
+ReportedQuotes = Table('reported_quotes', Base.metadata,
+    Column('user_id', Integer, ForeignKey('users.id')),
+    Column('quote_id', Integer, ForeignKey('quotes.id'))
+)
+
 class User(Base):
     __tablename__  = 'users'
     __table_args__ = {'mysql_engine': 'InnoDB',
@@ -42,6 +47,7 @@ class User(Base):
     level = Column(Integer, nullable=False, default=0)
     email = Column(String(64), nullable=False)
     favourites = relationship("Quote", secondary=Favourites)
+    reported_quotes = relationship("Quote", secondary=ReportedQuotes)
 
 QuoteToUser = Table('quote_to_user', Base.metadata,
     Column('quote_id', Integer, ForeignKey('quotes.id')),
