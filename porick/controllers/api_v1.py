@@ -49,6 +49,20 @@ class ApiV1Controller(BaseController):
             return {'msg': 'Removed favourite',
                     'status': 'success'}
 
+    @jsonify
+    def report(self, quote_id):
+        authorize()
+        quote = db.query(Quote).filter(Quote.id == quote_id).first()
+        if not quote:
+            return {'msg': 'Invalid quote ID',
+                    'status': 'error'}
+        if request.environ['REQUEST_METHOD'] == 'POST':
+            quote.flagged = 1
+            db.commit()
+            return {'msg': 'Quote reported',
+                    'status': 'success'}
+
+
 
     @jsonify
     def vote(self, direction, quote_id):
