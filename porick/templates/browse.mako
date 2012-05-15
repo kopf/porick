@@ -40,6 +40,10 @@
             </li>
         </ul>
         ${self.insert_quote_body(quote)}
+        <div class="bottom_metadata">
+            ${self.insert_quote_tags(quote)}
+            <div class="report">W</div>
+        </div>
     </div>
 </%def>
 
@@ -67,6 +71,9 @@
             <h6>${quote.notes}</h6>
         % endif
     </div>
+</%def>
+
+<%def name="insert_quote_tags(quote)">
     % if quote.tags:
         <div class="extra_info tags">
             % for tag in quote.tags:

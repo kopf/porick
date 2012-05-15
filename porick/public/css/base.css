@@ -155,6 +155,17 @@ body {
     margin: 15px 0px 5px 0px;
 }
 
+.bottom_metadata {
+    margin-bottom: 5px;
+}
+.bottom_metadata .tags {
+    float: left;
+}
+.bottom_metadata .report {
+    float: right;
+    font-family: 'WebSymbolsRegular';
+}
+
 .extra_info.tags {
     margin-left: 12px;
 }
