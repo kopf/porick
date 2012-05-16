@@ -12,7 +12,16 @@
     % if not (c.paginator or c.quote):
         <div class="hero-unit">
             <h1>No quotes found.</h1>
-            <p>Get your users to add some!</p>
+            <p>
+            % if c.page == 'unapproved': 
+                Best go grab a can.
+            % elif c.page == 'favourites':
+                Just click the little heart in the top-right hand corner of any quote and it'll be added to your
+                favourites!
+            % else: 
+                Get your users to add some!
+            % endif
+            </p>
         </div>
     % else:
         % if c.quote:
