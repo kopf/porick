@@ -35,7 +35,7 @@ class AccountController(BaseController):
                 c.user = db.query(User).filter(User.username == username).first()
                 return render('/signup/success.mako')
             except NameError, e:
-                h.add_message(e.__str__, 'error')
+                h.add_message(e.__str__(), 'error')
                 return render('/signup/form.mako')
 
     def login(self):
