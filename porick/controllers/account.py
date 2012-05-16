@@ -6,6 +6,7 @@ from pylons.controllers.util import abort, redirect
 from porick.lib.auth import authenticate, clear_cookies
 from porick.lib.base import BaseController, render
 from porick.lib.create import create_user, validate_signup
+from porick.model import db, User
 import porick.lib.helpers as h
 
 log = logging.getLogger(__name__)
