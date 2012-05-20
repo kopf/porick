@@ -61,7 +61,7 @@ def validate_signup(username, password, password_confirm, email):
                 'msg': 'Your username may consist only of'
                        ' alphanumeric characters and underscores.'}
 
-    if not len(password) > 8:
+    if not len(password) >= 8:
         return {'status': False,
                 'msg': 'Your password must be at least 8 characters long.'}
 
