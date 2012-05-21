@@ -23,13 +23,13 @@ class BrowseController(BaseController):
         return render(self._get_template_name())
 
     def best(self, page=1):
-        quotes = db.query(Quote).order_by(Quote.score.desc()).filter(Quote.approved == 1).all()
+        quotes = db.query(Quote).order_by(Quote.rating.desc()).filter(Quote.approved == 1).all()
         c.paginator = self._create_paginator(quotes, page)
         c.page = 'best'
         return render(self._get_template_name())
 
     def worst(self, page=1):
-        quotes = db.query(Quote).order_by(Quote.score).filter(Quote.approved == 1).all()
+        quotes = db.query(Quote).order_by(Quote.rating).filter(Quote.approved == 1).all()
         c.paginator = self._create_paginator(quotes, page)
         c.page = 'worst'
         return render(self._get_template_name())
