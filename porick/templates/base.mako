@@ -7,10 +7,10 @@
     </head>
     <body>
         ${self.body_header()}
-        <div class="side_text">
-            ${self.side_text()}
-        </div>
         <div class="container">
+            <div class="side_text">
+                ${self.side_text()}
+            </div>
             % if c.messages:
                 % for message in c.messages:
                     <div class="alert alert-${message.get('level', 'error')}">
