@@ -6,6 +6,13 @@ from sqlalchemy.dialects.mysql import DOUBLE
 from porick.model.meta import Base, Session as db
 
 
+QSTATUS = {'unapproved': 0,
+           'approved': 1,
+           'disapproved': 2,
+           'reported': 3,
+           'deleted': 4}
+
+
 def now():
     return datetime.datetime.now()
 
@@ -71,8 +78,7 @@ class Quote(Base):
     rating       = Column(Integer, nullable=False, default=0)
     votes        = Column(Integer, nullable=False, default=0)
     submitted    = Column(DateTime, nullable=False, default=now)
-    approved     = Column(Integer, nullable=False, default=0)
-    flagged      = Column(Integer, nullable=False, default=0)
+    status       = Column(Integer, nullable=False, default=0)
     score        = Column(DOUBLE(unsigned=True), nullable=False, default=1)
     tags         = relationship("Tag", secondary=QuoteToTag)
     submitted_by = relationship("User", secondary=QuoteToUser, uselist=False)

@@ -9,7 +9,7 @@ import webhelpers.paginate as paginate
 from porick.lib.auth import authorize
 from porick.lib.base import BaseController, render
 import porick.lib.helpers as h
-from porick.model import db, Quote, QuoteToTag, Tag
+from porick.model import db, QSTATUS, Quote, QuoteToTag, Tag
 
 log = logging.getLogger(__name__)
 
@@ -17,25 +17,25 @@ log = logging.getLogger(__name__)
 class BrowseController(BaseController):
 
     def main(self, page=1):
-        quotes = db.query(Quote).order_by(Quote.submitted.desc()).filter(Quote.approved == 1).all()
+        quotes = db.query(Quote).order_by(Quote.submitted.desc()).filter(Quote.status == QSTATUS['approved']).all()
         c.paginator = self._create_paginator(quotes, page)
         c.page = 'browse'
         return render(self._get_template_name())
 
     def best(self, page=1):
-        quotes = db.query(Quote).order_by(Quote.rating.desc()).filter(Quote.approved == 1).all()
+        quotes = db.query(Quote).order_by(Quote.rating.desc()).filter(Quote.status == QSTATUS['approved']).all()
         c.paginator = self._create_paginator(quotes, page)
         c.page = 'best'
         return render(self._get_template_name())
 
     def worst(self, page=1):
-        quotes = db.query(Quote).order_by(Quote.rating).filter(Quote.approved == 1).all()
+        quotes = db.query(Quote).order_by(Quote.rating).filter(Quote.status == QSTATUS['approved']).all()
         c.paginator = self._create_paginator(quotes, page)
         c.page = 'worst'
         return render(self._get_template_name())
 
     def random(self):
-        c.quote = db.query(Quote).order_by(sql.func.rand()).filter(Quote.approved == 1).first()
+        c.quote = db.query(Quote).order_by(sql.func.rand()).filter(Quote.status == QSTATUS['approved']).first()
         c.page = 'random'
         return render(self._get_template_name())
 
@@ -69,7 +69,7 @@ class BrowseController(BaseController):
 
     def view_one(self, ref_id):
         quote = db.query(Quote).filter(Quote.id == ref_id).first()
-        if not quote or quote.approved != 1:
+        if not quote or quote.status != QSTATUS['approved']:
             abort(404)
         else:
             c.quote = quote
@@ -80,7 +80,7 @@ class BrowseController(BaseController):
         if not h.is_admin():
             h.add_message('You must be an admin to perform that action.', 'error')
             return render('/blank.mako')
-        quotes = db.query(Quote).filter(Quote.approved == 0).order_by(Quote.submitted.desc()).all()
+        quotes = db.query(Quote).filter(Quote.status == QSTATUS['unapproved']).order_by(Quote.submitted.desc()).all()
         c.paginator = self._create_paginator(quotes, page)
         c.page = 'unapproved'
         return render(self._get_template_name())

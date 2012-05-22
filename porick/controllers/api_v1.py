@@ -7,7 +7,7 @@ from pylons.decorators import jsonify
 from porick.lib.auth import authorize
 from porick.lib.base import BaseController, render
 import porick.lib.helpers as h
-from porick.model import db, Quote, VoteToUser
+from porick.model import db, QSTATUS, Quote, VoteToUser
 
 log = logging.getLogger(__name__)
 
@@ -23,7 +23,7 @@ class ApiV1Controller(BaseController):
             if not quote:
                 return {'msg': 'Invalid quote ID',
                         'status': 'error'}
-            quote.approved = 1
+            quote.status = QSTATUS['approved']
             db.commit()
             return {'msg': 'Quote approved',
                     'status': 'success'}
@@ -58,7 +58,7 @@ class ApiV1Controller(BaseController):
                     'status': 'error'}
         if request.environ['REQUEST_METHOD'] == 'POST':
             c.user.reported_quotes.append(quote)
-            quote.flagged = 1
+            quote.status = QSTATUS['reported']
             db.commit()
             return {'msg': 'Quote reported',
                     'status': 'success'}
