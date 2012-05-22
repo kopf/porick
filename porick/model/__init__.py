@@ -41,7 +41,8 @@ Favourites = Table('favourites', Base.metadata,
 
 ReportedQuotes = Table('reported_quotes', Base.metadata,
     Column('user_id', Integer, ForeignKey('users.id')),
-    Column('quote_id', Integer, ForeignKey('quotes.id'))
+    Column('quote_id', Integer, ForeignKey('quotes.id')),
+    Column('time', DateTime, nullable=False, default=now)
 )
 
 class User(Base):
