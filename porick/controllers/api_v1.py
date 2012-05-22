@@ -56,14 +56,15 @@ class ApiV1Controller(BaseController):
         if not quote:
             return {'msg': 'Invalid quote ID',
                     'status': 'error'}
-        if request.environ['REQUEST_METHOD'] == 'POST':
+        if request.environ['REQUEST_METHOD'] == 'PUT':
+            if not quote.status == QSTATUS['approved']:
+                return {'msg': 'Quote is not approved, therefore cannot be reported',
+                        'status': 'error'}
             c.user.reported_quotes.append(quote)
             quote.status = QSTATUS['reported']
             db.commit()
             return {'msg': 'Quote reported',
                     'status': 'success'}
-
-
 
     @jsonify
     def vote(self, direction, quote_id):
