@@ -18,6 +18,8 @@ function report(quote_id, button) {
             button.addClass(data['status'] + ' reported');
             if(data['status'] === 'success') {
                 button.parent().parent().parent().parent().parent().fadeOut('slow');
+            } else if(data['status'] === 'error') {
+                button.parent().html(data['msg']);
             }
         }
     });
