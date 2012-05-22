@@ -1,3 +1,4 @@
 data/
 *.swp
+personal_migrate_script.sh
 production.ini
