@@ -64,6 +64,7 @@ body {
 }
 .quote_control.logged_in {
     cursor: pointer;
+    color: #000;
 }
 .approve {
     font-size: 15px;
@@ -78,15 +79,12 @@ body {
     margin-top: 15px;
 }
 .favourite.logged_in {
-    color: #F71E75;
+    color: #F71E75 !important;
 }
 .votes .vote {
     width: 15px;
     margin-top: 2px;
     font-size: 14px;
-}
-.votes .vote.logged_in {
-    color: #000;
 }
 .votes .vote.voted {
     color: green !important;

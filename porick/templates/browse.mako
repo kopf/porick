@@ -12,6 +12,7 @@
             $(document).ready(function() {
                 setupVoteClickHandlers();
                 setupFavouritesClickHandlers();
+                setupReportingClickHandlers();
                 % if h.show_approval_buttons():
                     setupApproveClickHandlers();
                 % endif
@@ -65,7 +66,7 @@
                     % if h.show_approval_buttons():
                         <li><div class="approve" ${self.data_quote_id(quote)}>/</div></li>
                     % else:
-                        <li><div class="quote_control report">W</div></li>
+                        <li><div class="quote_control report ${'logged_in' if c.logged_in else ''}" ${self.data_quote_id(quote)}>W</div></li>
                         <li><div>${self.insert_favourite_button(quote)}</div></li>
                     % endif
                 </ul>
