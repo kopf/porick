@@ -154,9 +154,6 @@ body {
 .bottom_metadata {
     margin-bottom: 5px;
 }
-.bottom_metadata .tags {
-    float: left;
-}
 .bottom_metadata .report {
     float: right;
     font-family: 'WebSymbolsRegular';
