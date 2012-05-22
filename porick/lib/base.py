@@ -53,6 +53,7 @@ class BaseController(WSGIController):
         level = request.cookies.get('level')
         if auth:
             if hashlib.md5('%s:%s:%s' % (config['COOKIE_SECRET'], username, level)).hexdigest() == auth:
-                c.logged_in = True
                 c.user = db.query(User).filter(User.username == username).first()
+                if c.user:
+                    c.logged_in = True
         
