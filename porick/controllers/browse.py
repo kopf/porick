@@ -20,24 +20,24 @@ class BrowseController(BaseController):
         quotes = db.query(Quote).order_by(Quote.submitted.desc()).filter(Quote.status == QSTATUS['approved']).all()
         c.paginator = self._create_paginator(quotes, page)
         c.page = 'browse'
-        return render(self._get_template_name())
+        return render('/browse.mako')
 
     def best(self, page=1):
         quotes = db.query(Quote).order_by(Quote.rating.desc()).filter(Quote.status == QSTATUS['approved']).all()
         c.paginator = self._create_paginator(quotes, page)
         c.page = 'best'
-        return render(self._get_template_name())
+        return render('/browse.mako')
 
     def worst(self, page=1):
         quotes = db.query(Quote).order_by(Quote.rating).filter(Quote.status == QSTATUS['approved']).all()
         c.paginator = self._create_paginator(quotes, page)
         c.page = 'worst'
-        return render(self._get_template_name())
+        return render('/browse.mako')
 
     def random(self):
         c.quote = db.query(Quote).order_by(sql.func.rand()).filter(Quote.status == QSTATUS['approved']).first()
         c.page = 'random'
-        return render(self._get_template_name())
+        return render('/browse.mako')
 
     def search(self, keyword='', page=1):
         if request.environ['REQUEST_METHOD'] == 'POST':
@@ -47,7 +47,7 @@ class BrowseController(BaseController):
         quotes = db.query(Quote).filter(Quote.body.like(query)).order_by(Quote.submitted.desc()).all()
         c.paginator = self._create_paginator(quotes, page)
         c.page = 'search: %s' % keyword
-        return render(self._get_template_name())
+        return render('/browse.mako')
         
 
     def tags(self, tag=None, page=1):
@@ -65,7 +65,7 @@ class BrowseController(BaseController):
             quotes = db.query(Quote).filter(Quote.tags.contains(tag_obj)).all()
             c.paginator = self._create_paginator(quotes, page)
             c.tag_filter = tag
-            return render(self._get_template_name())
+            return render('/browse.mako')
 
     def view_one(self, ref_id):
         quote = db.query(Quote).filter(Quote.id == ref_id).first()
@@ -74,7 +74,7 @@ class BrowseController(BaseController):
         else:
             c.quote = quote
             c.page = 'browse'
-            return render(self._get_template_name())
+            return render('/browse.mako')
 
     def unapproved(self, page=1):
         if not h.is_admin():
@@ -83,13 +83,13 @@ class BrowseController(BaseController):
         quotes = db.query(Quote).filter(Quote.status == QSTATUS['unapproved']).order_by(Quote.submitted.desc()).all()
         c.paginator = self._create_paginator(quotes, page)
         c.page = 'unapproved'
-        return render(self._get_template_name())
+        return render('/browse.mako')
 
     def favourites(self, page=1):
         authorize()
         c.paginator = self._create_paginator(c.user.favourites, page)
         c.page = 'favourites'
-        return render(self._get_template_name())
+        return render('/browse.mako')
 
     def _generate_tagcloud(self):
         retval = {}
@@ -98,9 +98,6 @@ class BrowseController(BaseController):
             retval[tag.tag] = count or 1
             retval[tag.tag] = math.log(retval[tag.tag], math.e/2)
         return retval
-
-    def _get_template_name(self):
-        return '/browse-logged_in.mako' if c.logged_in else '/browse.mako'
 
     def _create_paginator(self, quotes, page):
         return paginate.Page(quotes, page=page, items_per_page=10)
