@@ -53,16 +53,23 @@ body {
     border: 1px solid #DDD;
     border-left-width: 0;
 }
-.approve {
+.metadata .date {
+    font-size: 11px;
+}
+
+.quote_control {
     font-family: 'WebSymbolsRegular';
-    font-size: 15px;
+    color: #ddd;
+    cursor: default;
+}
+.quote_control.logged_in {
     cursor: pointer;
+}
+.approve {
+    font-size: 15px;
 }
 .approve.approved {
     color: green !important;
-}
-.metadata .date {
-    font-size: 11px;
 }
 .quote .votes {
     float: left;
@@ -70,26 +77,16 @@ body {
     margin-left: -9px;
     margin-top: 15px;
 }
-.favourite {
-    font-family: 'WebSymbolsRegular';
-    color: #ddd;
-    cursor: default;
-}
 .favourite.logged_in {
     color: #F71E75;
-    cursor: pointer;
 }
 .votes .vote {
     width: 15px;
     margin-top: 2px;
-    font-family: 'WebSymbolsRegular';
     font-size: 14px;
-    color: #ddd;
-    cursor: default;
 }
 .votes .vote.logged_in {
     color: #000;
-    cursor: pointer;
 }
 .votes .vote.voted {
     color: green !important;
@@ -97,6 +94,7 @@ body {
 .votes .vote.error {
     color: red !important;
 }
+
 .votes .score {
     text-align: center;
     font-weight: bold;
@@ -164,6 +162,10 @@ body {
 .bottom_metadata .report {
     float: right;
     font-family: 'WebSymbolsRegular';
+}
+
+.top_right_controls {
+    float: left;
 }
 
 .extra_info.tags {
