@@ -23,7 +23,8 @@ class CreateController(BaseController):
             if not quote_body:
                 abort(400)
             notes = request.params.get('notes', '')
-            tags = request.params.get('tags', '').split(' ')
+            tags = filter(None, request.params.get('tags', '').replace(',', ' ').split(' '))
+
             
             result = create_quote(quote_body, notes, tags)
             if result:
