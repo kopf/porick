@@ -16,6 +16,9 @@ function report(quote_id, button) {
         type: 'PUT',
         success: function(data, status, jqXHR){
             button.addClass(data['status'] + ' reported');
+            if(data['status'] === 'success') {
+                button.parent().parent().parent().parent().parent().fadeOut('slow');
+            }
         }
     });
 }

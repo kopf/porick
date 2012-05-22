@@ -154,9 +154,8 @@ body {
 .bottom_metadata {
     margin-bottom: 5px;
 }
-.bottom_metadata .report {
-    float: right;
-    font-family: 'WebSymbolsRegular';
+.report.reported {
+    color: #F71E75 !important;
 }
 
 .top_right_controls {
