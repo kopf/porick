@@ -8,7 +8,8 @@
         <textarea class="input-xlarge" id="quote_body" name="quote_body" rows=10 cols=80></textarea>
         <label>Additional information, if any:</label>
         <textarea class="input-xlarge" id="notes" name="notes" rows=5 cols=80></textarea>
-        <input type="text" class="input-xlarge" id="tags" name="tags" placeholder="Enter some tags separated by spaces here...">
+        <label>Tags:</label>
+        <input type="text" class="input-xlarge" id="tags" name="tags" placeholder="#channel, topic, people, etc">
         <div>
             <button type="submit" class="btn btn-primary">Submit</button>
         </div>
