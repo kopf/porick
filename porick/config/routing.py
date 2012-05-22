@@ -35,6 +35,9 @@ def make_map(config):
     map.connect('/browse/unapproved', controller='browse', action='unapproved')
     map.connect('/browse/unapproved/page/{page}', controller='browse', action='unapproved')
 
+    map.connect('/browse/reported', controller='browse', action='reported')
+    map.connect('/browse/reported/page/{page}', controller='browse', action='reported')
+
     map.connect('/browse/favourites', controller='browse', action='favourites')
     map.connect('/browse/favourites/page/{page}', controller='browse', action='favourites')
 

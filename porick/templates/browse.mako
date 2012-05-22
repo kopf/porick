@@ -34,11 +34,13 @@
         <div class="hero-unit">
             <h1>No quotes found.</h1>
             <p>
-            % if c.page == 'unapproved': 
-                Best go grab a can.
-            % elif c.page == 'favourites':
+            % if c.page == 'favourites':
                 Just click the little heart in the top-right hand corner of any quote and it'll be added to your
                 favourites!
+            % elif c.page == 'unapproved': 
+                Best go grab a can.
+            % elif c.page == 'reported': 
+
             % else: 
                 Get your users to add some!
             % endif
@@ -64,7 +66,7 @@
             <li class="top_right nomargin">
                 <ul class="top_right_controls">
                     % if h.show_approval_buttons():
-                        <li><div class="approve" ${self.data_quote_id(quote)}>/</div></li>
+                        <li><div class="quote_control approve" ${self.data_quote_id(quote)}>/</div></li>
                     % else:
                         <li><div class="quote_control report ${'logged_in' if c.logged_in else ''}" ${self.data_quote_id(quote)}>W</div></li>
                         <li><div>${self.insert_favourite_button(quote)}</div></li>
@@ -94,7 +96,7 @@
 
 <%def name="insert_favourite_button(quote)">
     % if not c.logged_in:
-        <span class="favourite">O</span>
+        <span class="quote_control favourite">O</span>
     % elif quote in c.user.favourites:
         <span class="quote_control favourite logged_in favourited" ${self.data_quote_id(quote)}>N</span>
     % else:

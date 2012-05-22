@@ -44,4 +44,4 @@ def is_admin():
     return c.logged_in and c.user.level == 1
 
 def show_approval_buttons():
-    return c.page == 'unapproved' and is_admin()
+    return c.page in ['unapproved', 'reported'] and is_admin()

@@ -85,6 +85,15 @@ class BrowseController(BaseController):
         c.page = 'unapproved'
         return render('/browse.mako')
 
+    def reported(self, page=1):
+        if not h.is_admin():
+            h.add_message('You must be an admin to perform that action.', 'error')
+            return render('/blank.mako')
+        quotes = db.query(Quote).filter(Quote.status == QSTATUS['reported']).all()
+        c.paginator = self._create_paginator(quotes, page)
+        c.page = 'reported'
+        return render('/browse.mako')
+
     def favourites(self, page=1):
         authorize()
         c.paginator = self._create_paginator(c.user.favourites, page)
