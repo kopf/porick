@@ -3,6 +3,7 @@
 Provides the BaseController class for subclassing.
 """
 import hashlib
+import routes
 
 from pylons import request, config
 from pylons import tmpl_context as c
@@ -25,8 +26,17 @@ class BaseController(WSGIController):
             db.remove()
 
     def __before__(self, action, **params):
+        self._fix_routes()
         self._set_context_var_defaults()
         self._process_auth_cookies()
+
+    def _fix_routes(self):
+        env = {}
+        for k,v in request.environ.items():
+            env[k]=v
+        env['SCRIPT_NAME'] = ''
+        config = routes.request_config()
+        config.environ = env
 
     def _set_context_var_defaults(self):
         c.page = ''

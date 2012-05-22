@@ -26,7 +26,7 @@ body {
     bottom: 0;
     width: 0px;
     height: 0px;
-    margin-left: 80px;
+    margin-left: -40px;
     font-size: 96px;
     font-weight: bold;
 }
@@ -101,7 +101,7 @@ body {
     text-align: center;
     font-weight: bold;
     font-size: 16px;
-    color: #C6C6C6;
+    color: #666;
     margin: 1px 0px -2px -3px;
 }
 

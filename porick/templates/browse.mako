@@ -12,7 +12,16 @@
     % if not (c.paginator or c.quote):
         <div class="hero-unit">
             <h1>No quotes found.</h1>
-            <p>Get your users to add some!</p>
+            <p>
+            % if c.page == 'unapproved': 
+                Best go grab a can.
+            % elif c.page == 'favourites':
+                Just click the little heart in the top-right hand corner of any quote and it'll be added to your
+                favourites!
+            % else: 
+                Get your users to add some!
+            % endif
+            </p>
         </div>
     % else:
         % if c.quote:
@@ -30,7 +39,7 @@
     <div class="well quote">
         ${self.insert_vote_buttons(quote)}
         <ul class="metadata">
-            <li><a href="${h.url(controller='browse', action='view_one', ref_id=quote.id)}" class="date">${quote.submitted.strftime("%d. %B %Y %I:%M%p")}</a></li>
+            <li><a href="${h.url(controller='browse', action='view_one', ref_id=quote.id)}" class="date">${quote.submitted.strftime("%d. %B %Y @ %H:%M")}</a></li>
             <li class="top_right nomargin">
                 % if h.show_approval_buttons():
                     <div class="approve" data-quote_id="${quote.id}">/</div>

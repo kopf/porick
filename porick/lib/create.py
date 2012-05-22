@@ -48,9 +48,9 @@ def validate_signup(username, password, password_confirm, email):
         return {'status': False,
                 'msg': 'Your password did not match in both fields.'}
 
-    email_regex = re.compile('''[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$'''
-                             '''%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-'''
-                             ''']*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?''')
+    email_regex = re.compile('''[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-zA-Z0-9!#$%'''
+                             '''&'*+/=?^_`{|}~-]+)*@(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]*'''
+                             '''[a-zA-Z0-9])?\.)+[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?''')
     if not email_regex.match(email):
         return {'status': False,
                 'msg': 'Please enter a valid email address.'}
@@ -61,7 +61,7 @@ def validate_signup(username, password, password_confirm, email):
                 'msg': 'Your username may consist only of'
                        ' alphanumeric characters and underscores.'}
 
-    if not len(password) > 8:
+    if not len(password) >= 8:
         return {'status': False,
                 'msg': 'Your password must be at least 8 characters long.'}
 

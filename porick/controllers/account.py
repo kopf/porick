@@ -6,6 +6,7 @@ from pylons.controllers.util import abort, redirect
 from porick.lib.auth import authenticate, clear_cookies
 from porick.lib.base import BaseController, render
 from porick.lib.create import create_user, validate_signup
+from porick.model import db, User
 import porick.lib.helpers as h
 
 log = logging.getLogger(__name__)
@@ -34,7 +35,7 @@ class AccountController(BaseController):
                 c.user = db.query(User).filter(User.username == username).first()
                 return render('/signup/success.mako')
             except NameError, e:
-                h.add_message(e.__str__, 'error')
+                h.add_message(e.__str__(), 'error')
                 return render('/signup/form.mako')
 
     def login(self):
