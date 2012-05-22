@@ -14,7 +14,7 @@ QSTATUS = {'unapproved': 0,
 
 
 def now():
-    return datetime.datetime.now()
+    return datetime.datetime.utcnow()
 
 def init_model(engine):
     """Call me before using any of the tables or classes in the model"""
