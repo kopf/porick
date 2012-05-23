@@ -33,19 +33,23 @@ class ApiV1Controller(BaseController):
     @jsonify
     def delete(self, quote_id):
         authorize()
+        quote = db.query(Quote).filter(Quote.id == quote_id).first()
+        if not quote:
+            return {'msg': 'Invalid quote ID.',
+                    'status': 'error'}
+        if not h.quote_is_deleteable(quote):
+            return {'msg': 'You do not have permission to delete this quote.',
+                    'status': 'error'}
+        c.user.deleted_quotes.append(quote)
         if request.environ['REQUEST_METHOD'] == 'DELETE':
-            quote = db.query(Quote).filter(Quote.id == quote_id).first()
-            if not quote:
-                return {'msg': 'Invalid quote ID.',
-                        'status': 'error'}
-            if not h.quote_is_deleteable(quote):
-                return {'msg': 'You do not have permission to delete this quote.',
-                        'status': 'error'}
-            c.user.deleted_quotes.append(quote)
             quote.status = QSTATUS['deleted']
-            db.commit()
-            return {'msg': 'Quote deleted.',
-                    'status': 'success'}
+            msg = 'Quote deleted.'
+        elif request.environ['REQUEST_METHOD'] == 'POST':
+            quote.status = QSTATUS['disapproved']
+            msg = 'Quote disapproved.'
+        db.commit()
+        return {'msg': msg,
+                'status': 'success'}
 
     @jsonify
     def favourite(self, quote_id):

@@ -76,6 +76,15 @@ class BrowseController(BaseController):
             c.page = 'browse'
             return render('/browse.mako')
 
+    def disapproved(self, page=1):
+        if not h.is_admin():
+            h.add_message('You must be an admin to perform that action.', 'error')
+            return render('/blank.mako')
+        quotes = db.query(Quote).filter(Quote.status == QSTATUS['disapproved']).order_by(Quote.submitted.desc()).all()
+        c.paginator = self._create_paginator(quotes, page)
+        c.page = 'disapproved'
+        return render('/browse.mako')
+
     def unapproved(self, page=1):
         if not h.is_admin():
             h.add_message('You must be an admin to perform that action.', 'error')

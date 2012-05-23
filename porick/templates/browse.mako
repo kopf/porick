@@ -14,7 +14,12 @@
                 setupVoteClickHandlers();
                 setupFavouritesClickHandlers();
                 setupReportingClickHandlers();
-                setupDeleteClickHandlers();
+                % if c.page == 'unapproved':
+                    setupDisapproveClickHandlers();
+                % else:
+                    setupDeleteClickHandlers();
+                % endif
+                
                 % if h.show_approval_button():
                     setupApproveClickHandlers();
                 % endif

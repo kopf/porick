@@ -1,6 +1,6 @@
 function setupReportingClickHandlers() {
     /**
-     * Assign click handlers to all favourite buttons.
+     * Assign click handlers to all report buttons.
      */
     $('.report').click(function() { 
     	var quote_id = $(this).data('quote_id');

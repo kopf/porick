@@ -1,20 +1,31 @@
 function setupDeleteClickHandlers() {
     /**
-     * Assign click handlers to all approve buttons.
+     * Assign click handlers to all delete buttons.
      */
     $('.delete').click(function() { 
         var quote_id = $(this).data('quote_id');
         var button = $(this);
         if(confirm("Do you really want to delete this quote?")) {
-            delete_quote(quote_id, button);
+            delete_quote(quote_id, button, 'DELETE');
         }
     });
 }
 
-function delete_quote(quote_id, button) {
+function setupDisapproveClickHandlers() {
+    /**
+     * Assign click handlers to all disapprove buttons.
+     */
+    $('.delete').click(function() { 
+        var quote_id = $(this).data('quote_id');
+        var button = $(this);
+        delete_quote(quote_id, button, 'POST');
+    });
+}
+
+function delete_quote(quote_id, button, method) {
     $.ajax({
         url: '/api/v1/delete/' + quote_id,
-        type: 'DELETE',
+        type: method,
         success: function(data, status, jqXHR){
             button.addClass(data['status'] + ' deleted');
             if(data['status'] === 'success') {
