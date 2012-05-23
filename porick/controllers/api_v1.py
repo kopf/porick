@@ -44,6 +44,8 @@ class ApiV1Controller(BaseController):
             c.user.deleted_quotes.append(quote)
             quote.status = QSTATUS['deleted']
             db.commit()
+            return {'msg': 'Quote deleted.',
+                    'status': 'success'}
 
     @jsonify
     def favourite(self, quote_id):
