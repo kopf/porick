@@ -45,6 +45,12 @@ ReportedQuotes = Table('reported_quotes', Base.metadata,
     Column('time', DateTime, nullable=False, default=now)
 )
 
+DeletedQuotes = Table('deleted_quotes', Base.metadata,
+    Column('user_id', Integer, ForeignKey('users.id')),
+    Column('quote_id', Integer, ForeignKey('quotes.id')),
+    Column('time', DateTime, nullable=False, default=now)
+)
+
 class User(Base):
     __tablename__  = 'users'
     __table_args__ = {'mysql_engine': 'InnoDB',
@@ -56,6 +62,7 @@ class User(Base):
     email = Column(String(64), nullable=False)
     favourites = relationship("Quote", secondary=Favourites)
     reported_quotes = relationship("Quote", secondary=ReportedQuotes)
+    deleted_quotes = relationship("Quote", secondary=DeletedQuotes)
 
 QuoteToUser = Table('quote_to_user', Base.metadata,
     Column('quote_id', Integer, ForeignKey('quotes.id')),

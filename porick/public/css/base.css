@@ -66,11 +66,8 @@ body {
     cursor: pointer;
     color: #000;
 }
-.approve {
-    color: #000;
-    font-size: 15px;
-}
-.approve.approved {
+.approve.approved,
+.delete.deleted {
     color: green !important;
 }
 .quote .votes {

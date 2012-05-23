@@ -2,18 +2,20 @@
 
 <%def name="custom_js()">
     % if c.logged_in:
-        % if h.show_approval_buttons():
+        % if h.show_approval_button():
             <script type="text/javascript" src="/js/approval.js"></script>
         % endif
         <script type="text/javascript" src="/js/voting.js"></script>
         <script type="text/javascript" src="/js/favourites.js"></script>
         <script type="text/javascript" src="/js/reporting.js"></script>
+        <script type="text/javascript" src="/js/delete.js"></script>
         <script type="text/javascript">
             $(document).ready(function() {
                 setupVoteClickHandlers();
                 setupFavouritesClickHandlers();
                 setupReportingClickHandlers();
-                % if h.show_approval_buttons():
+                setupDeleteClickHandlers();
+                % if h.show_approval_button():
                     setupApproveClickHandlers();
                 % endif
             });
@@ -39,7 +41,7 @@
                 favourites!
             % elif c.page == 'unapproved': 
                 Best go grab a can.
-            % elif c.page == 'reported': 
+            % elif c.page in ['reported', 'deleted']: 
 
             % else: 
                 Get your users to add some!
@@ -65,11 +67,13 @@
             <li><a href="${h.url(controller='browse', action='view_one', ref_id=quote.id)}" class="date">${quote.submitted.strftime("%d. %B %Y @ %H:%M")}</a></li>
             <li class="top_right nomargin">
                 <ul class="top_right_controls">
-                    % if h.show_approval_buttons():
-                        <li><div class="quote_control approve" ${self.data_quote_id(quote)}>/</div></li>
-                    % else:
-                        <li><div class="quote_control report ${'logged_in' if c.logged_in else ''}" title="Report" ${self.data_quote_id(quote)}>W</div></li>
-                        <li><div>${self.insert_favourite_button(quote)}</div></li>
+                    <li><div class="quote_control report ${'logged_in' if c.logged_in else ''}" title="Report" ${self.data_quote_id(quote)}>W</div></li>
+                    <li><div>${self.insert_favourite_button(quote)}</div></li>
+                    % if h.show_approval_button():
+                        <li><div class="quote_control logged_in approve" ${self.data_quote_id(quote)}>/</div></li>
+                    % endif
+                    % if h.quote_is_deleteable(quote):
+                        <li><div class="quote_control logged_in delete" title="Delete" ${self.data_quote_id(quote)}>×</div></li>
                     % endif
                 </ul>
             </li>
