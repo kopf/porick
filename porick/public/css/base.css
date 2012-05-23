@@ -67,6 +67,7 @@ body {
     color: #000;
 }
 .approve {
+    color: #000;
     font-size: 15px;
 }
 .approve.approved {
