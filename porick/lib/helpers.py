@@ -36,6 +36,8 @@ def add_message(msg, level):
     c.messages.append({'msg': msg, 'level': level})
 
 def check_if_voted(quote):
+    if not c.logged_in:
+        return False
     for assoc in quote.voters:
         if assoc.user.username == c.user.username:
             return assoc.direction
