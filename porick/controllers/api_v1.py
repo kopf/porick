@@ -81,6 +81,10 @@ class ApiV1Controller(BaseController):
                 #       doesn't seem to support it :/
                 return {'msg': 'You are reporting quotes too fast. Slow down!',
                         'status': 'error'}
+            if db.query(ReportedQuotes).filter_by(user_id=c.user.id).\
+                filter_by(quote_id=quote.id).first():
+                return {'msg': 'You already reported this quote in the past. Ignored.',
+                        'status': 'error'}
             if not quote.status == QSTATUS['approved']:
                 return {'msg': 'Quote is not approved, therefore cannot be reported.',
                         'status': 'error'}
