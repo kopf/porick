@@ -75,10 +75,10 @@
                     <li><div class="quote_control report ${'logged_in' if c.logged_in else ''}" title="Report" ${self.data_quote_id(quote)}>W</div></li>
                     <li><div>${self.insert_favourite_button(quote)}</div></li>
                     % if h.show_approval_button():
-                        <li><div class="quote_control logged_in approve" ${self.data_quote_id(quote)}>/</div></li>
+                        <li><div class="quote_control logged_in approve" title="Approve" ${self.data_quote_id(quote)}>/</div></li>
                     % endif
                     % if h.quote_is_deleteable(quote):
-                        <li><div class="quote_control logged_in delete" title="Delete" ${self.data_quote_id(quote)}>×</div></li>
+                        <li><div class="quote_control logged_in delete" title="${'Disapprove' if c.page == 'unapproved' else 'Delete'}" ${self.data_quote_id(quote)}>×</div></li>
                     % endif
                 </ul>
             </li>
