@@ -45,5 +45,11 @@ def check_if_voted(quote):
 def is_admin():
     return c.logged_in and c.user.level == 1
 
-def show_approval_buttons():
+def show_approval_button():
     return c.page in ['unapproved', 'reported'] and is_admin()
+
+def show_delete_button(quote):
+    if not c.logged_in:
+        return False
+    else:
+        return quote.submitted_by == c.user or c.user.level == 1

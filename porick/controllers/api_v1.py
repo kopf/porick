@@ -24,6 +24,8 @@ class ApiV1Controller(BaseController):
             if not quote:
                 return {'msg': 'Invalid quote ID',
                         'status': 'error'}
+            if quote.status == QSTATUS['reported']:
+                self._clear_reports_for_quote(quote)
             quote.status = QSTATUS['approved']
             db.commit()
             return {'msg': 'Quote approved',
@@ -149,3 +151,8 @@ class ApiV1Controller(BaseController):
                 break
             i += 1
         return len(found) >= limit
+
+    def _clear_reports_for_quote(self, quote):
+        for report in db.query(ReportedQuotes).filter_by(quote_id=quote.id).all():
+            report.delete()
+        db.commit()
