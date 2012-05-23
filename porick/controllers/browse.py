@@ -77,8 +77,8 @@ class BrowseController(BaseController):
             return render('/browse.mako')
 
     def disapproved(self, page=1):
-        if not h.is_admin():
-            h.add_message('You must be an admin to perform that action.', 'error')
+        if not c.logged_in:
+            h.add_message('You must be logged in to perform that action.', 'error')
             return render('/blank.mako')
         quotes = db.query(Quote).filter(Quote.status == QSTATUS['disapproved']).order_by(Quote.submitted.desc()).all()
         c.paginator = self._create_paginator(quotes, page)
@@ -104,8 +104,8 @@ class BrowseController(BaseController):
         return render('/browse.mako')
 
     def deleted(self, page=1):
-        if not c.logged_in:
-            h.add_message('You must be logged in to perform that action.', 'error')
+        if not h.is_admin():
+            h.add_message('You must be an admin to perform that action.', 'error')
             return render('/blank.mako')
         quotes = db.query(Quote).filter(Quote.status == QSTATUS['deleted']).all()
         c.paginator = self._create_paginator(quotes, page)

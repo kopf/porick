@@ -98,7 +98,7 @@
                         <li class="${'active' if c.page == 'best' else ''}"><a href="${h.url(controller='browse', action='best')}">Best</a></li>
                         <li class="${'active' if c.page == 'worst' else ''}"><a href="${h.url(controller='browse', action='worst')}">Worst</a></li>
                         <li class="${'active' if c.page == 'random' else ''}"><a href="${h.url(controller='browse', action='random')}">Random</a></li>
-                        <li class="${'active' if c.page == 'deleted' else ''}"><a href="${h.url(controller='browse', action='deleted')}">Deleted</a></li>
+                        <li class="${'active' if c.page == 'disapproved' else ''}"><a href="${h.url(controller='browse', action='disapproved')}">Disapproved</a></li>
                         <li class="${'active' if c.page == 'tags' else ''}"><a href="${h.url(controller='browse', action='tags')}">Tags</a></li>
                     </ul>
                     <a class="btn btn-small btn-success" href="${h.url(controller='create', action='quote')}">Submit</a>
@@ -124,7 +124,7 @@
                     <li class="nav-header">Admin</li>
                     <li><a href="${h.url(controller='browse', action='unapproved')}">Unapproved Quotes</a></li>
                     <li><a href="${h.url(controller='browse', action='reported')}">Reported Quotes</a></li>
-                    <li><a href="${h.url(controller='browse', action='disapproved')}">Disapproved Quotes</a></li>
+                    <li><a href="${h.url(controller='browse', action='deleted')}">Deleted Quotes</a></li>
                     <li class="divider"></li>
                 % endif
                 <li><a href="${h.url(controller='browse', action='favourites')}">My Favourites</a></li>
