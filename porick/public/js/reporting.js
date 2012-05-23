@@ -4,8 +4,8 @@ function setupReportingClickHandlers() {
      */
     $('.report').click(function() { 
     	var quote_id = $(this).data('quote_id');
-        if(!($(this).hasClass('reported'))) {
-        	report(quote_id, $(this));
+        if(confirm("Do you really want to report this quote?")) {
+            report(quote_id, $(this));
         }
     });
 }
