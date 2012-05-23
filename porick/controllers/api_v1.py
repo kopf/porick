@@ -24,8 +24,6 @@ class ApiV1Controller(BaseController):
             if not quote:
                 return {'msg': 'Invalid quote ID',
                         'status': 'error'}
-            if quote.status == QSTATUS['reported']:
-                self._clear_reports_for_quote(quote)
             quote.status = QSTATUS['approved']
             db.commit()
             return {'msg': 'Quote approved',
@@ -67,6 +65,10 @@ class ApiV1Controller(BaseController):
                         'status': 'error'}
             if not quote.status == QSTATUS['approved']:
                 return {'msg': 'Quote is not approved, therefore cannot be reported',
+                        'status': 'error'}
+            if db.query(ReportedQuotes).filter_by(user_id=c.user.id).\
+                filter_by(quote_id=quote.id).first():
+                return {'msg': 'You already reported this quote in the past. Ignored.',
                         'status': 'error'}
             c.user.reported_quotes.append(quote)
             quote.status = QSTATUS['reported']
@@ -151,8 +153,3 @@ class ApiV1Controller(BaseController):
                 break
             i += 1
         return len(found) >= limit
-
-    def _clear_reports_for_quote(self, quote):
-        for report in db.query(ReportedQuotes).filter_by(quote_id=quote.id).all():
-            report.delete()
-        db.commit()
