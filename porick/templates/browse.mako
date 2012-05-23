@@ -8,11 +8,13 @@
         <script type="text/javascript" src="/js/voting.js"></script>
         <script type="text/javascript" src="/js/favourites.js"></script>
         <script type="text/javascript" src="/js/reporting.js"></script>
+        <script type="text/javascript" src="/js/delete.js"></script>
         <script type="text/javascript">
             $(document).ready(function() {
                 setupVoteClickHandlers();
                 setupFavouritesClickHandlers();
                 setupReportingClickHandlers();
+                setupDeleteClickHandlers();
                 % if h.show_approval_button():
                     setupApproveClickHandlers();
                 % endif
