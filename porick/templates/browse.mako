@@ -46,7 +46,7 @@
                 favourites!
             % elif c.page == 'unapproved': 
                 Best go grab a can.
-            % elif c.page in ['reported', 'deleted']: 
+            % elif c.page in ['reported', 'deleted', 'disapproved']: 
 
             % else: 
                 Get your users to add some!
