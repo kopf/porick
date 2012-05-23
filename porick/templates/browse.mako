@@ -68,7 +68,7 @@
                     % if h.show_approval_buttons():
                         <li><div class="quote_control approve" ${self.data_quote_id(quote)}>/</div></li>
                     % else:
-                        <li><div class="quote_control report ${'logged_in' if c.logged_in else ''}" ${self.data_quote_id(quote)}>W</div></li>
+                        <li><div class="quote_control report ${'logged_in' if c.logged_in else ''}" title="Report" ${self.data_quote_id(quote)}>W</div></li>
                         <li><div>${self.insert_favourite_button(quote)}</div></li>
                     % endif
                 </ul>
@@ -96,11 +96,11 @@
 
 <%def name="insert_favourite_button(quote)">
     % if not c.logged_in:
-        <span class="quote_control favourite">O</span>
+        <span class="quote_control favourite" title="Favourite">O</span>
     % elif quote in c.user.favourites:
-        <span class="quote_control favourite logged_in favourited" ${self.data_quote_id(quote)}>N</span>
+        <span class="quote_control favourite logged_in favourited" title="Favourite" ${self.data_quote_id(quote)}>N</span>
     % else:
-        <span class="quote_control favourite logged_in" ${self.data_quote_id(quote)}>O</span>
+        <span class="quote_control favourite logged_in" title="Favourite" ${self.data_quote_id(quote)}>O</span>
     % endif
 </%def>
 
