@@ -160,6 +160,7 @@ body {
 }
 
 .top_right_controls {
+    margin-right: -14px;
     float: left;
 }
 
