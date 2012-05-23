@@ -13,10 +13,12 @@ def authenticate(username, password):
     user = db.query(User).filter(User.username == username).first()
     if not user:
         return False
-    if bcrypt.hashpw(password, config['PASSWORD_SALT']) == user.password:
+    elif bcrypt.hashpw(password, config['PASSWORD_SALT']) == user.password:
         set_auth_cookie(user)
         return True
-    return False
+    else:
+        clear_cookies()
+        return False
 
 
 def authorize():

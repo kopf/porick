@@ -1,4 +1,5 @@
 import logging
+import datetime
 
 from pylons import request, response, session, tmpl_context as c, url
 from pylons.controllers.util import abort, redirect
@@ -7,7 +8,7 @@ from pylons.decorators import jsonify
 from porick.lib.auth import authorize
 from porick.lib.base import BaseController, render
 import porick.lib.helpers as h
-from porick.model import db, Quote, VoteToUser
+from porick.model import db, QSTATUS, Quote, VoteToUser, ReportedQuotes, now
 
 log = logging.getLogger(__name__)
 
@@ -23,7 +24,7 @@ class ApiV1Controller(BaseController):
             if not quote:
                 return {'msg': 'Invalid quote ID',
                         'status': 'error'}
-            quote.approved = 1
+            quote.status = QSTATUS['approved']
             db.commit()
             return {'msg': 'Quote approved',
                     'status': 'success'}
@@ -48,7 +49,29 @@ class ApiV1Controller(BaseController):
             db.commit()
             return {'msg': 'Removed favourite',
                     'status': 'success'}
-
+    
+    @jsonify
+    def report(self, quote_id):
+        authorize()
+        quote = db.query(Quote).filter(Quote.id == quote_id).first()
+        if not quote:
+            return {'msg': 'Invalid quote ID',
+                    'status': 'error'}
+        if request.environ['REQUEST_METHOD'] == 'PUT':
+            if self._has_made_too_many_reports():
+                # TODO: This should return a HTTP 429! But pylons.controllers.util.abort()
+                #       doesn't seem to support it :/
+                return {'msg': 'You are reporting quotes too fast. Slow down!',
+                        'status': 'error'}
+            if not quote.status == QSTATUS['approved']:
+                return {'msg': 'Quote is not approved, therefore cannot be reported',
+                        'status': 'error'}
+            c.user.reported_quotes.append(quote)
+            quote.status = QSTATUS['reported']
+            db.commit()
+            
+            return {'msg': 'Quote reported',
+                    'status': 'success'}
 
     @jsonify
     def vote(self, direction, quote_id):
@@ -106,3 +129,23 @@ class ApiV1Controller(BaseController):
 
         else:
             abort(405)
+
+    def _has_made_too_many_reports(self):
+        # TODO:
+        # This filtering / counting should be done by SQLAlchemy.
+        #
+        # This is a quick hack to get around problems with between() and filter/filter_by,
+        # possibly caused by the fact that ReportedQuotes is a Table() obj and not a class
+        #
+        reports = db.query(ReportedQuotes).filter_by(user_id=c.user.id).all()
+        limit = 5
+        limit_time = now() - datetime.timedelta(hours=1)
+        i = 0
+        found = []
+        for report in reports:
+            if limit_time < report.time:
+                found.append(report)
+            if i == limit:
+                break
+            i += 1
+        return len(found) >= limit

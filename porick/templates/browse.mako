@@ -1,5 +1,26 @@
 <%inherit file="base.mako"/>
 
+<%def name="custom_js()">
+    % if c.logged_in:
+        % if h.show_approval_buttons():
+            <script type="text/javascript" src="/js/approval.js"></script>
+        % endif
+        <script type="text/javascript" src="/js/voting.js"></script>
+        <script type="text/javascript" src="/js/favourites.js"></script>
+        <script type="text/javascript" src="/js/reporting.js"></script>
+        <script type="text/javascript">
+            $(document).ready(function() {
+                setupVoteClickHandlers();
+                setupFavouritesClickHandlers();
+                setupReportingClickHandlers();
+                % if h.show_approval_buttons():
+                    setupApproveClickHandlers();
+                % endif
+            });
+        </script>
+    % endif
+</%def>
+
 <%def name="head_title()">
     % if 'search' in c.page or c.page == 'tags':
         ${self.side_text(capitalize=True)}
@@ -13,11 +34,13 @@
         <div class="hero-unit">
             <h1>No quotes found.</h1>
             <p>
-            % if c.page == 'unapproved': 
-                Best go grab a can.
-            % elif c.page == 'favourites':
+            % if c.page == 'favourites':
                 Just click the little heart in the top-right hand corner of any quote and it'll be added to your
                 favourites!
+            % elif c.page == 'unapproved': 
+                Best go grab a can.
+            % elif c.page == 'reported': 
+
             % else: 
                 Get your users to add some!
             % endif
@@ -41,31 +64,44 @@
         <ul class="metadata">
             <li><a href="${h.url(controller='browse', action='view_one', ref_id=quote.id)}" class="date">${quote.submitted.strftime("%d. %B %Y @ %H:%M")}</a></li>
             <li class="top_right nomargin">
-                % if h.show_approval_buttons():
-                    <div class="approve" data-quote_id="${quote.id}">/</div>
-                % else:
-                    <div>${self.insert_favourite_button(quote)}</div>
-                % endif
+                <ul class="top_right_controls">
+                    % if h.show_approval_buttons():
+                        <li><div class="quote_control approve" ${self.data_quote_id(quote)}>/</div></li>
+                    % else:
+                        <li><div class="quote_control report ${'logged_in' if c.logged_in else ''}" ${self.data_quote_id(quote)}>W</div></li>
+                        <li><div>${self.insert_favourite_button(quote)}</div></li>
+                    % endif
+                </ul>
             </li>
         </ul>
         ${self.insert_quote_body(quote)}
+        <div class="bottom_metadata">
+            ${self.insert_quote_tags(quote)}
+        </div>
     </div>
 </%def>
 
 <%def name="insert_vote_buttons(quote)">
+    <% voted = h.check_if_voted(quote) %>
     <div class="votes">
-        <div class="vote up" title="${h.get_score_mouseover(quote, 'up')}" data-quote_id="${quote.id}">
+        <div class="quote_control vote up ${'logged_in' if c.logged_in else ''} ${'voted' if voted == 'up' else ''}" title="${h.get_score_mouseover(quote, 'up')}" ${self.data_quote_id(quote)}>
             :
         </div>
         <div class="score">${quote.rating}</div>
-        <div class="vote down" title="${h.get_score_mouseover(quote, 'down')}" data-quote_id="${quote.id}">
+        <div class="quote_control vote down ${'logged_in' if c.logged_in else ''} ${'voted' if voted == 'down' else ''}" title="${h.get_score_mouseover(quote, 'down')}" ${self.data_quote_id(quote)}>
             ;
         </div>
     </div>
 </%def>
 
 <%def name="insert_favourite_button(quote)">
-    <span class="favourite">O</span>
+    % if not c.logged_in:
+        <span class="quote_control favourite">O</span>
+    % elif quote in c.user.favourites:
+        <span class="quote_control favourite logged_in favourited" ${self.data_quote_id(quote)}>N</span>
+    % else:
+        <span class="quote_control favourite logged_in" ${self.data_quote_id(quote)}>O</span>
+    % endif
 </%def>
 
 <%def name="insert_quote_body(quote)">
@@ -76,6 +112,9 @@
             <h6>${quote.notes}</h6>
         % endif
     </div>
+</%def>
+
+<%def name="insert_quote_tags(quote)">
     % if quote.tags:
         <div class="extra_info tags">
             % for tag in quote.tags:
@@ -101,3 +140,5 @@
         </div>
     % endif
 </%def>
+
+<%def name="data_quote_id(quote)">data-quote_id="${quote.id}"</%def>

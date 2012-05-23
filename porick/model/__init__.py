@@ -6,8 +6,15 @@ from sqlalchemy.dialects.mysql import DOUBLE
 from porick.model.meta import Base, Session as db
 
 
+QSTATUS = {'unapproved': 0,
+           'approved': 1,
+           'disapproved': 2,
+           'reported': 3,
+           'deleted': 4}
+
+
 def now():
-    return datetime.datetime.now()
+    return datetime.datetime.utcnow()
 
 def init_model(engine):
     """Call me before using any of the tables or classes in the model"""
@@ -32,6 +39,12 @@ Favourites = Table('favourites', Base.metadata,
     Column('quote_id', Integer, ForeignKey('quotes.id'))
 )
 
+ReportedQuotes = Table('reported_quotes', Base.metadata,
+    Column('user_id', Integer, ForeignKey('users.id')),
+    Column('quote_id', Integer, ForeignKey('quotes.id')),
+    Column('time', DateTime, nullable=False, default=now)
+)
+
 class User(Base):
     __tablename__  = 'users'
     __table_args__ = {'mysql_engine': 'InnoDB',
@@ -42,6 +55,7 @@ class User(Base):
     level = Column(Integer, nullable=False, default=0)
     email = Column(String(64), nullable=False)
     favourites = relationship("Quote", secondary=Favourites)
+    reported_quotes = relationship("Quote", secondary=ReportedQuotes)
 
 QuoteToUser = Table('quote_to_user', Base.metadata,
     Column('quote_id', Integer, ForeignKey('quotes.id')),
@@ -65,8 +79,7 @@ class Quote(Base):
     rating       = Column(Integer, nullable=False, default=0)
     votes        = Column(Integer, nullable=False, default=0)
     submitted    = Column(DateTime, nullable=False, default=now)
-    approved     = Column(Integer, nullable=False, default=0)
-    flagged      = Column(Integer, nullable=False, default=0)
+    status       = Column(Integer, nullable=False, default=0)
     score        = Column(DOUBLE(unsigned=True), nullable=False, default=1)
     tags         = relationship("Tag", secondary=QuoteToTag)
     submitted_by = relationship("User", secondary=QuoteToUser, uselist=False)

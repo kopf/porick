@@ -11,7 +11,7 @@ function setupApproveClickHandlers() {
             success: function(data, status, jqXHR){
                 button.addClass(data['status'] + ' approved');
                 if(data['status'] === 'success') {
-                    button.parent().parent().parent().fadeOut('slow');
+                    button.parent().parent().parent().parent().parent().fadeOut('slow');
                 }
             }
         });

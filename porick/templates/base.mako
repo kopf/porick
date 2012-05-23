@@ -122,6 +122,7 @@
                 % if h.is_admin():
                     <li class="nav-header">Admin</li>
                     <li><a href="${h.url(controller='browse', action='unapproved')}">Unapproved Quotes</a></li>
+                    <li><a href="${h.url(controller='browse', action='reported')}">Reported Quotes</a></li>
                     <li class="divider"></li>
                 % endif
                 <li><a href="${h.url(controller='browse', action='favourites')}">My Favourites</a></li>

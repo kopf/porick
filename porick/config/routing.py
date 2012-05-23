@@ -35,6 +35,9 @@ def make_map(config):
     map.connect('/browse/unapproved', controller='browse', action='unapproved')
     map.connect('/browse/unapproved/page/{page}', controller='browse', action='unapproved')
 
+    map.connect('/browse/reported', controller='browse', action='reported')
+    map.connect('/browse/reported/page/{page}', controller='browse', action='reported')
+
     map.connect('/browse/favourites', controller='browse', action='favourites')
     map.connect('/browse/favourites/page/{page}', controller='browse', action='favourites')
 
@@ -54,6 +57,7 @@ def make_map(config):
 
     map.connect('/api/v1/approve/{quote_id}', controller='api_v1', action='approve')
     map.connect('/api/v1/favourite/{quote_id}', controller='api_v1', action='favourite')
+    map.connect('/api/v1/report/{quote_id}', controller='api_v1', action='report')
     map.connect('/api/v1/vote/{direction}/{quote_id}', controller='api_v1', action='vote')
 
     map.connect('/', controller='home', action='main')
