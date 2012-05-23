@@ -46,7 +46,7 @@ def is_admin():
     return c.logged_in and c.user.level == 1
 
 def show_approval_button():
-    return c.page in ['unapproved', 'reported', 'deleted'] and is_admin()
+    return c.page in ['unapproved', 'reported', 'deleted', 'disapproved'] and is_admin()
 
 def quote_is_deleteable(quote):
     if not c.logged_in:
