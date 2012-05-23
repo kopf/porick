@@ -48,7 +48,7 @@ def is_admin():
 def show_approval_button():
     return c.page in ['unapproved', 'reported'] and is_admin()
 
-def show_delete_button(quote):
+def quote_is_deleteable(quote):
     if not c.logged_in:
         return False
     else:

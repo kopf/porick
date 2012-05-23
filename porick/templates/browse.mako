@@ -72,7 +72,7 @@
                         <li><div>${self.insert_favourite_button(quote)}</div></li>
                     % endif
 
-                    % if h.show_delete_button(quote):
+                    % if h.quote_is_deleteable(quote):
                         <li><div class="quote_control logged_in delete" title="Delete" ${self.data_quote_id(quote)}>×</div></li>
                     % endif
                 </ul>
