@@ -22,32 +22,44 @@ class ApiV1Controller(BaseController):
         if request.environ['REQUEST_METHOD'] == 'POST':
             quote = db.query(Quote).filter(Quote.id == quote_id).first()
             if not quote:
-                return {'msg': 'Invalid quote ID',
+                return {'msg': 'Invalid quote ID.',
                         'status': 'error'}
             quote.status = QSTATUS['approved']
             db.commit()
-            return {'msg': 'Quote approved',
+            return {'msg': 'Quote approved.',
                     'status': 'success'}
+
+    @jsonify
+    def delete(self, quote_id):
+        authorize()
+        if request.environ['REQUEST_METHOD'] == 'POST':
+            quote = db.query(Quote).filter(Quote.id == quote_id).first()
+            if not h.quote_is_deleteable(quote):
+                return {'msg': 'You do not have permission to delete this quote.',
+                        'status': 'error'}
+            quote.status = QSTATUS['deleted']
+            
+
 
     @jsonify
     def favourite(self, quote_id):
         authorize()
         quote = db.query(Quote).filter(Quote.id == quote_id).first()
         if not quote:
-            return {'msg': 'Invalid quote ID',
+            return {'msg': 'Invalid quote ID.',
                     'status': 'error'}
         if request.environ['REQUEST_METHOD'] == 'PUT':
             c.user.favourites.append(quote)
             db.commit()
-            return {'msg': 'Quote favourited',
+            return {'msg': 'Quote favourited.',
                     'status': 'success'}
         elif request.environ['REQUEST_METHOD'] == 'DELETE':
             if not quote in c.user.favourites:
-                return {'msg': "Can't remove: This quote isn't in your favourites",
+                return {'msg': "Can't remove: This quote isn't in your favourites.",
                         'status': 'error'}
             c.user.favourites.remove(quote)
             db.commit()
-            return {'msg': 'Removed favourite',
+            return {'msg': 'Removed favourite.',
                     'status': 'success'}
     
     @jsonify
@@ -55,7 +67,7 @@ class ApiV1Controller(BaseController):
         authorize()
         quote = db.query(Quote).filter(Quote.id == quote_id).first()
         if not quote:
-            return {'msg': 'Invalid quote ID',
+            return {'msg': 'Invalid quote ID.',
                     'status': 'error'}
         if request.environ['REQUEST_METHOD'] == 'PUT':
             if self._has_made_too_many_reports():
@@ -64,7 +76,7 @@ class ApiV1Controller(BaseController):
                 return {'msg': 'You are reporting quotes too fast. Slow down!',
                         'status': 'error'}
             if not quote.status == QSTATUS['approved']:
-                return {'msg': 'Quote is not approved, therefore cannot be reported',
+                return {'msg': 'Quote is not approved, therefore cannot be reported.',
                         'status': 'error'}
             if db.query(ReportedQuotes).filter_by(user_id=c.user.id).\
                 filter_by(quote_id=quote.id).first():
@@ -74,7 +86,7 @@ class ApiV1Controller(BaseController):
             quote.status = QSTATUS['reported']
             db.commit()
             
-            return {'msg': 'Quote reported',
+            return {'msg': 'Quote reported.',
                     'status': 'success'}
 
     @jsonify
@@ -83,7 +95,7 @@ class ApiV1Controller(BaseController):
         quote = db.query(Quote).filter(Quote.id == quote_id).first()
         if request.environ['REQUEST_METHOD'] == 'PUT':
             if not quote:
-                return {'msg': 'Invalid quote ID',
+                return {'msg': 'Invalid quote ID.',
                         'status': 'error'}
 
             already_voted = ''
@@ -106,7 +118,7 @@ class ApiV1Controller(BaseController):
             elif direction == 'down':
                 quote.rating -= 1
             else:
-                return {'msg': 'Invalid vote direction',
+                return {'msg': 'Invalid vote direction.',
                         'status': 'error'}
 
             if not already_voted:
@@ -123,13 +135,13 @@ class ApiV1Controller(BaseController):
             elif direction == 'down':
                 quote.rating += 1
             else:
-                return {'msg': 'Invalid vote direction',
+                return {'msg': 'Invalid vote direction.',
                         'status': 'error'}
             
             quote.votes -= 1
             db.commit()
             return {'status': 'success',
-                    'msg': 'Vote annulled!!'}
+                    'msg': 'Vote annulled!'}
 
         else:
             abort(405)
