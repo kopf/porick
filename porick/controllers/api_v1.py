@@ -8,7 +8,8 @@ from pylons.decorators import jsonify
 from porick.lib.auth import authorize
 from porick.lib.base import BaseController, render
 import porick.lib.helpers as h
-from porick.model import db, QSTATUS, Quote, VoteToUser, ReportedQuotes, now
+from porick.model import (db, QSTATUS, Quote, VoteToUser, 
+                          ReportedQuotes, DeletedQuotes, now)
 
 log = logging.getLogger(__name__)
 
@@ -32,14 +33,17 @@ class ApiV1Controller(BaseController):
     @jsonify
     def delete(self, quote_id):
         authorize()
-        if request.environ['REQUEST_METHOD'] == 'POST':
+        if request.environ['REQUEST_METHOD'] == 'DELETE':
             quote = db.query(Quote).filter(Quote.id == quote_id).first()
+            if not quote:
+                return {'msg': 'Invalid quote ID.',
+                        'status': 'error'}
             if not h.quote_is_deleteable(quote):
                 return {'msg': 'You do not have permission to delete this quote.',
                         'status': 'error'}
+            c.user.deleted_quotes.append(quote)
             quote.status = QSTATUS['deleted']
-            
-
+            db.commit()
 
     @jsonify
     def favourite(self, quote_id):

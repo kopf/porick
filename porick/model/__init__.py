@@ -62,6 +62,7 @@ class User(Base):
     email = Column(String(64), nullable=False)
     favourites = relationship("Quote", secondary=Favourites)
     reported_quotes = relationship("Quote", secondary=ReportedQuotes)
+    deleted_quotes = relationship("Quote", secondary=DeletedQuotes)
 
 QuoteToUser = Table('quote_to_user', Base.metadata,
     Column('quote_id', Integer, ForeignKey('quotes.id')),
