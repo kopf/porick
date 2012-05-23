@@ -94,6 +94,15 @@ class BrowseController(BaseController):
         c.page = 'reported'
         return render('/browse.mako')
 
+    def deleted(self, page=1):
+        if not c.logged_in:
+            h.add_message('You must be logged in to perform that action.', 'error')
+            return render('/blank.mako')
+        quotes = db.query(Quote).filter(Quote.status == QSTATUS['deleted']).all()
+        c.paginator = self._create_paginator(quotes, page)
+        c.page = 'deleted'
+        return render('/browse.mako')
+
     def favourites(self, page=1):
         authorize()
         c.paginator = self._create_paginator(c.user.favourites, page)
