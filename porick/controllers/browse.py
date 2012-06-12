@@ -44,7 +44,7 @@ class BrowseController(BaseController):
             keyword = request.params.get('keyword', '')
             redirect(url(controller='browse', action='search', keyword=keyword))
         query = '%' + keyword + '%'
-        quotes = db.query(Quote).filter(Quote.body.like(query)).order_by(Quote.submitted.desc()).all()
+        quotes = db.query(Quote).filter(Quote.body.like(query)).filter(Quote.status == QSTATUS['approved']).order_by(Quote.submitted.desc()).all()
         c.paginator = self._create_paginator(quotes, page)
         c.page = 'search: %s' % keyword
         return render('/browse.mako')
@@ -62,7 +62,7 @@ class BrowseController(BaseController):
             return render('/tagcloud.mako')
         else:
             tag_obj = db.query(Tag).filter(Tag.tag == tag).first()
-            quotes = db.query(Quote).filter(Quote.tags.contains(tag_obj)).all()
+            quotes = db.query(Quote).filter(Quote.tags.contains(tag_obj)).filter(Quote.status == QSTATUS['approved']).all()
             c.paginator = self._create_paginator(quotes, page)
             c.tag_filter = tag
             return render('/browse.mako')
