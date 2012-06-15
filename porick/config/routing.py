@@ -51,8 +51,8 @@ def make_map(config):
     map.connect('/browse/{ref_id}', controller='browse', action='view_one')
 
     map.connect('/search', controller='browse', action='search')
-    map.connect('/search/{keyword}', controller='browse', action='search')
-    map.connect('/search/{keyword}/page/{page}', controller='browse', action='search')
+    map.connect('/search/{term}', controller='browse', action='search')
+    map.connect('/search/{term}/page/{page}', controller='browse', action='search')
 
 
     map.connect('/create', controller='create', action='quote')

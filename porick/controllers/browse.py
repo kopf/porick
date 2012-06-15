@@ -39,14 +39,14 @@ class BrowseController(BaseController):
         c.page = 'random'
         return render('/browse.mako')
 
-    def search(self, keyword='', page=1):
+    def search(self, term='', page=1):
         if request.environ['REQUEST_METHOD'] == 'POST':
-            keyword = request.params.get('keyword', '')
-            redirect(url(controller='browse', action='search', keyword=keyword))
-        query = '%' + keyword + '%'
+            term = request.params.get('term', '')
+            redirect(url(controller='browse', action='search', term=term))
+        query = '%' + term + '%'
         quotes = db.query(Quote).filter(Quote.body.like(query)).filter(Quote.status == QSTATUS['approved']).order_by(Quote.submitted.desc()).all()
         c.paginator = self._create_paginator(quotes, page)
-        c.page = 'search: %s' % keyword
+        c.page = 'search: %s' % term
         return render('/browse.mako')
         
 

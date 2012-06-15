@@ -104,7 +104,7 @@
                     <a class="btn btn-small btn-success" href="${h.url(controller='create', action='quote')}">Submit</a>
                     <ul class="nav pull-right">
                         <form class="navbar-search pull-left" action="${h.url(controller='browse', action='search')}" method="post">
-                            <input type="text" class="search-query span2" placeholder="Search" name="keyword">
+                            <input type="text" class="search-query span2" placeholder="Search" name="term">
                         </form>
                         <li class="divider-vertical"></li>
                         ${self.account_dropdown()}
