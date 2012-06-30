@@ -53,7 +53,8 @@ body {
     border: 1px solid #DDD;
     border-left-width: 0;
 }
-.metadata .date {
+.metadata .date,
+.metadata .submitted_by {
     font-size: 11px;
 }
 

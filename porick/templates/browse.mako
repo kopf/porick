@@ -69,7 +69,14 @@
     <div class="well quote">
         ${self.insert_vote_buttons(quote)}
         <ul class="metadata">
-            <li><a href="${h.url(controller='browse', action='view_one', ref_id=quote.id)}" class="date">${quote.submitted.strftime("%d. %B %Y @ %H:%M")}</a></li>
+            <li>
+                <a href="${h.url(controller='browse', action='view_one', ref_id=quote.id)}" class="date">${quote.submitted.strftime("%d. %B %Y @ %H:%M")}</a>
+                % if quote.submitted_by:
+                    <span class="submitted_by">
+                        by ${quote.submitted_by.username}
+                    </span>
+                % endif
+            </li>
             <li class="top_right nomargin">
                 <ul class="top_right_controls">
                     <li><div class="quote_control report ${'logged_in' if c.logged_in else ''}" title="Report" ${self.data_quote_id(quote)}>W</div></li>
