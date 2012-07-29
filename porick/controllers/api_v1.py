@@ -29,27 +29,40 @@ class ApiV1Controller(BaseController):
             db.commit()
             return {'msg': 'Quote approved.',
                     'status': 'success'}
+        else:
+            abort(405)
 
     @jsonify
     def delete(self, quote_id):
-        authorize()
-        quote = db.query(Quote).filter(Quote.id == quote_id).first()
-        if not quote:
-            return {'msg': 'Invalid quote ID.',
-                    'status': 'error'}
-        if not h.quote_is_deleteable(quote):
-            return {'msg': 'You do not have permission to delete this quote.',
-                    'status': 'error'}
-        c.user.deleted_quotes.append(quote)
         if request.environ['REQUEST_METHOD'] == 'DELETE':
+            delete_check = self._is_deleteable_or_disapprovable(quote_id)
+            if delete_check['status'] == 'error':
+                return delete_check
+            else:
+                quote = delete_check['quote']
             quote.status = QSTATUS['deleted']
             msg = 'Quote deleted.'
-        elif request.environ['REQUEST_METHOD'] == 'POST':
+            db.commit()
+            return {'msg': msg,
+                    'status': 'success'}
+        else:
+            abort(405)
+
+    @jsonify
+    def disapprove(self, quote_id):
+        if request.environ['REQUEST_METHOD'] == 'POST':
+            delete_check = self._is_deleteable_or_disapprovable(quote_id)
+            if delete_check['status'] == 'error':
+                return delete_check
+            else:
+                quote = delete_check['quote']
             quote.status = QSTATUS['disapproved']
             msg = 'Quote disapproved.'
-        db.commit()
-        return {'msg': msg,
-                'status': 'success'}
+            db.commit()
+            return {'msg': msg,
+                    'status': 'success'}
+        else:
+            abort(405)
 
     @jsonify
     def favourite(self, quote_id):
@@ -71,6 +84,8 @@ class ApiV1Controller(BaseController):
             db.commit()
             return {'msg': 'Removed favourite.',
                     'status': 'success'}
+        else:
+            abort(405)
     
     @jsonify
     def report(self, quote_id):
@@ -102,6 +117,8 @@ class ApiV1Controller(BaseController):
             
             return {'msg': 'Quote reported.',
                     'status': 'success'}
+        else:
+            abort(405)
 
     @jsonify
     def vote(self, direction, quote_id):
@@ -156,7 +173,6 @@ class ApiV1Controller(BaseController):
             db.commit()
             return {'status': 'success',
                     'msg': 'Vote annulled!'}
-
         else:
             abort(405)
 
@@ -179,3 +195,15 @@ class ApiV1Controller(BaseController):
                 break
             i += 1
         return len(found) >= limit
+
+    def _is_deleteable_or_disapprovable(self, quote_id):
+        authorize()
+        quote = db.query(Quote).filter(Quote.id == quote_id).first()
+        if not quote:
+            return {'msg': 'Invalid quote ID.',
+                    'status': 'error'}
+        if not h.quote_is_deleteable(quote):
+            return {'msg': 'You do not have permission to delete this quote.',
+                    'status': 'error'}
+        c.user.deleted_quotes.append(quote)
+        return {'status': 'success', 'quote': quote}

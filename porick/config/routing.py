@@ -63,6 +63,7 @@ def make_map(config):
 
     map.connect('/api/v1/approve/{quote_id}', controller='api_v1', action='approve')
     map.connect('/api/v1/delete/{quote_id}', controller='api_v1', action='delete')
+    map.connect('/api/v1/disapprove/{quote_id}', controller='api_v1', action='disapprove')
     map.connect('/api/v1/favourite/{quote_id}', controller='api_v1', action='favourite')
     map.connect('/api/v1/report/{quote_id}', controller='api_v1', action='report')
     map.connect('/api/v1/vote/{direction}/{quote_id}', controller='api_v1', action='vote')

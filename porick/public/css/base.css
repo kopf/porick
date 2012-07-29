@@ -53,13 +53,14 @@ body {
 .quote_control {
     color: #ddd;
     cursor: default;
-    font-size: 18px;
+    font-size: 17px;
 }
 .quote_control.logged_in {
     cursor: pointer;
     color: #000;
 }
 .approve.approved,
+.disapprove.disapproved,
 .delete.deleted {
     color: green !important;
 }
@@ -146,7 +147,7 @@ body {
     margin-bottom: 5px;
 }
 .report.reported {
-    color: #F71E75 !important;
+    color: green !important;
 }
 
 .top_right_controls {

@@ -9,17 +9,18 @@
         <script type="text/javascript" src="/js/favourites.js"></script>
         <script type="text/javascript" src="/js/reporting.js"></script>
         <script type="text/javascript" src="/js/delete.js"></script>
+        % if h.is_admin() and c.page not in ['disapproved', 'unapproved']:
+            <script type="text/javascript" src="/js/disapprove.js"></script>
+        % endif
         <script type="text/javascript">
             $(document).ready(function() {
                 setupVoteClickHandlers();
                 setupFavouritesClickHandlers();
                 setupReportingClickHandlers();
-                % if c.page == 'unapproved':
+                setupDeleteClickHandlers();
+                % if h.is_admin() and c.page not in ['disapproved', 'unapproved']:
                     setupDisapproveClickHandlers();
-                % else:
-                    setupDeleteClickHandlers();
                 % endif
-                
                 % if h.show_approval_button():
                     setupApproveClickHandlers();
                 % endif
@@ -89,6 +90,13 @@
                         <li>
                             <div class="quote_control logged_in approve" title="Approve" ${self.data_quote_id(quote)}>
                                 <i class="icon-ok-sign"></i>
+                            </div>
+                        </li>
+                    % endif
+                    % if h.is_admin() and c.page not in ['disapproved', 'unapproved']:
+                        <li>
+                            <div class="quote_control logged_in disapprove" title="Disapprove" ${self.data_quote_id(quote)}>
+                                <i class="icon-remove-sign"></i>
                             </div>
                         </li>
                     % endif
