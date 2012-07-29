@@ -18,7 +18,7 @@ function removeFavourite(quote_id, button) {
         type: 'DELETE',
         success: function(data, status, jqXHR){
             button.removeClass('success error favourited');
-            button.html('O');
+            $(button.children('i')[0]).attr('class', 'icon-star-empty');
         }
     });
 }
@@ -29,7 +29,7 @@ function addFavourite(quote_id, button) {
         type: 'PUT',
         success: function(data, status, jqXHR){
             button.addClass(data['status'] + ' favourited');
-            button.html('N');
+            $(button.children('i')[0]).attr('class', 'icon-star');
         }
     });
 }

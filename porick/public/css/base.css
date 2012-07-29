@@ -5,14 +5,6 @@ body {
     height: 100%;
     padding-top: 45px;
 }
-@font-face { 
-    font-family: 'WebSymbolsRegular';
-    src: url('/fonts/websymbols-regular-webfont.eot');
-    src: url('/fonts/websymbols-regular-webfont.eot?#iefix') format('embedded-opentype'),
-         url('/fonts/websymbols-regular-webfont.woff') format('woff'),
-         url('/fonts/websymbols-regular-webfont.ttf') format('truetype'),
-         url('/fonts/websymbols-regular-webfont.svg#WebSymbolsRegular') format('svg');
-}
 .side_text {
     color: #333;
     opacity: 0.3;
@@ -59,15 +51,16 @@ body {
 }
 
 .quote_control {
-    font-family: 'WebSymbolsRegular';
     color: #ddd;
     cursor: default;
+    font-size: 17px;
 }
 .quote_control.logged_in {
     cursor: pointer;
     color: #000;
 }
 .approve.approved,
+.disapprove.disapproved,
 .delete.deleted {
     color: green !important;
 }
@@ -83,7 +76,7 @@ body {
 .votes .vote {
     width: 15px;
     margin-top: 2px;
-    font-size: 14px;
+    font-size: 18px;
 }
 .votes .vote.voted {
     color: green !important;
@@ -154,7 +147,7 @@ body {
     margin-bottom: 5px;
 }
 .report.reported {
-    color: #F71E75 !important;
+    color: green !important;
 }
 
 .top_right_controls {
