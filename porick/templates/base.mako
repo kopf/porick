@@ -40,7 +40,6 @@
 <%def name="head_css()">
     <link rel="stylesheet" type="text/css" href="/css/base.css" />
     <link rel="stylesheet" type="text/css" href="/bootstrap/css/bootstrap.css" />
-    <link rel="stylesheet" type="text/css" href="/css/font-awesome.css">
     ${self.custom_css()}
 </%def>
 
