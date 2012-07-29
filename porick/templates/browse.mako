@@ -79,13 +79,25 @@
             </li>
             <li class="top_right nomargin">
                 <ul class="top_right_controls">
-                    <li><div class="quote_control report ${'logged_in' if c.logged_in else ''}" title="Report" ${self.data_quote_id(quote)}>W</div></li>
+                    <li>
+                        <div class="quote_control report ${'logged_in' if c.logged_in else ''}" title="Report" ${self.data_quote_id(quote)}>
+                            <i class="icon-flag"></i>
+                        </div>
+                    </li>
                     <li><div>${self.insert_favourite_button(quote)}</div></li>
                     % if h.show_approval_button():
-                        <li><div class="quote_control logged_in approve" title="Approve" ${self.data_quote_id(quote)}>/</div></li>
+                        <li>
+                            <div class="quote_control logged_in approve" title="Approve" ${self.data_quote_id(quote)}>
+                                <i class="icon-ok-sign"></i>
+                            </div>
+                        </li>
                     % endif
                     % if h.quote_is_deleteable(quote):
-                        <li><div class="quote_control logged_in delete" title="${'Disapprove' if c.page == 'unapproved' else 'Delete'}" ${self.data_quote_id(quote)}>×</div></li>
+                        <li>
+                            <div class="quote_control logged_in delete" title="Delete" ${self.data_quote_id(quote)}>
+                                <i class="icon-trash"></i>
+                            </div>
+                        </li>
                     % endif
                 </ul>
             </li>
@@ -101,22 +113,28 @@
     <% voted = h.check_if_voted(quote) %>
     <div class="votes">
         <div class="quote_control vote up ${'logged_in' if c.logged_in else ''} ${'voted' if voted == 'up' else ''}" title="${h.get_score_mouseover(quote, 'up')}" ${self.data_quote_id(quote)}>
-            :
+            <i class="icon-arrow-up"></i>
         </div>
         <div class="score">${quote.rating}</div>
         <div class="quote_control vote down ${'logged_in' if c.logged_in else ''} ${'voted' if voted == 'down' else ''}" title="${h.get_score_mouseover(quote, 'down')}" ${self.data_quote_id(quote)}>
-            ;
+            <i class="icon-arrow-down"></i>
         </div>
     </div>
 </%def>
 
 <%def name="insert_favourite_button(quote)">
     % if not c.logged_in:
-        <span class="quote_control favourite" title="Favourite">O</span>
+        <span class="quote_control favourite" title="Favourite">
+            <i class="icon-star-empty"></i>
+        </span>
     % elif quote in c.user.favourites:
-        <span class="quote_control favourite logged_in favourited" title="Favourite" ${self.data_quote_id(quote)}>N</span>
+        <span class="quote_control favourite logged_in favourited" title="Favourite" ${self.data_quote_id(quote)}>
+            <i class="icon-star"></i>
+        </span>
     % else:
-        <span class="quote_control favourite logged_in" title="Favourite" ${self.data_quote_id(quote)}>O</span>
+        <span class="quote_control favourite logged_in" title="Favourite" ${self.data_quote_id(quote)}>
+            <i class="icon-star-empty"></i>
+        </span>
     % endif
 </%def>
 
