@@ -80,11 +80,13 @@
             </li>
             <li class="top_right nomargin">
                 <ul class="top_right_controls">
-                    <li>
-                        <div class="quote_control report ${'logged_in' if c.logged_in else ''}" title="Report" ${self.data_quote_id(quote)}>
-                            <i class="icon-flag"></i>
-                        </div>
-                    </li>
+                    % if not c.page == 'reported':
+                        <li>
+                            <div class="quote_control report ${'logged_in' if c.logged_in else ''}" title="Report" ${self.data_quote_id(quote)}>
+                                <i class="icon-flag"></i>
+                            </div>
+                        </li>
+                    % endif
                     <li><div>${self.insert_favourite_button(quote)}</div></li>
                     % if h.show_approval_button():
                         <li>
