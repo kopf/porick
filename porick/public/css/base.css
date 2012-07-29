@@ -53,6 +53,7 @@ body {
 .quote_control {
     color: #ddd;
     cursor: default;
+    font-size: 18px;
 }
 .quote_control.logged_in {
     cursor: pointer;
@@ -74,7 +75,7 @@ body {
 .votes .vote {
     width: 15px;
     margin-top: 2px;
-    font-size: 14px;
+    font-size: 18px;
 }
 .votes .vote.voted {
     color: green !important;
