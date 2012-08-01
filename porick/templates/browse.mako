@@ -18,7 +18,7 @@
                 setupFavouritesClickHandlers();
                 setupReportingClickHandlers();
                 setupDeleteClickHandlers();
-                % if h.is_admin() and c.page not in ['disapproved', 'unapproved']:
+                % if h.is_admin() and c.page != 'disapproved':
                     setupDisapproveClickHandlers();
                 % endif
                 % if h.show_approval_button():
@@ -95,7 +95,7 @@
                             </div>
                         </li>
                     % endif
-                    % if h.is_admin() and c.page not in ['disapproved', 'unapproved']:
+                    % if h.is_admin() and c.page != 'disapproved':
                         <li>
                             <div class="quote_control logged_in disapprove" title="Disapprove" ${self.data_quote_id(quote)}>
                                 <i class="icon-remove-sign"></i>
