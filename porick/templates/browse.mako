@@ -9,7 +9,7 @@
         <script type="text/javascript" src="/js/favourites.js"></script>
         <script type="text/javascript" src="/js/reporting.js"></script>
         <script type="text/javascript" src="/js/delete.js"></script>
-        % if h.is_admin() and c.page not in ['disapproved', 'unapproved']:
+        % if h.is_admin() and c.page != 'disapproved':
             <script type="text/javascript" src="/js/disapprove.js"></script>
         % endif
         <script type="text/javascript">
