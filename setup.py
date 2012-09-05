@@ -14,6 +14,7 @@ setup(
     url='',
     install_requires=[
         "Pylons>=1.0.1rc1",
+        "mysql-python",
         "SQLAlchemy==0.7.7",
         "py-bcrypt"
     ],
