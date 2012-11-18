@@ -10,7 +10,7 @@ A password reset has been requested for your account on Porick.
 
 To reset your password, please click the link below. 
 
-http://{server_address}/reset_password?key={key}
+http://{server_domain}/reset_password?key={key}
 
 This URL will be valid for 2 hours.
 
@@ -25,6 +25,6 @@ def send_reset_password_email(user_email, key):
     s = smtplib.SMTP(config['smtp_server'])
     s.sendmail(
         config['SMTP_REPLYTO'], [user_email],
-        reset_password_text.format(server_address=config['SERVER_ADDRESS'], key=key)
+        reset_password_text.format(server_domain=config['SERVER_DOMAIN'], key=key)
     )
     s.quit()
