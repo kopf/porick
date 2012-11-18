@@ -66,3 +66,21 @@ class AccountController(BaseController):
         c.logged_in = False
         h.add_message('Logged out successfully!', 'info')
         return render('/home.mako')
+
+    def reset_password(self):
+        c.page = 'pw reset'
+        c.redirect_url = url(controller='account', action='login')
+        if request.environ['REQUEST_METHOD'] == 'GET':
+            return render('/reset_password.mako')
+        elif request.environ['REQUEST_METHOD'] == 'POST':
+            email = request.params['email']
+            user = db.query(User).filter(User.email == email).first()
+            if not user:
+                h.add_message('Invalid email address provided.', 'error')
+                return render('/reset_password.mako')
+            new_password = h.generate_password()
+            user.password = h.hash_password(new_password)
+            db.commit()
+            
+            h.add_message('Password reset email sent!', 'success')
+            return render('/reset_password.mako')

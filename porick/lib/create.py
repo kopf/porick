@@ -2,7 +2,7 @@ import bcrypt
 import re
 from sqlalchemy import or_
 
-from pylons import config, tmpl_context as c
+from pylons import tmpl_context as c
 
 import porick.lib.helpers as h
 from porick.model import db, Quote, User
@@ -28,7 +28,7 @@ def create_user(username, password, email):
         elif conflicts.username == username:
             raise NameError('Sorry! That username is already taken.')
     
-    hashed_pass = bcrypt.hashpw(password, config['PASSWORD_SALT'])
+    hashed_pass = h.hash_password(password)
     new_user = User()
     new_user.username = username
     new_user.password = hashed_pass

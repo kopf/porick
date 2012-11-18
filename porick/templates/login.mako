@@ -17,6 +17,7 @@
         <div>
             <button type="submit" class="btn btn-primary">Sign in</button>
         </div>
+        <div style="margin-top:1em;"><a href="${h.url(controller='account', action='reset_password')}">Forgot your password?</a></div>
     </form>
 </%def>
 

@@ -1,7 +1,9 @@
 import random
+import string
 
+import bcrypt
 from webhelpers.html import literal
-from pylons import url
+from pylons import url, config
 from pylons import tmpl_context as c
 
 from porick.model import db, Quote, Tag, User
@@ -53,3 +55,10 @@ def quote_is_deleteable(quote):
         return False
     else:
         return c.page != 'deleted' and (quote.submitted_by == c.user or c.user.level == 1)
+
+def hash_password(plaintext):
+     return bcrypt.hashpw(plaintext, config['PASSWORD_SALT'])
+
+def generate_password():
+    chars = string.printable.strip()
+    return ''.join(random.choice(chars) for _ in range(12))

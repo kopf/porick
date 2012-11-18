@@ -60,6 +60,7 @@ def make_map(config):
     map.connect('/signup', controller='account', action='create')
     map.connect('/login', controller='account', action='login')
     map.connect('/logout', controller='account', action='logout')
+    map.connect('/reset_password', controller='account', action='reset_password')
 
     map.connect('/api/v1/quotes/{quote_id}/approve', controller='api_v1', action='approve')
     map.connect('/api/v1/quotes/{quote_id}/delete', controller='api_v1', action='delete')
