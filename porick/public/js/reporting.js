@@ -12,8 +12,8 @@ function setupReportingClickHandlers() {
 
 function report(quote_id, button) {
 	$.ajax({
-        url: '/api/v1/report/' + quote_id,
-        type: 'PUT',
+        url: '/api/v1/quotes/'+quote_id+'/report',
+        type: 'POST',
         success: function(data, status, jqXHR){
             button.addClass(data['status'] + ' reported');
             if(data['status'] === 'success') {

@@ -14,7 +14,7 @@ function setupFavouritesClickHandlers() {
 
 function removeFavourite(quote_id, button) {
 	$.ajax({
-        url: '/api/v1/favourite/' + quote_id,
+        url: '/api/v1/quotes'+quote_id+'favourite',
         type: 'DELETE',
         success: function(data, status, jqXHR){
             button.removeClass('success error favourited');
@@ -25,8 +25,8 @@ function removeFavourite(quote_id, button) {
 
 function addFavourite(quote_id, button) {
 	$.ajax({
-        url: '/api/v1/favourite/' + quote_id,
-        type: 'PUT',
+        url: '/api/v1/quotes/'+quote_id+'/favourite',
+        type: 'POST',
         success: function(data, status, jqXHR){
             button.addClass(data['status'] + ' favourited');
             $(button.children('i')[0]).attr('class', 'icon-star');

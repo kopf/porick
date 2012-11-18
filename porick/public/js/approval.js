@@ -6,7 +6,7 @@ function setupApproveClickHandlers() {
         var quote_id = $(this).data('quote_id');
         var button = $(this);
         $.ajax({
-            url: '/api/v1/approve/' + quote_id,
+            url: '/api/v1/quotes/'+quote_id+'/approve',
             type: 'POST',
             success: function(data, status, jqXHR){
                 button.addClass(data['status'] + ' approved');
