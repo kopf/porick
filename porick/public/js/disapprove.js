@@ -11,7 +11,7 @@ function setupDisapproveClickHandlers() {
 
 function disapprove_quote(quote_id, button) {
     $.ajax({
-        url: '/api/v1/disapprove/' + quote_id,
+        url: '/api/v1/quotes/'+quote_id+'/disapprove',
         type: 'POST',
         success: function(data, status, jqXHR){
             button.addClass(data['status'] + ' disapproved');

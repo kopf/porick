@@ -24,8 +24,8 @@ function setupVoteClickHandlers() {
 
 function castVote(quote_id, direction, button) {
     $.ajax({
-        url: '/api/v1/vote/' + direction + '/' + quote_id,
-        type: 'PUT',
+        url: '/api/v1/quotes/'+quote_id+'/vote/'+direction,
+        type: 'POST',
         success: function(data, status, jqXHR){
             $(button).addClass(data['status'] + ' voted');
             changeScoreCount(button, direction, false);
@@ -35,7 +35,7 @@ function castVote(quote_id, direction, button) {
 
 function annulVote(quote_id, direction, button) {
     $.ajax({
-        url: '/api/v1/vote/' + direction + '/' + quote_id,
+        url: '/api/v1/quotes/'+quote_id+'/vote/'+direction,
         type: 'DELETE',
         success: function(data, status, jqXHR){
             $(button).removeClass('success error voted');

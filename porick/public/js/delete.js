@@ -13,7 +13,7 @@ function setupDeleteClickHandlers() {
 
 function delete_quote(quote_id, button) {
     $.ajax({
-        url: '/api/v1/delete/' + quote_id,
+        url: '/api/v1/quotes/'+quote_id+'/delete',
         type: 'DELETE',
         success: function(data, status, jqXHR){
             button.addClass(data['status'] + ' deleted');

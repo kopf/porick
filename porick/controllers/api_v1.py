@@ -71,7 +71,7 @@ class ApiV1Controller(BaseController):
         if not quote:
             return {'msg': 'Invalid quote ID.',
                     'status': 'error'}
-        if request.environ['REQUEST_METHOD'] == 'PUT':
+        if request.environ['REQUEST_METHOD'] == 'POST':
             c.user.favourites.append(quote)
             db.commit()
             return {'msg': 'Quote favourited.',
@@ -94,7 +94,7 @@ class ApiV1Controller(BaseController):
         if not quote:
             return {'msg': 'Invalid quote ID.',
                     'status': 'error'}
-        if request.environ['REQUEST_METHOD'] == 'PUT':
+        if request.environ['REQUEST_METHOD'] == 'POST':
             if self._has_made_too_many_reports():
                 # TODO: This should return a HTTP 429! But pylons.controllers.util.abort()
                 #       doesn't seem to support it :/
@@ -121,10 +121,10 @@ class ApiV1Controller(BaseController):
             abort(405)
 
     @jsonify
-    def vote(self, direction, quote_id):
+    def vote(self, quote_id, direction):
         authorize()
         quote = db.query(Quote).filter(Quote.id == quote_id).first()
-        if request.environ['REQUEST_METHOD'] == 'PUT':
+        if request.environ['REQUEST_METHOD'] == 'POST':
             if not quote:
                 return {'msg': 'Invalid quote ID.',
                         'status': 'error'}

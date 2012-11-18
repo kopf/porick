@@ -61,12 +61,12 @@ def make_map(config):
     map.connect('/login', controller='account', action='login')
     map.connect('/logout', controller='account', action='logout')
 
-    map.connect('/api/v1/approve/{quote_id}', controller='api_v1', action='approve')
-    map.connect('/api/v1/delete/{quote_id}', controller='api_v1', action='delete')
-    map.connect('/api/v1/disapprove/{quote_id}', controller='api_v1', action='disapprove')
-    map.connect('/api/v1/favourite/{quote_id}', controller='api_v1', action='favourite')
-    map.connect('/api/v1/report/{quote_id}', controller='api_v1', action='report')
-    map.connect('/api/v1/vote/{direction}/{quote_id}', controller='api_v1', action='vote')
+    map.connect('/api/v1/quotes/{quote_id}/approve', controller='api_v1', action='approve')
+    map.connect('/api/v1/quotes/{quote_id}/delete', controller='api_v1', action='delete')
+    map.connect('/api/v1/quotes/{quote_id}/disapprove', controller='api_v1', action='disapprove')
+    map.connect('/api/v1/quotes/{quote_id}/favourite', controller='api_v1', action='favourite')
+    map.connect('/api/v1/quotes/{quote_id}/report', controller='api_v1', action='report')
+    map.connect('/api/v1/quotes/{quote_id}/vote/{direction}', controller='api_v1', action='vote')
 
     map.connect('/', controller='home', action='main')
 
