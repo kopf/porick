@@ -24,9 +24,13 @@ Porick
 
 
 def send_reset_password_email(user_email, key):
+    msg = MIMEText(reset_password_text.format(server_domain=config['SERVER_DOMAIN'], key=key))
+    msg['To'] = user_email
+    msg['From'] = config['SMTP_REPLYTO']
+    msg['Subject'] = 'Porick password reset request'
     s = smtplib.SMTP(config['smtp_server'])
     s.sendmail(
         config['SMTP_REPLYTO'], [user_email],
-        MIMEText(reset_password_text.format(server_domain=config['SERVER_DOMAIN'], key=key)).as_string()
+        msg.as_string()
     )
     s.quit()
