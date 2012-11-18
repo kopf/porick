@@ -3,6 +3,7 @@ from email.mime.text import MIMEText
 
 from pylons import config
 
+
 reset_password_text = MIMEText("""
 Hi,
 
@@ -20,6 +21,7 @@ Cheers,
 Porick
 
 """)
+
 
 def send_reset_password_email(user_email, key):
     s = smtplib.SMTP(config['smtp_server'])

@@ -9,7 +9,7 @@ from pylons.controllers.util import abort, redirect
 from porick.lib.auth import authenticate, clear_cookies
 from porick.lib.base import BaseController, render
 from porick.lib.create import create_user, validate_signup, validate_password
-from porick.lib.email import send_reset_password_email
+from porick.lib.mail import send_reset_password_email
 from porick.model import now, db, User, PasswordResets
 import porick.lib.helpers as h
 
