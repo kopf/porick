@@ -58,7 +58,3 @@ def quote_is_deleteable(quote):
 
 def hash_password(plaintext):
      return bcrypt.hashpw(plaintext, config['PASSWORD_SALT'])
-
-def generate_password():
-    chars = string.printable.strip()
-    return ''.join(random.choice(chars) for _ in range(12))

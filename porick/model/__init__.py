@@ -76,6 +76,12 @@ class VoteToUser(Base):
     direction = Column(String(4), nullable=False)
     user = relationship("User")
 
+class PasswordResets(Base):
+    __tablename__  = 'password_resets'
+    user_id  = Column(Integer, ForeignKey('users.id'), primary_key=True)
+    key = Column(String(26), nullable=False)
+    created = Column(DateTime, nullable=False, default=now)
+
 class Quote(Base):
     __tablename__  = 'quotes'
     __table_args__ = {'mysql_engine': 'InnoDB',
