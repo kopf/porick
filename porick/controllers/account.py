@@ -9,6 +9,7 @@ from pylons.controllers.util import abort, redirect
 from porick.lib.auth import authenticate, clear_cookies
 from porick.lib.base import BaseController, render
 from porick.lib.create import create_user, validate_signup, validate_password
+from porick.lib.email import send_reset_password_email
 from porick.model import now, db, User, PasswordResets
 import porick.lib.helpers as h
 
@@ -105,8 +106,7 @@ class AccountController(BaseController):
                 db.add(pw_reset_key)
                 db.commit()
 
-                print '!!!!!!!!!!!!!!!!!! KEY IS %s !!!!!!!!!!!!!!!!!!!!!!!!!!' % pw_reset_key.key
-                
+                send_reset_password_email(user.email, pw_reset_key.key)
                 h.add_message('Password reset email sent!', 'success')
                 return render('/blank.mako')
             else:
