@@ -43,7 +43,7 @@
             <h1>No quotes found.</h1>
             <p>
             % if c.page == 'favourites':
-                Just click the little heart in the top-right hand corner of any quote and it'll be added to your
+                Just click the little star in the top-right hand corner of any quote and it'll be added to your
                 favourites!
             % elif c.page == 'unapproved': 
                 Best go grab a can.
